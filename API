@@ -113,3 +113,13 @@ SAMPLE REQUEST:
 SAMPLE RESPONSE:
 {"Status": "Successful Deletion"}
 -------------------------------------------------------------------------------------------------------------
+ADMINS ONLY:
+POST
+/api/admin/users/{id}/approve
+
+SAMPLE REQUEST:
+/api/admin/users/5/approve
+
+SAMPLE RESPONSE:
+{"Status": "User Approved"}
+-------------------------------------------------------------------------------------------------------------
