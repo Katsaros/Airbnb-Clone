@@ -2,6 +2,7 @@ package com.project.homerent.service;
 
 
 import com.project.homerent.model.dto.UserDto;
+import com.project.homerent.model.dto.UserPostDto;
 import com.project.homerent.model.usermodel.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface UserService {
     UserDto findDtoById(Long id);
 
     List<UserDto> findAll();
-//    UserDto save(UserPostDto userPostDto);
+    UserDto save(UserDto userPostDto);
 
     void deleteById(Long id);
 }

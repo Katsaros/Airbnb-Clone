@@ -1,7 +1,9 @@
 package com.project.homerent.service;
 
 import com.project.homerent.converter.UserConverter;
+import com.project.homerent.converter.UserPostConverter;
 import com.project.homerent.model.dto.UserDto;
+import com.project.homerent.model.dto.UserPostDto;
 import com.project.homerent.model.usermodel.User;
 import com.project.homerent.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-//    UserConverter userConverter = new UserConverter();
+    UserConverter userConverter = new UserConverter();
+    UserPostConverter userPostConverter = new UserPostConverter();
 
     @Autowired
     UserRepository userRepository;
@@ -44,5 +47,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDto save(UserDto userDto) {
+        User tempUser = findById(userDto.getId());
+        String password = tempUser.getPassword();
+
+        User user = userPostConverter.convert(userDto);
+
+        user.setFirstName(userDto.getFirstname());
+        user.setLastName(userDto.getLastname());
+        user.setEmail(tempUser.getEmail());
+        user.setPassword(tempUser.getPassword());
+        user.setRoles(tempUser.getRoles());
+
+        user = userRepository.save(user);
+
+        return userConverter.convertToDto(user);
     }
 }
