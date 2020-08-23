@@ -68,4 +68,11 @@ public class AdminController {
         userService.deleteById(id);
         return ResponseEntity.ok().body("{\"Status\": \"Successful Deletion\"}");
     }
+
+    @PostMapping("/users/{id}/approve")
+    public ResponseEntity<String> ApproveUser(@PathVariable("id") Long id) {
+        userService.approve(id);
+
+        return ResponseEntity.ok().body("{\"Status\": \"User Approved\"}");
+    }
 }

@@ -66,4 +66,11 @@ public class UserServiceImpl implements UserService {
 
         return userConverter.convertToDto(user);
     }
+
+    @Override
+    public void approve(Long id) {
+        User searchedUser = findById(id);
+        searchedUser.setApproved(1);
+        userRepository.save(searchedUser);
+    }
 }
