@@ -1,0 +1,51 @@
+-------------------------------------------------------------------------------------------------------------
+//run spring boot application and then insert the roles in database:
+INSERT INTO homerent.roles(name) VALUES('ROLE_USER');
+INSERT INTO homerent.roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO homerent.roles(name) VALUES('ROLE_ADMIN');
+-------------------------------------------------------------------------------------------------------------
+SAMPLE REQUEST:
+/api/auth/signup
+{
+	"username": "admin",
+	"firstname": "Admin",
+	"lastname": "Admin",
+	"email": "admin@homerent.com",
+	"role": ["admin"],
+	"password": "123456"
+}
+
+NOTE: We have 3 roles: admin (the admin), mod (the host), user (the tenant)
+
+SAMPLE RESPONSES:
+{
+    "message": "User registered successfully!"
+}
+
+{
+    "message": "Error: Username is already taken!"
+}
+
+{
+    "message": "Error: Email is already taken!"
+}
+-------------------------------------------------------------------------------------------------------------
+SAMPLE REQUEST:
+/api/auth/signin
+{
+	"username": "admin",
+	"password": "123456"
+}
+
+SAMPLE RESPONSE:
+{
+    "id": 1,
+    "username": "admin",
+    "email": "admin@homerent.com",
+    "roles": [
+        "ROLE_ADMIN"
+    ],
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5ODEyNTQ4NSwiZXhwIjoxNTk4MjExODg1fQ.zFuBO4Dd4yuoAQokD1gS0Y6BX1tQ81kTICPut3HtIuE4GvpC5A_UX45xwvoCeuLsjYCju4vnJT5gjBsHXQAk4g",
+    "tokenType": "Bearer"
+}
+-------------------------------------------------------------------------------------------------------------
