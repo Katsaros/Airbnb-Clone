@@ -3,6 +3,7 @@ package com.project.homerent.controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -76,6 +77,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        AtomicBoolean isHost = new AtomicBoolean(false);
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -119,6 +122,7 @@ public class AuthController {
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
                         user.setApproved(0);
+                        isHost.set(true);
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -128,10 +132,10 @@ public class AuthController {
                 }
             });
         }
-
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        if(isHost.get())return ResponseEntity.ok(new MessageResponse("User registered successfully but must be approved by an Administrator!"));
+        else return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }
