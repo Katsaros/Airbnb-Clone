@@ -9,11 +9,12 @@ SAMPLE BODY REQUEST:
 POST
 {
 	"username": "admin",
-	"firstname": "Admin",
-	"lastname": "Admin",
+	"firstname": "admin",
+	"lastname": "admin",
 	"email": "admin@homerent.com",
-	"roles": ["admin"],
-	"password": "123456"
+	"role": ["admin"],
+	"password": "123456",
+	"telephone": "+306911111111"
 }
 
 NOTE: We have 3 roles: admin (the admin), mod (the host), user (the tenant)
@@ -44,11 +45,13 @@ SAMPLE RESPONSE:
     "id": 1,
     "username": "admin",
     "email": "admin@homerent.com",
+    "telephone": "+306911111111",
+    "approved": "1",
     "roles": [
         "ROLE_ADMIN"
     ],
-    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5ODEyNTQ4NSwiZXhwIjoxNTk4MjExODg1fQ.zFuBO4Dd4yuoAQokD1gS0Y6BX1tQ81kTICPut3HtIuE4GvpC5A_UX45xwvoCeuLsjYCju4vnJT5gjBsHXQAk4g",
-    "tokenType": "Bearer"
+    "tokenType": "Bearer",
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE1OTgyMTkxNjQsImV4cCI6MTU5ODMwNTU2NH0.sSOaJswdb7Yz4nYNhjyOmT-CMVTxxpqI9Sepxh-Kr8TNPbOcVeFWlNSRBiOkZJ85kifNuaSY6Y8Lyfr48HAGag"
 }
 -------------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
@@ -109,3 +112,4 @@ SAMPLE REQUEST:
 
 SAMPLE RESPONSE:
 {"Status": "Successful Deletion"}
+-------------------------------------------------------------------------------------------------------------
