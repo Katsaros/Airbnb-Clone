@@ -22,6 +22,9 @@ public class SignupRequest {
     @Email
     private String email;
 
+    private String telephone;
+    private String approved;
+
     private Set<String> role;
 
     @NotBlank
@@ -74,5 +77,21 @@ public class SignupRequest {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
     }
 }

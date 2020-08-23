@@ -32,4 +32,6 @@ public class UserPostDto {
 
     private Set<Role> roles;
 
+    private String telephone;
+    private String approved;
 }
