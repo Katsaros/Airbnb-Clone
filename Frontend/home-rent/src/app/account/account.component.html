@@ -1,73 +1,88 @@
 <body>
-<app-header-user></app-header-user>
+    <app-header-user></app-header-user>
 
-<mat-card style="margin-top: 10%; width: 40%; border-radius: 0px; text-align: center; align-items: center; margin-left: 30%">
-    <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Στοιχεία Λογαριασμού</mat-card-title>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6" align="center">
+                <mat-card style="margin-top: 20%; width: 90%; border-radius: 0px; text-align: center;">
+                    <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Στοιχεία Λογαριασμού</mat-card-title>
+                    <mat-card-content>
+                        <p>
+                            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
+                                <mat-label>Username</mat-label>
+                                <input matInput value="{{username}}" [disabled]="disabled" style="color: #0d0d0d">
+                            </mat-form-field>
 
-    <mat-card-content>
-        <p>
-            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
-                <mat-label>Username</mat-label>
-                <input matInput value="{{username}}" [disabled]="disabled" style="color: #0d0d0d">
-            </mat-form-field>
+                            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
+                                <mat-label>Κωδικός</mat-label>
+                                <input matInput [type]="hide ? 'password' : 'text'" value="{{password}}" [disabled]="disabled" style="color: #0d0d0d">
+                                <button *ngIf="disabled == false" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" style="width: 20px; height: 20px">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </p>
 
-            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
-                <mat-label>Κωδικός</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" value="{{password}}" [disabled]="disabled" style="color: #0d0d0d">
-                <button *ngIf="disabled == false" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" style="width: 20px; height: 20px">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-        </p>
+                        <p>
+                            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
+                                <mat-label>Όνομα</mat-label>
+                                <input matInput value="{{name}}" [disabled]="disabled" style="color: #0d0d0d">
+                            </mat-form-field>
 
-        <p>
-            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
-                <mat-label>Όνομα</mat-label>
-                <input matInput value="{{name}}" [disabled]="disabled" style="color: #0d0d0d">
-            </mat-form-field>
+                            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
+                                <mat-label>Επίθετο</mat-label>
+                                <input matInput value="{{last_name}}" [disabled]="disabled" style="color: #0d0d0d">
+                            </mat-form-field>
+                        </p>
 
-            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
-                <mat-label>Επίθετο</mat-label>
-                <input matInput value="{{last_name}}" [disabled]="disabled" style="color: #0d0d0d">
-            </mat-form-field>
-        </p>
+                        <p>
+                            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
+                                <mat-label>Email</mat-label>
+                                <input matInput value="{{email}}" [disabled]="disabled" style="color: #0d0d0d">
+                            </mat-form-field>
 
-        <p>
-            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
-                <mat-label>Email</mat-label>
-                <input matInput value="{{email}}" [disabled]="disabled" style="color: #0d0d0d">
-            </mat-form-field>
+                            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
+                                <mat-label>Τηλέφωνο</mat-label>
+                                <input matInput value="{{phone}}" [disabled]="disabled" style="color: #0d0d0d">
+                            </mat-form-field>
+                        </p>
 
-            <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
-                <mat-label>Τηλέφωνο</mat-label>
-                <input matInput value="{{phone}}" [disabled]="disabled" style="color: #0d0d0d">
-            </mat-form-field>
-        </p>
+                        <section class="example-section" style="margin-right: 10px; margin-bottom: 30px">
+                            <mat-checkbox class="example-margin" [disabled]="disabled"
+                                          [checked]="enoikiastis_check" style="margin-right: 10px">
+                                Ενοικιαστής
+                            </mat-checkbox>
+                            <mat-checkbox class="example-margin" [disabled]="disabled"
+                                          [checked]="oikodespotis_check" style="margin-left: 10px">
+                                Οικοδεσπότης
+                            </mat-checkbox>
+                        </section>
+                    </mat-card-content>
 
-        <section class="example-section" style="margin-right: 10px; margin-bottom: 30px">
-            <mat-checkbox class="example-margin" [disabled]="disabled"
-                          [checked]="enoikiastis_check" style="margin-right: 10px">
-                Ενοικιαστής
-            </mat-checkbox>
-            <mat-checkbox class="example-margin" [disabled]="disabled"
-                          [checked]="oikodespotis_check" style="margin-left: 10px">
-                Οικοδεσπότης
-            </mat-checkbox>
-        </section>
+                    <mat-card-footer *ngIf="disabled == true">
+                        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="change_disabled()">Αλλαγή στοιχείων</button>
+                        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="delete_account()">Διαγραφή Λογαριασμού</button>
+                    </mat-card-footer>
 
-    </mat-card-content>
+                    <mat-card-footer *ngIf="disabled == false">
+                        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="save()">Αποθήκευση Αλλαγών</button>
+                        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="cancel()">Απόρριψη αλλαγών</button>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
 
-    <mat-card-footer *ngIf="disabled == true">
-        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="change_disabled()">Αλλαγή στοιχείων</button>
-        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="delete_account()">Διαγραφή Λογαριασμού</button>
-    </mat-card-footer>
+            <div class="col-6" align="center">
+                <mat-card style="margin-top: 20%; width: 90%; border-radius: 0px; text-align: center; align-items: center; position: absolute">
+                    <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Φωτογραφία Λογαριασμού</mat-card-title>
 
-    <mat-card-footer *ngIf="disabled == false">
-        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="save()">Αποθήκευση Αλλαγών</button>
-        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="cancel()">Απόρριψη αλλαγών</button>
-    </mat-card-footer>
+                    <mat-card-content>
+                        <img src="assets/avatar.jpeg">
+                    </mat-card-content>
 
-</mat-card>
-
-
+                    <mat-card-footer>
+                        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="change_photo()">Αλλαγή Φωτογραφίας</button>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+        </div>
+    </div>
 </body>

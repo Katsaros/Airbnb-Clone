@@ -51,5 +51,9 @@ export class AccountComponent implements OnInit {
 
   }
 
+  change_photo() {
+
+  }
+
 
 }
