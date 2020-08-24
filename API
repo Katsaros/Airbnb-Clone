@@ -31,6 +31,10 @@ SAMPLE RESPONSES:
 {
     "message": "Error: Email is already taken!"
 }
+
+{
+    "message": "User registered successfully but must be approved by an Administrator!"
+}
 -------------------------------------------------------------------------------------------------------------
 SAMPLE BODY REQUEST:
 POST
@@ -122,4 +126,21 @@ SAMPLE REQUEST:
 
 SAMPLE RESPONSE:
 {"Status": "User Approved"}
+-------------------------------------------------------------------------------------------------------------
+ADMINS ONLY:
+GET
+/api/admin/users/unapproved
+
+SAMPLE RESPONSE:
+[
+    {
+        "id": 2,
+        "username": "host",
+        "firstname": "host",
+        "lastname": "host",
+        "email": "host@homerent.com",
+        "telephone": +305483754983,
+        "approved": 0
+    }
+]
 -------------------------------------------------------------------------------------------------------------
