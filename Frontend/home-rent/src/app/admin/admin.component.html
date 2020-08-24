@@ -1,0 +1,101 @@
+<body>
+
+<app-header-user></app-header-user>
+
+<!--<app-header></app-header>-->
+
+<div class="mat-elevation-z8" style="margin-top: 100px; width: 60%; margin-left: 30px">
+
+<!--    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >-->
+
+<!--        &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="position">-->
+<!--            <th mat-header-cell *matHeaderCellDef> Όνομα </th>-->
+<!--            <td mat-cell *matCellDef="let element" (click)="open(content, element.position)"> {{element.first_name}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="name">-->
+<!--            <th mat-header-cell *matHeaderCellDef> Επίθετο </th>-->
+<!--            <td mat-cell *matCellDef="let element" (click)="open(content, element.position)"> {{element.last_name}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="weight">-->
+<!--            <th mat-header-cell *matHeaderCellDef> Τηλέφωνο </th>-->
+<!--            <td mat-cell *matCellDef="let element" (click)="open(content, element.position)"> {{element.mobile}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="symbol">-->
+<!--            <th mat-header-cell *matHeaderCellDef> Email</th>-->
+<!--            <td mat-cell *matCellDef="let element" (click)="open(content, element.position)"> {{element.email}} </td>-->
+<!--        </ng-container>-->
+
+<!--&lt;!&ndash;        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr mat-row *matRowDef="let row; columns: displayedColumns;"&ndash;&gt;-->
+<!--&lt;!&ndash;            (click)="selection.toggle(row)">&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--    </table>-->
+
+    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+<!--<ng-template #content let-modal style="width: 90%">-->
+<!--    <div class="modal-header">-->
+<!--        <h1>Πληροφορίες Επαφής</h1>-->
+<!--    </div>-->
+<!--    <div class="modal-body">-->
+
+<!--        <div class="container-fluid">-->
+
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <h3>Προσωπικά Στοιχεία</h3>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</ng-template>-->
+
+
+<mat-card class="right_card">
+    <mat-card-title style="font-weight: bold; text-decoration: none">Αιτήματα Χρηστών</mat-card-title>
+
+    <mat-card-content>
+        <p> Εγκρίνετε ή απορρίψτε τα αιτήματα των χρηστών για τον ρόλο του οικοδεσπότη. </p>
+        <p> Εκκρεμμούν </p> <h1>{{aitimata}}</h1> <p>αιτήματα χρηστών</p>
+
+    </mat-card-content>
+
+    <mat-card-footer>
+        <button mat-button style="padding-right: 20px; padding-left: 20px">Προβολή αιτημάτων</button>
+        <button mat-button style="padding-left: 20px; padding-right: 20px">Αποδοχή όλων</button>
+        <button mat-button style="padding-left: 20px; padding-right: 20px">Απόρριψη όλων</button>
+    </mat-card-footer>
+</mat-card>
+
+<mat-card class="right_card" style="margin-top: 20%">
+    <mat-card-title style="font-weight: bold; text-decoration: none">Στοιχεία Εφαρμογής</mat-card-title>
+
+    <mat-card-content>
+        <p>Δυνατότητα εξαγωγής στοιχείων σε XML ή JSON: Δημιουργεία αρχείου με τις πληροφορίες των καταλυμάτων και των
+            χρηστών και αποθήκευση στον υπολογιστή σας. </p>
+    </mat-card-content>
+
+    <mat-card-footer>
+        <button mat-button style="padding-right: 20px; padding-left: 20px">XML</button>
+        <button mat-button style="padding-left: 20px; padding-right: 20px">JSON</button>
+    </mat-card-footer>
+</mat-card>
+
+
+</body>
+
+
+
+

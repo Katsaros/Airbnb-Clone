@@ -1,0 +1,36 @@
+
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-light white" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" routerLink="/home">Home-Rent</a></mdb-navbar-brand>
+
+  <div class="right">
+  <form>
+
+    <mat-form-field appearance="fill"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value">
+      <input matInput placeholder="Username" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value">
+      <input matInput placeholder="Password" required [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" style="width: 20px; height: 20px">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button style="background-color: #81d9c4; margin: 10px" (click)="goLanding()">Sign In</button>
+    <a style="padding: 4px">Or</a>
+    <button mat-raised-button style="margin: 10px" (click)="goRegister()">Register</button>
+
+
+  </form>
+
+  </div>
+
+
+</mdb-navbar>

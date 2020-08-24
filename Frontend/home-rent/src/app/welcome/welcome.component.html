@@ -1,0 +1,58 @@
+<body>
+<app-header></app-header>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+
+
+      <h1 style="color: white"> Αναζήτηση Δωματίου/Κατοικίας</h1>
+
+      <br>
+      <mat-form-field appearance="outline" style="padding: 8px">
+        <mat-label style="color: white;">Συνοικία</mat-label>
+        <input matInput placeholder="Συνοικία" style="color: white" [formControl]="synoikia">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="padding: 8px">
+        <mat-label style="color: white;">Πόλη</mat-label>
+        <input matInput placeholder="Πόλη" style="color: white" [formControl]="poli">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="padding: 8px">
+        <mat-label style="color: white;">Χώρα</mat-label>
+        <input matInput placeholder="Χώρα" style="color: white" [formControl]="xora">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field appearance="outline" style="padding: 8px">
+        <mat-label style="color: white;">Χρονικό Διάστημα</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Άφιξη">
+          <input matEndDate formControlName="end" placeholder="Αναχώρηση">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="padding: 8px">
+        <mat-label style="color: white">Αριθμός Επισκεπτών</mat-label>
+        <input matInput type="number" placeholder="Επισκέπτες" style="color: white" [formControl]="visitors" min="1">
+        <mat-error *ngIf="visitors.invalid" style="color: white">Ελαχιστος Αριθμός: 1</mat-error>
+      </mat-form-field>
+
+      <br>
+
+      <button mat-raised-button style="margin: 10px; background-color: #81d9c4; font-size: 20px;" (click)="search()">Αναζήτηση</button>
+
+
+    </div>
+
+  </div>
+
+</body>
+
+

@@ -1,0 +1,7 @@
+body {
+    background-color: #164359;
+    /*background-image: url("/../../assets/home.jpg");*/
+    background-size: cover;
+    height: 100vh;
+    padding: 0;
+}
