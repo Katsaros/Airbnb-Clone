@@ -16,3 +16,8 @@ body {
 .mat-card-footer {
     background-color: #d0ddda;
 }
+
+img {
+    border-radius: 50%;
+    width: 400px;
+}

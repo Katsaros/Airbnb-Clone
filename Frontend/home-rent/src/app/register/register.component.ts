@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {Signup} from '../signup';
+import {Response} from '../response';
 
 @Component({
   selector: 'app-register',
@@ -15,12 +18,16 @@ export class RegisterComponent implements OnInit {
   passVerif = new FormControl('', [Validators.required]);
   telephone = new FormControl('', [Validators.required, Validators.minLength(10)]);
 
-  role = new FormControl('', [Validators.required]);
+  role = new FormControl();
+  // mpla = new FormControl();
+
+  // role: string;
   roleList: string[] = ['Ενοικιαστής', 'Οικοδεσπότης'];
 
+  body: Signup;
   selectedFile: File;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -37,8 +44,7 @@ export class RegisterComponent implements OnInit {
 
   getErrorMessage() {
     if (this.email.hasError('required') || this.lastName.hasError('required') || this.firstName.hasError('required') ||
-        this.username.hasError('required') || this.password.hasError('required') || this.passVerif.hasError('required') ||
-        this.role.hasError('required')) {
+        this.username.hasError('required') || this.password.hasError('required') || this.passVerif.hasError('required')) {
       return 'You must enter a value';
     }
 
@@ -47,6 +53,21 @@ export class RegisterComponent implements OnInit {
 
   register() {
 
+    this.body = new Signup();
+    this.body.email = this.email.value;
+    this.body.username = this.username.value;
+    this.body.firstname = this.firstName.value;
+    this.body.lastname = this.lastName.value;
+    this.body.password = this.password.value;
+    this.body.role = this.role.value;
+    this.body.telephone = this.telephone.value;
+
+    // console.log(this.body);
+
+    this.http.post<Response>('https://localhost:8080/api/auth/signup', this.body).subscribe(data => {
+      console.log(data);
+
+    });
   }
 
 

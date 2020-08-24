@@ -11,13 +11,13 @@
     <mat-form-field appearance="fill"
                     [hideRequiredMarker]="hideRequiredControl.value"
                     [floatLabel]="floatLabelControl.value">
-      <input matInput placeholder="Username" required>
+      <input matInput placeholder="Username" [formControl]="username" required>
     </mat-form-field>
 
     <mat-form-field appearance="fill"
                     [hideRequiredMarker]="hideRequiredControl.value"
                     [floatLabel]="floatLabelControl.value">
-      <input matInput placeholder="Password" required [type]="hide ? 'password' : 'text'">
+      <input matInput placeholder="Password" required [type]="hide ? 'password' : 'text'" [formControl]="password">
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" style="width: 20px; height: 20px">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
