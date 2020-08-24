@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Signin} from '../signin';
+import {Response} from '../response';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +17,10 @@ export class HeaderComponent implements OnInit{
   floatLabelControl = new FormControl('auto');
   hide = true;
 
-  constructor(fb: FormBuilder, private router: Router) {
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
+
+  constructor(fb: FormBuilder, private router: Router, private http: HttpClient) {
     this.options = fb.group({
       hideRequired: this.hideRequiredControl,
       floatLabel: this.floatLabelControl,
@@ -26,6 +32,15 @@ export class HeaderComponent implements OnInit{
   }
 
   goLanding() {
+    let body: Signin;
+    body = new Signin();
+    body.password = this.password.value;
+    body.username = this.username.value;
+
+    this.http.post<Response>('https://localhost:8080/api/auth/signin', body).subscribe(data => {
+      console.log(data);
+
+    });
 
   }
 

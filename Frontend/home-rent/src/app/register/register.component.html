@@ -63,7 +63,7 @@
     <mat-form-field appearance="outline" style="padding: 8px">
         <mat-label style="color: white">Ρόλος Χρήστη</mat-label>
         <mat-select [formControl]="role" multiple style="color: white" required>
-            <mat-option *ngFor="let r of roleList" [value]="role" >{{r}}</mat-option>
+            <mat-option *ngFor="let r of roleList" [value]="r" >{{r}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -81,7 +81,6 @@
     <br>
 
     <a routerLink="/welcome" style="color: white; font-weight: lighter;">Already have an acount? Sign In</a>
-
 
     </div>
 </div>

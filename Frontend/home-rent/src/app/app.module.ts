@@ -37,6 +37,7 @@ import { HeaderUserComponent } from './header-user/header-user.component';
 import { AccountComponent } from './account/account.component';
 import { SearchComponent } from './search/search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         ReactiveFormsModule,
         FormsModule,
         MatCheckboxModule,
+        HttpClientModule
     ],
   exports: [
     MatButtonModule,
