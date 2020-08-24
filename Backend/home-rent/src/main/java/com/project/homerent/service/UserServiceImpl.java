@@ -45,6 +45,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> findUnapprovedUsers() {
+        List<UserDto> allUsers = userRepository.findAll()
+                .stream()
+                .map(UserConverter::convertToDto)
+                .collect(Collectors.toList());
+        return allUsers.stream().filter(t->t.getApproved()==0).collect(Collectors.toList());
+    }
+
+    @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }

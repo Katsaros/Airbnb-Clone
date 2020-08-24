@@ -1,6 +1,6 @@
 package com.project.homerent.model.hostmodel;
 
-import com.project.homerent.model.usermodel.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,20 +12,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="incident_authority")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name="home_category")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class HomeCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "myhome_id", nullable = false)
+    @Column(name = "homecategory_id", nullable = false)
     private long id;
 
-    @Column(name = "myhome_name", nullable = false)
-    private String authorityName;
+    @Column(name = "homecategory_title", nullable = false)
+    private String homeCategoryTitle;
 
-    @OneToMany(mappedBy="authority", cascade = CascadeType.ALL)
-    private List<HomeCategory> incidents;
-
-    @OneToMany(mappedBy="authority", cascade = CascadeType.ALL)
-    private List<User> users;
+    @OneToMany(mappedBy="homeCategory", cascade = CascadeType.ALL)
+    private List<MyHome> myHomes;
 }

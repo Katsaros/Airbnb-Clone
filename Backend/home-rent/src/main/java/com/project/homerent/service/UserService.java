@@ -18,4 +18,6 @@ public interface UserService {
     void approve(Long id);
 
     void deleteById(Long id);
+
+    List<UserDto> findUnapprovedUsers();
 }

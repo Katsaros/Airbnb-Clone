@@ -3,10 +3,7 @@ package com.project.homerent.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.homerent.model.dto.UserDto;
-import com.project.homerent.model.dto.UserPostDto;
-import com.project.homerent.model.usermodel.User;
 import com.project.homerent.service.UserService;
-import com.project.homerent.util.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -43,24 +40,7 @@ public class AdminController {
 
     @PutMapping("/users")
     public ResponseEntity<String> updateUser(@RequestBody @Nullable UserDto userPostDto) throws JsonProcessingException {
-//        if (userPostDto != null) {
-//            String password;
-//            if(userPostDto.getPassword().isEmpty() || userPostDto.getPassword()==null) {
-//                User tempUser = userService.findById(userPostDto.getUserId());
-//                if(tempUser!=null)password = tempUser.getPassword();
-//                else
-//                    return ResponseEntity.badRequest().body("{\"Status\": \"user not found\"}");
-//            }
-//            else {
-//                password = userPostDto.getPassword();
-//            }
-//
-//            String encodedPassword = passwordEncoder.encode(password);
-//            userPostDto.setPassword(encodedPassword);
             return ResponseEntity.ok().body(convertToJson(userService.save(userPostDto)));
-//        }
-//        else
-//            return ResponseEntity.badRequest().body("{\"Status\": \"user not found\"}");
     }
 
     @DeleteMapping("/users/{id}")
@@ -74,5 +54,10 @@ public class AdminController {
         userService.approve(id);
 
         return ResponseEntity.ok().body("{\"Status\": \"User Approved\"}");
+    }
+
+    @GetMapping("/users/unapproved")
+    public ResponseEntity<List<UserDto>> findUnapprovedUsers(){
+        return ResponseEntity.ok().body(userService.findUnapprovedUsers());
     }
 }
