@@ -1,8 +1,4 @@
--------------------------------------------------------------------------------------------------------------
-//run spring boot application and then insert the roles in database:
-INSERT INTO homerent.roles(name) VALUES('ROLE_USER');
-INSERT INTO homerent.roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO homerent.roles(name) VALUES('ROLE_ADMIN');
+API Documentation
 -------------------------------------------------------------------------------------------------------------
 SAMPLE BODY REQUEST:
 /api/auth/signup
