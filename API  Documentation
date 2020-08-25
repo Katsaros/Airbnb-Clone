@@ -140,3 +140,41 @@ SAMPLE RESPONSE:
     }
 ]
 -------------------------------------------------------------------------------------------------------------
+HOSTS ONLY:
+GET
+/api/host/{userId}/homes
+
+SAMPLE REQUEST:
+/api/host/1/homes
+
+SAMPLE RESPONSE:
+[ {
+  "id" : 1,
+  "ownerId" : 0,
+  "ownerUsername" : null,
+  "openBooking" : null,
+  "closeBooking" : null,
+  "price" : 0,
+  "address" : "Aghsilaou",
+  "latitude" : null,
+  "longitude" : null,
+  "description" : null,
+  "squareMeters" : null,
+  "overnightPrice" : 0.0,
+  "extraPersonPrice" : 0.0,
+  "maxPeople" : null,
+  "minOvernights" : null,
+  "beds" : null,
+  "bathrooms" : null,
+  "bedrooms" : null,
+  "transport" : null,
+  "neighborhood" : null,
+  "houseRules" : null,
+  "ac" : false,
+  "elevator" : false,
+  "heating" : false,
+  "kitchen" : false,
+  "parking" : false,
+  "tv" : false,
+  "wifi" : false
+} ]
