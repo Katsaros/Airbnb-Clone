@@ -34,10 +34,12 @@ public class HostModController {
     //todo tsekare an to approved einai 1 se ka8e API, an den einai den exei ginei approved apo admin
 
     @GetMapping("/homes")
-    public ResponseEntity<String> commonIncidents(Principal principal) throws JsonProcessingException {
+    public ResponseEntity<String> getHostHomes(Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
 
-        if(user.getApproved()==0)return ResponseEntity.ok().body("{\"Host\": \"Isn't approved yet by administrator\"}");
-        else return ResponseEntity.ok().body(Helpers.convertToJson(hostService.findAllByHostId(user.getId())));
+        if(user.getApproved()==0)
+            return ResponseEntity.ok().body("{\"Host\": \"Isn't approved yet by administrator\"}");
+        else
+            return ResponseEntity.ok().body(Helpers.convertToJson(hostService.findAllByHostId(user.getId())));
     }
 }
