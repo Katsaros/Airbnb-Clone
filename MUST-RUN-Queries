@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------------------------------------
-First run spring boot application
-Then run these queries:
--------------------------------------------------------------------------------------------------------------
-INSERT INTO homerent.roles(name) VALUES('ROLE_USER');
-INSERT INTO homerent.roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO homerent.roles(name) VALUES('ROLE_ADMIN');
-
