@@ -1,18 +1,12 @@
 package com.project.homerent.model.dto;
 
-import com.project.homerent.model.hostmodel.CalendarDates;
-import com.project.homerent.model.hostmodel.HomeCategory;
 import com.project.homerent.model.usermodel.User;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter

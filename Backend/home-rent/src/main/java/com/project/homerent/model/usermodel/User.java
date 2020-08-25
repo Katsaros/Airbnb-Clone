@@ -1,6 +1,6 @@
 package com.project.homerent.model.usermodel;
 
-import com.project.homerent.model.hostmodel.CalendarDates;
+import com.project.homerent.model.hostmodel.Reservation;
 import com.project.homerent.model.hostmodel.MyHome;
 
 import javax.persistence.*;
@@ -49,7 +49,7 @@ public class User {
     private List<MyHome> myHomeList;
 
     @OneToMany(mappedBy = "userBooked" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<CalendarDates> calendarDates;
+    private List<Reservation> reservations;
 
     public User() {
     }

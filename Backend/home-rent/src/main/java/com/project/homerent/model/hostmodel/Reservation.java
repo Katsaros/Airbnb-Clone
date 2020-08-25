@@ -15,11 +15,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="calendar_dates")
+@Table(name="reservation")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CalendarDates {
+public class Reservation {
     @Id
-    @Column(name = "calendar_date_id", nullable = false)
+    @Column(name = "reservation_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -27,9 +27,14 @@ public class CalendarDates {
     @JoinColumn(name ="myhome_id", nullable = false)
     private MyHome bookedHome;
 
-    @Column(name = "calendar_date", nullable = false)
-    String calendarDate;
-//    Date actualDate;
+    @Column(name = "booked_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date bookedDate;
+
+    @Column(name = "leave_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date leaveDate;
+
     @Column(name = "booked")
     int booked;
 

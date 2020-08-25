@@ -37,9 +37,10 @@ public class MyHome {
     private Date closeBooking;
 
     @OneToMany(mappedBy = "bookedHome", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<CalendarDates> calendarDates;
+    private List<Reservation> reservations;
 
-    private int price;
+    @Column(name = "price", nullable = false)
+    private double price;
 
     @Column(name = "myhome_address", nullable = false)
     private String address;
@@ -56,32 +57,22 @@ public class MyHome {
 
 //    private Collection<Picture> pictures = new HashSet<>();
 
-    @NotNull
-    @Length(max = 300)
     private String description;
 
-    @NotNull
     private Integer squareMeters;
 
-    @NotNull
     private double overnightPrice;
 
-    @NotNull
     private double extraPersonPrice;
 
-    @NotNull
     private Integer maxPeople;
 
-    @NotNull
     private Integer minOvernights;
 
-    @NotNull
     private Integer beds;
 
-    @NotNull
     private Integer bathrooms;
 
-    @NotNull
     private Integer bedrooms;
 
     private String transport;
