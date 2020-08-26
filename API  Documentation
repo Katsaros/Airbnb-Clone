@@ -140,3 +140,79 @@ SAMPLE RESPONSE:
     }
 ]
 -------------------------------------------------------------------------------------------------------------
+HOSTS ONLY:
+GET
+/api/host/{userId}/homes
+
+SAMPLE REQUEST:
+/api/host/1/homes
+
+SAMPLE RESPONSE:
+[ {
+  "id" : 1,
+  "ownerId" : 1,
+  "ownerUsername" : "admin",
+  "reservations" : [ ],
+  "openBooking" : "2020-01-01",
+  "closeBooking" : "2020-10-01",
+  "price" : 50.0,
+  "address" : "Aghsilaou",
+  "latitude" : "0.543545",
+  "longitude" : "0.553545",
+  "description" : "It is a nice place to stay",
+  "squareMeters" : 78,
+  "overnightPrice" : 50.0,
+  "extraPersonPrice" : 100.0,
+  "maxPeople" : 5,
+  "minOvernights" : 1,
+  "beds" : 3,
+  "bathrooms" : 4,
+  "bedrooms" : 3,
+  "transport" : "1",
+  "neighborhood" : "0",
+  "houseRules" : "There are not house rules",
+  "ac" : false,
+  "elevator" : false,
+  "heating" : false,
+  "kitchen" : false,
+  "parking" : false,
+  "tv" : false,
+  "wifi" : false
+} ]
+-------------------------------------------------------------------------------------------------------------
+HOSTS ONLY:
+POST
+/api/home/new
+
+SAMPLE REQUEST:
+{
+  "id" : 2,
+  "ownerId" : 1,
+  "ownerUsername" : "admin",
+  "reservations" : [],
+  "openBooking" : "2020-06-01",
+  "closeBooking" : "2021-12-01",
+  "price" : 100.0,
+  "address" : "Agwnistwn Stratopedou",
+  "latitude" : "0.513545",
+  "longitude" : "0.513545",
+  "description" : "It is a nice place to stay too",
+  "squareMeters" : 122,
+  "overnightPrice" : 90.0,
+  "extraPersonPrice" : 120.0,
+  "maxPeople" : 15,
+  "minOvernights" : 1,
+  "beds" : 5,
+  "bathrooms" : 8,
+  "bedrooms" : 7,
+  "transport" : "1",
+  "neighborhood" : "0",
+  "houseRules" : "There are not house rules",
+  "ac" : true,
+  "elevator" : true,
+  "heating" : true,
+  "kitchen" : true,
+  "parking" : true,
+  "tv" : true,
+  "wifi" : true
+}
