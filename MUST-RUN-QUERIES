@@ -5,9 +5,12 @@ Then run these queries:
 INSERT INTO homerent.roles(name) VALUES('ROLE_USER');
 INSERT INTO homerent.roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO homerent.roles(name) VALUES('ROLE_ADMIN');
+
 INSERT INTO `homerent`.`users` (`approved`, `email`, `first_name`, `id`, `last_name`, `password`, `telephone`, `username`) VALUES (1, "admin@homerent.com", "admin", 1, "admin", "$2a$10$YHVRGOscVYeMbIjkf5qRg.lYqB43jrIh1baf2SyeI5K3DfL8Mvj4G", "+306911111111", "admin");
 INSERT INTO `homerent`.`user_roles` (`user_id`, `role_id`) VALUES (1, 3);
+
 INSERT INTO `homerent`.`myhome` (`myhome_id`, `ac`, `myhome_address`, `bathrooms`, `bedrooms`, `beds`, `close_booking`, `description`, `elevator`, `extra_person_price`, `heating`, `house_rules`, `kitchen`, `myhome_address_latitude`, `myhome_address_longitude`, `max_people`, `min_overnights`, `neighborhood`, `open_booking`, `overnight_price`, `parking`, `price`, `square_meters`, `transport`, `tv`, `wifi`, `owner_id`) VALUES (1, 1, "Aghsilaou", 4, 3, 3, '2020-10-01', "It is a nice place to stay", 1,  100, 1, "There are not house rules", 1, 0.543545, 0.553545, 5, 1, 0, '2020-01-01', 50, 1, 50, 78, 1, 1, 1, 1);
+INSERT INTO `homerent`.`reservation` (`booked`, `booked_date`, `leave_date`, `myhome_id`, `reservation_id`, `user_id`) VALUES (1, '2020-09-02', '2020-09-29', 1, 1, 1);
 
 ############### comments ###############
 #INSERT INTO homerent.home_category(`homecategory_id`,`homecategory_title`) VALUES(1,"Big House");
