@@ -256,10 +256,10 @@ SAMPLE RESPONSE:
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 GET (filters) (mexri twra autoi douleoun)
-/api/public/homes?people={integer}&latitude={double}&longitude={double}
+/api/public/homes?people={integer}&latitude={double}&longitude={double}&arrivalDate={yyyy-MM-dd}&departureDate={yyyy-MM-dd}
 
 SAMPLE REQUEST:
-/api/public/homes?people=4&latitude=0.543545&longitude=0.553541
+/api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-01-05&departureDate=2020-09-30
 
 SAMPLE RESPONSE 1:
 [ {
