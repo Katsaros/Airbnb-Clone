@@ -219,7 +219,7 @@ SAMPLE REQUEST:
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 GET
-/api/public/homes
+/api/public/homes/all
 
 SAMPLE RESPONSE:
 [ {
@@ -254,3 +254,6 @@ SAMPLE RESPONSE:
   "wifi" : false
 } ]
 -------------------------------------------------------------------------------------------------------------
+PUBLIC FOR ALL:
+GET (filters) (coming soon)
+/api/public/homes?people=
