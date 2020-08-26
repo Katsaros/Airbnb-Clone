@@ -1,58 +1,42 @@
-package com.project.homerent.model.hostmodel;
+package com.project.homerent.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.homerent.model.usermodel.User;
-import com.sun.istack.NotNull;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@Entity
-@Table(name="myhome")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class MyHome {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "myhome_id", nullable = false)
+@Data
+public class MyHomeDto {
     private long id;
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name ="owner_id", nullable = false)
-    private User owner;
+//    private UserDto owner;
+    private long ownerId;
+    private String ownerUsername;
 
-    @Column(name = "open_booking", nullable = false)
+    private List<ReservationDto> reservations;
+//    private List<UserDto> owner;
+
     @Temporal(TemporalType.DATE)
     private Date openBooking;
 
-    @Column(name = "close_booking", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date closeBooking;
 
-    @OneToMany(mappedBy = "bookedHome", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Reservation> reservations;
+//    private List<CalendarDates> calendarDates;
 
-    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "myhome_address", nullable = false)
     private String address;
 
-    @Column(name = "myhome_address_latitude", nullable = false)
     private String latitude;
 
-    @Column(name = "myhome_address_longitude", nullable = false)
     private String longitude;
 
-//    @ManyToOne
-//    @JoinColumn(name ="homecategory_id", nullable = false)
 //    private HomeCategory homeCategory;
 
 //    private Collection<Picture> pictures = new HashSet<>();
@@ -79,10 +63,8 @@ public class MyHome {
 
     private String neighborhood;
 
-    @Length(max = 200)
     private String houseRules;
 
-    // Amenities
     private boolean ac;
 
     private boolean elevator;

@@ -11,18 +11,18 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class HomeDto {
+public class MyHomeDtoGeneral {
     private long id;
 
-    private User owner;
+    //    private User owner;
+    private long ownerId;
+    private String ownerUsername;
 
     @Temporal(TemporalType.DATE)
     private Date openBooking;
 
     @Temporal(TemporalType.DATE)
     private Date closeBooking;
-
-//    private List<CalendarDates> calendarDates;
 
     private int price;
 
@@ -54,23 +54,4 @@ public class HomeDto {
 
     private Integer bedrooms;
 
-    private String transport;
-
-    private String neighborhood;
-
-    private String houseRules;
-
-    private boolean ac;
-
-    private boolean elevator;
-
-    private boolean heating;
-
-    private boolean kitchen;
-
-    private boolean parking;
-
-    private boolean tv;
-
-    private boolean wifi;
 }
