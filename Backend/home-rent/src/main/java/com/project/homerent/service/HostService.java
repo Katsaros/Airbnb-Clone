@@ -12,8 +12,10 @@ public interface HostService {
 
     MyHome findHomeById(Long id);
 
+    List<MyHomeDto> findAll();
+
 //    MyHomeDto findDtoById(Long id);
-//    List<HomeDto> findAll();
+    List<MyHomeDto> findAllUsingFilters(int people, double latitude, double longitude);
 
     List<MyHomeDto> findByUserId(Long id);
     MyHomeDto save(MyHomeDto myHomeDto);
