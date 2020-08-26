@@ -6,7 +6,10 @@ INSERT INTO homerent.roles(name) VALUES('ROLE_USER');
 INSERT INTO homerent.roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO homerent.roles(name) VALUES('ROLE_ADMIN');
 
+- NOW Create admin - Then:
+
 #INSERT INTO homerent.home_category(`homecategory_id`,`homecategory_title`) VALUES(1,"Big House");
 #INSERT INTO homerent.home_category(`homecategory_id`,`homecategory_title`) VALUES(2,"Small House");
+#INSERT INTO `homerent`.`myhome` (`myhome_id`, `ac`, `myhome_address`, `bathrooms`, `bedrooms`, `beds`, `close_booking`, `description`, `elevator`, `extra_person_price`, `heating`, `house_rules`, `kitchen`, `myhome_address_latitude`, `myhome_address_longitude`, `max_people`, `min_overnights`, `neighborhood`, `open_booking`, `overnight_price`, `parking`, `price`, `square_meters`, `transport`, `tv`, `wifi`, `homecategory_id`, `owner_id`) VALUES (1, 1, "Aghsilaou", 4, 3, 3, 2020-10-01, "It is a nice place to stay", 1,  100, 1, "There are not house rules", 1, 0.543545, 0.553545, 5, 1, 0, 2020-01-01, 50, 1, 50, 78, 1, 1, 1, 2, 1);
 
-INSERT INTO `homerent`.`myhome` (`myhome_id`, `ac`, `myhome_address`, `bathrooms`, `bedrooms`, `beds`, `close_booking`, `description`, `elevator`, `extra_person_price`, `heating`, `house_rules`, `kitchen`, `myhome_address_latitude`, `myhome_address_longitude`, `max_people`, `min_overnights`, `neighborhood`, `open_booking`, `overnight_price`, `parking`, `price`, `square_meters`, `transport`, `tv`, `wifi`, `homecategory_id`, `owner_id`) VALUES (1, 1, "Aghsilaou", 4, 3, 3, 2020-10-01, "It is a nice place to stay", 1,  100, 1, "There are not house rules", 1, 0.543545, 0.553545, 5, 1, 0, 2020-01-01, 50, 1, 50, 78, 1, 1, 1, 2, 1);
+INSERT INTO `homerent`.`myhome` (`myhome_id`, `ac`, `myhome_address`, `bathrooms`, `bedrooms`, `beds`, `close_booking`, `description`, `elevator`, `extra_person_price`, `heating`, `house_rules`, `kitchen`, `myhome_address_latitude`, `myhome_address_longitude`, `max_people`, `min_overnights`, `neighborhood`, `open_booking`, `overnight_price`, `parking`, `price`, `square_meters`, `transport`, `tv`, `wifi`, `owner_id`) VALUES (1, 1, "Aghsilaou", 4, 3, 3, '2020-10-01', "It is a nice place to stay", 1,  100, 1, "There are not house rules", 1, 0.543545, 0.553545, 5, 1, 0, '2020-01-01', 50, 1, 50, 78, 1, 1, 1, 1);
