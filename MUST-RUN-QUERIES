@@ -12,6 +12,8 @@ INSERT INTO `homerent`.`user_roles` (`user_id`, `role_id`) VALUES (1, 3);
 INSERT INTO `homerent`.`myhome` (`myhome_id`, `ac`, `myhome_address`, `bathrooms`, `bedrooms`, `beds`, `close_booking`, `description`, `elevator`, `extra_person_price`, `heating`, `house_rules`, `kitchen`, `myhome_address_latitude`, `myhome_address_longitude`, `max_people`, `min_overnights`, `neighborhood`, `open_booking`, `overnight_price`, `parking`, `price`, `square_meters`, `transport`, `tv`, `wifi`, `owner_id`) VALUES (1, 1, "Aghsilaou", 4, 3, 3, '2020-10-01', "It is a nice place to stay", 1,  100, 1, "There are not house rules", 1, 0.543545, 0.553545, 5, 1, 0, '2020-01-01', 50, 1, 50, 78, 1, 1, 1, 1);
 INSERT INTO `homerent`.`reservation` (`booked`, `booked_date`, `leave_date`, `myhome_id`, `reservation_id`, `user_id`) VALUES (1, '2020-09-02', '2020-09-29', 1, 1, 1);
 
+INSERT INTO `homerent`.`myhome` (`myhome_id`, `ac`, `myhome_address`, `bathrooms`, `bedrooms`, `beds`, `close_booking`, `description`, `elevator`, `extra_person_price`, `heating`, `house_rules`, `kitchen`, `myhome_address_latitude`, `myhome_address_longitude`, `max_people`, `min_overnights`, `neighborhood`, `open_booking`, `overnight_price`, `parking`, `price`, `square_meters`, `transport`, `tv`, `wifi`, `owner_id`) VALUES (2, 1, "Sapfous", 4, 3, 3, '2021-04-08', "It is a nice place to stay", 1,  100, 1, "There are not house rules", 1, 0.543545, 0.553545, 5, 1, 0, '2020-05-10', 50, 1, 50, 78, 1, 1, 1, 1);
+
 ############### comments ###############
 #INSERT INTO homerent.home_category(`homecategory_id`,`homecategory_title`) VALUES(1,"Big House");
 #INSERT INTO homerent.home_category(`homecategory_id`,`homecategory_title`) VALUES(2,"Small House");
