@@ -39,6 +39,8 @@ import { SearchComponent } from './search/search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { NewHomeComponent } from './new-home/new-home.component';
+import { MyhomesComponent } from './myhomes/myhomes.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { UserInfoComponent } from './user-info/user-info.component';
     HeaderUserComponent,
     AccountComponent,
     SearchComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    NewHomeComponent,
+    MyhomesComponent
   ],
     imports: [
         TextFieldModule,

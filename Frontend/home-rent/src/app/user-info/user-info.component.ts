@@ -15,7 +15,6 @@ export class UserInfoComponent implements OnInit {
   roles: string[];
   oikodespotis_to_be: boolean;
 
-
   constructor() { }
 
   ngOnInit(): void {

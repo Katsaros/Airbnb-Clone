@@ -8,9 +8,11 @@ import {Router} from '@angular/router';
 })
 export class HeaderUserComponent implements OnInit {
 
+  admin: boolean;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.admin = false;
   }
 
   logOut() {
