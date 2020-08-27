@@ -217,6 +217,20 @@ SAMPLE REQUEST:
   "wifi" : true
 }
 -------------------------------------------------------------------------------------------------------------
+HOSTS ONLY:
+
+POST (add photo to home)
+localhost:8080/api/host/home/{id}/image
+
+SAMPLE REQUEST:
+localhost:8080/api/public/home/2/image
+
+Body Request form-data 
+with KEY imagefile and VALUE the actual photo
+
+SAMPLE RESPONSE:
+redirect:/recipe/2/show
+-------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 GET
 /api/public/homes/all
@@ -310,20 +324,6 @@ SAMPLE RESPONSE 1:
 
 SAMPLE RESPONSE 2:
 [ ]
--------------------------------------------------------------------------------------------------------------
-HOSTS ONLY:
-
-POST (add photo to home)
-localhost:8080/api/host/home/{id}/image
-
-SAMPLE REQUEST:
-localhost:8080/api/public/home/1/image
-
-Body Request form-data 
-with KEY imagefile and VALUE the actual photo
-
-SAMPLE RESPONSE:
-redirect:/recipe/1/show
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 
