@@ -38,6 +38,7 @@ import { AccountComponent } from './account/account.component';
 import { SearchComponent } from './search/search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HttpClientModule } from '@angular/common/http';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HttpClientModule } from '@angular/common/http';
     AdminComponent,
     HeaderUserComponent,
     AccountComponent,
-    SearchComponent
+    SearchComponent,
+    UserInfoComponent
   ],
     imports: [
         TextFieldModule,
