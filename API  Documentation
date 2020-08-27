@@ -311,9 +311,10 @@ SAMPLE RESPONSE 1:
 SAMPLE RESPONSE 2:
 [ ]
 -------------------------------------------------------------------------------------------------------------
-PUBLIC FOR ALL:
+HOSTS ONLY:
+
 POST (add photo to home)
-localhost:8080/api/public/home/{id}/image
+localhost:8080/api/host/home/{id}/image
 
 SAMPLE REQUEST:
 localhost:8080/api/public/home/1/image
@@ -325,6 +326,7 @@ SAMPLE RESPONSE:
 redirect:/recipe/1/show
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
+
 GET (get home photo)
 localhost:8080/api/public/home/{id}/image
 
