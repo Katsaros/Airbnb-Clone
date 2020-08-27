@@ -255,8 +255,14 @@ SAMPLE RESPONSE:
 } ]
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
-GET (filters) (mexri twra autoi douleoun)
+GET (with url parameters as filters)
 /api/public/homes?people={integer}&latitude={double}&longitude={double}&arrivalDate={yyyy-MM-dd}&departureDate={yyyy-MM-dd}
+
+NOTE: (How filtering works)
+1. We search for homes with people <= max people number
+2. We search for homes in the range of 30km of latitude and longitude
+3. We search for homes that are open for booking between the arrival and departure dates
+4. We search for homes that have not any reservations between the arrival and departure dates
 
 SAMPLE REQUEST:
 /api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-09-30&departureDate=2020-09-31
