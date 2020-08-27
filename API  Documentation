@@ -259,16 +259,24 @@ GET (filters) (mexri twra autoi douleoun)
 /api/public/homes?people={integer}&latitude={double}&longitude={double}&arrivalDate={yyyy-MM-dd}&departureDate={yyyy-MM-dd}
 
 SAMPLE REQUEST:
-/api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-01-05&departureDate=2020-09-30
+/api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-09-30&departureDate=2020-09-31
 
 SAMPLE RESPONSE 1:
 [ {
   "id" : 1,
   "ownerId" : 1,
   "ownerUsername" : "admin",
-  "reservations" : [ ],
+  "reservations" : [ {
+    "reservationId" : 1,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2020-09-02",
+    "leaveDate" : "2020-09-29",
+    "isBooked" : 0,
+    "userIdBooked" : 1,
+    "userNameBooked" : "admin"
+  } ],
   "openBooking" : "2020-01-01",
-  "closeBooking" : "2020-10-01",
+  "closeBooking" : "2021-12-01",
   "price" : 50.0,
   "address" : "Aghsilaou",
   "latitude" : "0.543545",
