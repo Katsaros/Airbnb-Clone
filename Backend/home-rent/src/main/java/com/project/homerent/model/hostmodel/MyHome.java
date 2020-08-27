@@ -28,6 +28,9 @@ public class MyHome {
     @JoinColumn(name ="owner_id", nullable = false)
     private User owner;
 
+    @Lob
+    private Byte[] image;
+    
     @Column(name = "open_booking", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date openBooking;

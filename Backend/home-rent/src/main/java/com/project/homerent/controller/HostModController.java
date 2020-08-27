@@ -53,5 +53,4 @@ public class HostModController {
         else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"Error\"}");
     }
-
 }

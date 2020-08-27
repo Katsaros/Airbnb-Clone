@@ -1,13 +1,21 @@
 package com.project.homerent.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.project.homerent.model.dto.MyHomeDto;
 import com.project.homerent.service.HostService;
+import com.project.homerent.service.ImageService;
 import com.project.homerent.service.UserService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,9 +30,10 @@ public class PublicController {
 
     @Autowired
     private HostService hostService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping("/homes/all")
     public ResponseEntity<String> getAllHomes()  throws JsonProcessingException {
@@ -44,4 +53,33 @@ public class PublicController {
         return ResponseEntity.ok().body(convertToJson(hostService.findAllUsingFilters(Integer.parseInt(people), Double.parseDouble(latitude), Double.parseDouble(longitude), arrivalDateConverted, departureDateConverted)));
     }
 
+    @GetMapping("/home/{id}/image")
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws Exception {
+        MyHomeDto myHomeDto = hostService.findHomeDtoById(Long.valueOf(id));
+
+        if(myHomeDto!=null) {
+            if(myHomeDto.getImage() != null) {
+                byte[] byteArray = new byte[myHomeDto.getImage().length];
+                int i = 0;
+
+                for (Byte wrappedByte : myHomeDto.getImage()) {
+                    byteArray[i++] = wrappedByte; //auto unboxing
+                }
+                response.setContentType("image/jpeg");
+                InputStream is = new ByteArrayInputStream(byteArray);
+                IOUtils.copy(is, response.getOutputStream());
+            }
+        }
+//        else {
+//            return ResponseEntity.ok().body("{\"Status\": \"Successful Deletion\"}");
+//        }
+    }
+
+    @PostMapping("home/{id}/image")
+    public String handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file){
+
+        imageService.saveImageFile(Long.valueOf(id), file);
+
+        return "redirect:/recipe/" + id + "/show";
+    }
 }

@@ -29,6 +29,9 @@ public class MyHomeDto {
 
 //    private List<CalendarDates> calendarDates;
 
+    @Lob
+    private Byte[] image;
+
     private double price;
 
     private String address;

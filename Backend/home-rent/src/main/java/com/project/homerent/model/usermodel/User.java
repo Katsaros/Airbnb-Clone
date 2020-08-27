@@ -27,6 +27,9 @@ public class User {
     @Email
     private String email;
 
+    @Lob
+    private Byte[] image;
+
     @NotBlank
     @Size(max = 120)
     private String password;
@@ -134,5 +137,29 @@ public class User {
 
     public void setApproved(int approved) {
         this.approved = approved;
+    }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
+    public List<MyHome> getMyHomeList() {
+        return myHomeList;
+    }
+
+    public void setMyHomeList(List<MyHome> myHomeList) {
+        this.myHomeList = myHomeList;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

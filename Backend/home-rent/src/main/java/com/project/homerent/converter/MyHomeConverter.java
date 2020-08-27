@@ -55,6 +55,8 @@ public class MyHomeConverter {
         myHomeDto.setSquareMeters(myHome.getSquareMeters());
         myHomeDto.setTransport(myHome.getTransport());
 
+        myHomeDto.setImage(myHome.getImage());
+
         List<ReservationDto> reservationDtoList = myHome.getReservations().stream().map(ReservationConverter::convertToDto).collect(Collectors.toList());
         myHomeDto.setReservations(reservationDtoList);
 
@@ -87,6 +89,8 @@ public class MyHomeConverter {
         myHome.setPrice(myHomeDto.getPrice());
         myHome.setSquareMeters(myHomeDto.getSquareMeters());
         myHome.setTransport(myHomeDto.getTransport());
+
+        myHome.setImage(myHomeDto.getImage());
 
         if(myHomeDto.getReservations() == null)
             myHome.setReservations(new ArrayList<Reservation>());
