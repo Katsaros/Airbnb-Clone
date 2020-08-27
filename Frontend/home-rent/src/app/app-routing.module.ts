@@ -7,6 +7,9 @@ import {RegisterComponent} from './register/register.component';
 import {AdminComponent} from './admin/admin.component';
 import {AccountComponent} from './account/account.component';
 import {SearchComponent} from './search/search.component';
+import {UserInfoComponent} from './user-info/user-info.component';
+import {NewHomeComponent} from './new-home/new-home.component';
+import {MyhomesComponent} from './myhomes/myhomes.component';
 
 const routes: Routes = [
   {
@@ -32,6 +35,18 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent
+  },
+  {
+    path: 'myhomes',
+    component: MyhomesComponent
+  },
+  {
+    path: 'newhome',
+    component: NewHomeComponent
+  },
+  {
+    path: 'userinfo',
+    component: UserInfoComponent
   },
   {
     path: '',

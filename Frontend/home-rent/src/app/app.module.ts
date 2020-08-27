@@ -37,7 +37,11 @@ import { HeaderUserComponent } from './header-user/header-user.component';
 import { AccountComponent } from './account/account.component';
 import { SearchComponent } from './search/search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { NewHomeComponent } from './new-home/new-home.component';
+import { MyhomesComponent } from './myhomes/myhomes.component';
+import {NominatimService} from './nominatim.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,10 @@ import { HttpClientModule } from '@angular/common/http';
     AdminComponent,
     HeaderUserComponent,
     AccountComponent,
-    SearchComponent
+    SearchComponent,
+    UserInfoComponent,
+    NewHomeComponent,
+    MyhomesComponent
   ],
     imports: [
         TextFieldModule,
@@ -83,7 +90,7 @@ import { HttpClientModule } from '@angular/common/http';
         ReactiveFormsModule,
         FormsModule,
         MatCheckboxModule,
-        HttpClientModule
+        HttpClientModule,
     ],
   exports: [
     MatButtonModule,
@@ -105,6 +112,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     MatDatepickerModule,
+      NominatimService
   ],
   bootstrap: [AppComponent]
 })

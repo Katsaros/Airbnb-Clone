@@ -1,0 +1,28 @@
+body {
+    background-color: #164359;
+    background-size: cover;
+    height: 100vh;
+    padding: 0;
+}
+
+.right_card {
+    position: absolute;
+    right: 30px;
+    width: 30%;
+    border-radius: 0px;
+    text-align: center;
+}
+
+.mat-card-footer {
+    background-color: #d0ddda;
+}
+
+img {
+    border-radius: 50%;
+    width: 400px;
+}
+
+h3 {
+    font-size: 18px;
+    padding: 7px;
+}

@@ -25,7 +25,6 @@ export class AccountComponent implements OnInit {
   roleList: string[] = ['Ενοικιαστής', 'Οικοδεσπότης'];
 
 
-
   constructor() {
     this.disabled = true;
     this.username = 'ckats';
