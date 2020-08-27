@@ -2,15 +2,14 @@ package com.project.homerent.service;
 
 import com.project.homerent.converter.MyHomeConverter;
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.ReservationDto;
 import com.project.homerent.model.hostmodel.MyHome;
 import com.project.homerent.repository.HostRepository;
 import com.project.homerent.util.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,22 +63,107 @@ public class HostServiceImpl implements HostService {
                 .collect(Collectors.toList());
     }
 
-    public List<MyHomeDto> findAllUsingFilters(int people, double latitude, double longitude) {
+    public List<MyHomeDto> findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate) {
         List<MyHomeDto> tempListWithAllHomes = hostRepository.findAll()
                 .stream()
                 .map(MyHomeConverter::convertToDto)
                 .collect(Collectors.toList());
 
-        //filter people
-        List<MyHomeDto> filteredHomeListWithMaxPeople = tempListWithAllHomes.stream().filter(t->t.getMaxPeople()>people).collect(Collectors.toList());
-        //filter distance by range search
-        List<MyHomeDto> filteredHomeListByDistance = getHomeListByDistance(filteredHomeListWithMaxPeople, latitude, longitude);
+        //filter homes by max people
+        List<MyHomeDto> filteredHomeListWithMaxPeople = filterHomeListByMaxPeople(people, tempListWithAllHomes);
 
-        return filteredHomeListByDistance;
+        //filter homes by distance by range search
+        List<MyHomeDto> filteredHomeListByDistance = filterHomeListByDistance(filteredHomeListWithMaxPeople, latitude, longitude);
+
+        //filter homes by openBooking and closeBooking days
+        List<MyHomeDto> filteredHomeListByDates = filterHomeListByDates(bookDate, leaveDate, filteredHomeListByDistance);
+
+        //filter homes the checking the other reservations
+        List<MyHomeDto> filteredHomeListByReservationDates = filterHomeListByReservationDates(bookDate, leaveDate, filteredHomeListByDates);
+
+
+        return filteredHomeListByReservationDates;
+    }
+
+    private List<MyHomeDto> filterHomeListByMaxPeople(int people, List<MyHomeDto> tempListWithAllHomes) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.getMaxPeople()>=people)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByReservationDates(Date imerominiaAfixis, Date imerominiaAnaxwrisis, List<MyHomeDto> tempListWithAllHomes) {
+        List<MyHomeDto> filteredList = new ArrayList<>();
+
+        for(int i=0; i<tempListWithAllHomes.size(); i++){
+
+            for(int j=0; j<tempListWithAllHomes.get(i).getReservations().size(); j++) {
+
+                int einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                int einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+
+                int einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+                int einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+
+//                System.out.println("einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB: "+einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB);
+//                System.out.println("einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB: "+einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB);
+//                System.out.println("einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB: "+einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB);
+//                System.out.println("einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB: "+einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB+"\n");
+
+                if ((einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB < 0) &&
+                        (einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB < 0 )) {
+                    filteredList.add(tempListWithAllHomes.get(i));
+                }
+
+            }
+        }
+        return filteredList;
+    }
+
+    private int checkBookingArrivalInReservations(Date bookDate, List<ReservationDto> reservationDtoList, int i) {
+        return reservationDtoList
+                .get(i)
+                .getBookedDate()
+                .compareTo(bookDate);
+    }
+
+    private int checkBookingLeaveInReservations(Date bookDate, List<ReservationDto> reservationDtoList, int i) {
+        return reservationDtoList
+                .get(i)
+                .getLeaveDate()
+                .compareTo(bookDate);
+    }
+
+    private List<MyHomeDto> filterHomeListByDates(Date bookDate, Date leaveDate, List<MyHomeDto> tempListWithAllHomes) {
+        List<MyHomeDto> filteredList = new ArrayList<>();
+
+        for(int i=0; i<tempListWithAllHomes.size(); i++){
+            int isBookDateAfterOpenBooking = checkBookingArrival(bookDate, tempListWithAllHomes, i);
+            int isLeaveDateBeforeCloseBooking = checkBookingLeave(leaveDate, tempListWithAllHomes, i);
+
+            if(isBookDateAfterOpenBooking<=0 && isLeaveDateBeforeCloseBooking>=0) {
+                filteredList.add(tempListWithAllHomes.get(i));
+            }
+
+        }
+        return filteredList;
+    }
+
+    private int checkBookingArrival(Date bookDate, List<MyHomeDto> tempListWithAllHomes, int i) {
+        return tempListWithAllHomes
+                        .get(i)
+                        .getOpenBooking()
+                        .compareTo(bookDate);
+    }
+
+    private int checkBookingLeave(Date bookDate, List<MyHomeDto> tempListWithAllHomes, int i) {
+        return tempListWithAllHomes
+                        .get(i)
+                        .getCloseBooking()
+                        .compareTo(bookDate);
     }
 
 
-    private List<MyHomeDto> getHomeListByDistance(List<MyHomeDto> homeList, double givenLat, double givenLong){
+    private List<MyHomeDto> filterHomeListByDistance(List<MyHomeDto> homeList, double givenLat, double givenLong) {
         double maxDistance = 30; //kilometers
         List<MyHomeDto> filteredHomes = homeList.stream()
                 .map(home -> {
