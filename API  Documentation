@@ -147,7 +147,7 @@ GET
 SAMPLE REQUEST:
 /api/host/1/homes
 
-SAMPLE RESPONSE:
+SAMPLE RESPONSE 1:
 [ {
   "id" : 1,
   "ownerId" : 1,
@@ -179,6 +179,11 @@ SAMPLE RESPONSE:
   "tv" : false,
   "wifi" : false
 } ]
+
+SAMPLE RESPONSE 2:
+{
+	"message": "Host Isn't approved yet by administrator"
+}
 -------------------------------------------------------------------------------------------------------------
 HOSTS ONLY:
 POST
@@ -229,7 +234,7 @@ Body Request form-data
 with KEY imagefile and VALUE the actual photo
 
 SAMPLE RESPONSE:
-redirect:/recipe/2/show
+redirect:/home/2/show
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 GET
@@ -335,3 +340,70 @@ localhost:8080/api/public/home/1/image
 
 SAMPLE RESPONSE:
 The Photo :D
+-------------------------------------------------------------------------------------------------------------
+PUBLIC FOR ALL:
+
+POST (post user photo)
+localhost:8080/api/public/user/{id}/image
+
+SAMPLE REQUEST:
+localhost:8080/api/public/user/1/image
+
+Body Request form-data 
+with KEY imagefile and VALUE the actual photo
+
+SAMPLE RESPONSE:
+redirect:/user/1/show
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+GET (get user photo)
+localhost:8080/api/secure/user/{id}/image
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/user/1/image
+
+SAMPLE RESPONSE:
+The User Photo :D
+-------------------------------------------------------------------------------------------------------------
+ADMINS ONLY:
+GET (get all details for a home)
+/api/admin/export/home/{id}/details?format=xml
+
+NOTE: format=xml or format=json
+
+SAMPLE REQUEST:
+localhost:8080/api/admin/export/home/1/details?format=xml
+
+SAMPLE RESPONSE 1:
+{
+    "message" : "Choose format"
+}
+
+SAMPLE RESPONSE 2:
+[
+    {
+
+    }
+]
+-------------------------------------------------------------------------------------------------------------
+ADMINS ONLY:
+GET (get all details for all homes)
+/api/admin/export/homes/details?format=json
+
+NOTE: format=xml or format=json
+
+SAMPLE REQUEST:
+localhost:8080/api/admin/export/homes/details?format=json
+
+SAMPLE RESPONSE 1:
+{
+    "message" : "Choose format"
+}
+
+SAMPLE RESPONSE 2:
+[
+    {
+
+    }
+]
