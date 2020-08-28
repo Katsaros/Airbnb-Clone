@@ -3,7 +3,10 @@ package com.project.homerent.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.project.homerent.model.dto.MyHomeDto;
 import com.project.homerent.model.dto.UserPostDto;
+import com.project.homerent.model.hostmodel.XmlHomeList;
+import com.thoughtworks.xstream.XStream;
 import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +17,8 @@ import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Helpers {
 
@@ -43,4 +48,47 @@ public class Helpers {
             return (dist);
         }
     }
+
+    public static String myHomeDtoToXML(MyHomeDto homeDto) {
+        String xmlString = "";
+        try {
+            JAXBContext context = JAXBContext.newInstance(MyHomeDto.class);
+            Marshaller m = context.createMarshaller();
+
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            StringWriter sw = new StringWriter();
+            m.marshal(homeDto, sw);
+            xmlString = sw.toString();
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return xmlString;
+    }
+
+    public static String myHomesToXML(List<MyHomeDto> usersHomeList) {
+        XStream xstream = new XStream();
+        xstream.alias("Home", MyHomeDto.class);
+        xstream.alias("Homes", XmlHomeList.class);
+        xstream.addImplicitCollection(XmlHomeList.class, "list");
+
+        XmlHomeList list = new XmlHomeList();
+
+        list.getList().addAll(usersHomeList);
+
+        String xml = xstream.toXML(list);
+        return xml;
+    }
+
+//    public static String myHomesToXML(List<MyHomeDto> usersHomeList) {
+//        List<String> convertedList;
+//
+//        convertedList = usersHomeList.stream().map(home->{
+//            String xmlHome = myHomeDtoToXML(home);
+//            return xmlHome;
+//        }).collect(Collectors.toList());
+//
+//        return convertedList.toString();
+//    }
 }

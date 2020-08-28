@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
 
+@XmlRootElement
 @Data
 public class MyHomeDto {
     private long id;
@@ -68,8 +70,6 @@ public class MyHomeDto {
 
     private String houseRules;
 
-    private boolean ac;
-
     private boolean elevator;
 
     private boolean heating;
@@ -81,4 +81,7 @@ public class MyHomeDto {
     private boolean tv;
 
     private boolean wifi;
+
+    private boolean ac;
+
 }

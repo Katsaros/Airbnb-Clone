@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
@@ -23,4 +24,7 @@ public class UserDto {
 
     private String telephone;
     private int approved;
+
+    @Lob
+    private Byte[] image;
 }

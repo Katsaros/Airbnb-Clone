@@ -55,6 +55,14 @@ public class MyHomeConverter {
         myHomeDto.setSquareMeters(myHome.getSquareMeters());
         myHomeDto.setTransport(myHome.getTransport());
 
+        myHomeDto.setAc(myHome.isAc());
+        myHomeDto.setWifi(myHome.isWifi());
+        myHomeDto.setTv(myHome.isTv());
+        myHomeDto.setParking(myHome.isParking());
+        myHomeDto.setKitchen(myHome.isKitchen());
+        myHomeDto.setHeating(myHome.isHeating());
+        myHomeDto.setElevator(myHome.isElevator());
+
         myHomeDto.setImage(myHome.getImage());
 
         List<ReservationDto> reservationDtoList = myHome.getReservations().stream().map(ReservationConverter::convertToDto).collect(Collectors.toList());
@@ -89,6 +97,13 @@ public class MyHomeConverter {
         myHome.setPrice(myHomeDto.getPrice());
         myHome.setSquareMeters(myHomeDto.getSquareMeters());
         myHome.setTransport(myHomeDto.getTransport());
+        myHome.setAc(myHomeDto.isAc());
+        myHome.setWifi(myHomeDto.isWifi());
+        myHome.setTv(myHomeDto.isTv());
+        myHome.setParking(myHomeDto.isParking());
+        myHome.setKitchen(myHomeDto.isKitchen());
+        myHome.setHeating(myHomeDto.isHeating());
+        myHome.setElevator(myHomeDto.isElevator());
 
         myHome.setImage(myHomeDto.getImage());
 

@@ -2,8 +2,12 @@ package com.project.homerent.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.project.homerent.model.dto.MyHomeDto;
 import com.project.homerent.model.dto.UserDto;
+import com.project.homerent.model.hostmodel.MyHome;
+import com.project.homerent.service.HostService;
 import com.project.homerent.service.UserService;
+import com.project.homerent.util.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -24,6 +28,10 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HostService hostService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -59,5 +67,25 @@ public class AdminController {
     @GetMapping("/users/unapproved")
     public ResponseEntity<List<UserDto>> findUnapprovedUsers(){
         return ResponseEntity.ok().body(userService.findUnapprovedUsers());
+    }
+
+    @GetMapping("/export/home/{id}/details")
+    public ResponseEntity<String> findHomeDetails(@PathVariable("id") Long id, @RequestParam String format) throws Exception {
+        MyHomeDto myHomeDto = hostService.findHomeDtoById(id);
+        if(format.equals("xml"))
+            return ResponseEntity.ok().body(Helpers.myHomeDtoToXML(myHomeDto));
+        else if(format.equals("json"))
+            return ResponseEntity.ok().body(Helpers.convertToJson(myHomeDto));
+        return ResponseEntity.ok().body("{\"message\": \"Choose format\"}");
+    }
+
+    @GetMapping("/export/homes/details")
+    public ResponseEntity<String> findAllHomesDetails(@RequestParam String format) throws Exception {
+        List <MyHomeDto> usersHomeList = hostService.findAll();
+        if(format.equals("xml"))
+            return ResponseEntity.ok().body(Helpers.myHomesToXML(usersHomeList));
+        else if(format.equals("json"))
+            return ResponseEntity.ok().body(Helpers.convertToJson(usersHomeList));
+        return ResponseEntity.ok().body("{\"message\": \"Choose format\"}");
     }
 }

@@ -7,14 +7,12 @@ import com.project.homerent.service.ImageService;
 import com.project.homerent.service.UserService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,15 +69,15 @@ public class PublicController {
             }
         }
 //        else {
-//            return ResponseEntity.ok().body("{\"Status\": \"Successful Deletion\"}");
+//            return ResponseEntity.ok().body("{\"Status\": \"Error\"}");
 //        }
     }
 
-    @PostMapping("home/{id}/image")
+    @PostMapping("user/{id}/image")
     public String handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file){
 
-        imageService.saveImageFile(Long.valueOf(id), file);
+        imageService.saveImageFileToUser(Long.valueOf(id), file);
 
-        return "redirect:/recipe/" + id + "/show";
+        return "redirect:/user/" + id + "/show";
     }
 }
