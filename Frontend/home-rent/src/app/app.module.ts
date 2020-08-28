@@ -42,6 +42,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { NewHomeComponent } from './new-home/new-home.component';
 import { MyhomesComponent } from './myhomes/myhomes.component';
 import {NominatimService} from './nominatim.service';
+import { StorageServiceModule } from 'ngx-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import {NominatimService} from './nominatim.service';
         FormsModule,
         MatCheckboxModule,
         HttpClientModule,
+        StorageServiceModule
     ],
   exports: [
     MatButtonModule,

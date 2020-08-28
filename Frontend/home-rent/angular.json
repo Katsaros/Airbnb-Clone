@@ -73,7 +73,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "TEDi:build"
+            "browserTarget": "TEDi:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
