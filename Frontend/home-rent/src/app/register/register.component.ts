@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
 
     // console.log(this.body);
 
-    this.http.post<Response>('https://localhost:8080/api/auth/signup', this.body).subscribe(data => {
+    this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
       console.log(data);
 
     });

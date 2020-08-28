@@ -58,8 +58,6 @@ public class MyHome {
 //    @JoinColumn(name ="homecategory_id", nullable = false)
 //    private HomeCategory homeCategory;
 
-//    private Collection<Picture> pictures = new HashSet<>();
-
     private String description;
 
     private Integer squareMeters;

@@ -81,8 +81,16 @@ public class HostServiceImpl implements HostService {
         //filter homes the checking the other reservations
         List<MyHomeDto> filteredHomeListByReservationDates = filterHomeListByReservationDates(bookDate, leaveDate, filteredHomeListByDates);
 
+        //sort by price
+        List<MyHomeDto> sortedHomesByPrice = sortHomesByPrice(filteredHomeListByReservationDates);
 
-        return filteredHomeListByReservationDates;
+        return sortedHomesByPrice;
+    }
+
+    private List<MyHomeDto> sortHomesByPrice(List<MyHomeDto> tempListWithAllHomes) {
+        return tempListWithAllHomes.stream()
+                .sorted(Comparator.comparingDouble(MyHomeDto::getPrice))
+                .collect(Collectors.toList());
     }
 
     private List<MyHomeDto> filterHomeListByMaxPeople(int people, List<MyHomeDto> tempListWithAllHomes) {
@@ -95,6 +103,9 @@ public class HostServiceImpl implements HostService {
         List<MyHomeDto> filteredList = new ArrayList<>();
 
         for(int i=0; i<tempListWithAllHomes.size(); i++){
+
+            //an den iparxei kratisi gia to spiti tote mporei na ginei book opoiadhpote hmeromhnia
+            if(tempListWithAllHomes.get(i).getReservations().isEmpty())filteredList.add(tempListWithAllHomes.get(i));
 
             for(int j=0; j<tempListWithAllHomes.get(i).getReservations().size(); j++) {
 
@@ -113,7 +124,6 @@ public class HostServiceImpl implements HostService {
                         (einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB < 0 )) {
                     filteredList.add(tempListWithAllHomes.get(i));
                 }
-
             }
         }
         return filteredList;

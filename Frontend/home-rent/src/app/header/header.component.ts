@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit{
     body.password = this.password.value;
     body.username = this.username.value;
 
-    this.http.post<Response>('https://localhost:8080/api/auth/signin', body).subscribe(data => {
+    this.http.post<Response>('http://localhost:8080/api/auth/signin', body).subscribe(data => {
       console.log(data);
 
     });
