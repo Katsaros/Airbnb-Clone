@@ -298,7 +298,11 @@ SAMPLE RESPONSE 1:
     "leaveDate" : "2020-09-29",
     "isBooked" : 0,
     "userIdBooked" : 1,
-    "userNameBooked" : "admin"
+    "userNameBooked" : "admin",
+    "hostReviewStars" : 5,
+    "hostReviewDescription" : "he was awesome",
+    "homeReviewStars" : 5,
+    "homeReviewDescription" : "was amazing"
   } ],
   "openBooking" : "2020-01-01",
   "closeBooking" : "2021-12-01",
