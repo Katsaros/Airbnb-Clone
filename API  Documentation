@@ -499,6 +499,7 @@ localhost:8080/api/secure/book
 SAMPLE REQUEST:
 localhost:8080/api/secure/book
 {
+ //h diafora tou panw me tou katw einai oti edw den vazeis reservationId
     "bookedHomeId" : 1,
     "bookedDate" : "2030-03-01",
     "leaveDate" : "2030-04-14",
@@ -510,3 +511,60 @@ localhost:8080/api/secure/book
     "homeReviewStars" : 0,
     "homeReviewDescription" : null
 }
+
+SAMPLE RESPONSE 1:
+{
+    "reservationId" : 2,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 0,
+    "hostReviewDescription" : null,
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 2:
+"{"Status": "Error booking the room"}"
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+PUT (Update Booking)
+localhost:8080/api/secure/book
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/book
+{
+    "reservationId" : 2,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 2,
+    "hostReviewDescription" : "evala review",
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 1:
+{
+    "reservationId" : 2,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 2,
+    "hostReviewDescription" : "evala review",
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 2:
+"{"Status": "Error updating booking"}"
