@@ -291,7 +291,7 @@ SAMPLE RESPONSE:
 redirect:/home/2/show
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
-GET
+GET (all homes without filters)
 /api/public/homes/all
 
 SAMPLE RESPONSE:
@@ -420,6 +420,7 @@ GET (with url parameters as filters) (more filters coming soon)
 
 SAMPLE REQUEST:
 localhost:8080/api/public/homes/more?maxPrice=50.0&wifi=false
+ΣΗΜΑΝΤΙΚΟ: πρέπει να δώσεις και στο body το json που έλαβες από το προηγούμενο endpoint προκειμένου το backend να επεξεργαστεί την υπάρχων λίστα
 
 SAMPLE RESPONSE 1:
 (As the above response)
