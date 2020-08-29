@@ -3,6 +3,7 @@ package com.project.homerent.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.homerent.model.dto.MyHomeDto;
 import com.project.homerent.model.dto.UserDto;
+import com.project.homerent.model.hostmodel.AllHomesList;
 import com.project.homerent.service.HostService;
 import com.project.homerent.service.ImageService;
 import com.project.homerent.service.UserService;
@@ -64,19 +65,22 @@ public class PublicController {
                 departureDateConverted
         )));
     }
-//
-//    @PostMapping("/homes/filters")
-//    public ResponseEntity<String> getHomesByMoreFilters(
-//            @RequestBody @Nullable MyHomeDto userPostDto,
-//            @RequestParam String people
-//    ) throws JsonProcessingException, ParseException {
-//        if(people.isEmpty())people="0";
-//
-//        return ResponseEntity.ok().body(
-//                convertToJson(hostService.findAllUsingMoreFilters(
-//                        Integer.parseInt(people)
-//                )));
-//    }
+
+    @PostMapping("/homes/more")
+    public ResponseEntity<String> getHomesByMoreFilters(
+            @RequestBody @Nullable AllHomesList allHomesList,
+            @RequestParam String maxPrice,
+            @RequestParam Boolean wifi
+    ) throws JsonProcessingException {
+        if(maxPrice.isEmpty())maxPrice="0.0";
+
+        return ResponseEntity.ok().body(
+                convertToJson(hostService.findAllUsingMoreFilters(
+                        allHomesList,
+                        Double.parseDouble(maxPrice),
+                        wifi
+                )));
+    }
 
     @GetMapping("/home/{id}/image")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws Exception {

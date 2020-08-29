@@ -112,6 +112,30 @@ public class HostServiceImpl implements HostService {
         return allHomesList;
     }
 
+    @Override
+    public AllHomesList findAllUsingMoreFilters(AllHomesList allHomesList,
+                                                Double maxPrice,
+                                                Boolean wifi){
+        List<MyHomeDto> filteredHomes = allHomesList.getHomes();
+        //filter homes by max price
+        if(maxPrice!=0.0){
+            List<MyHomeDto> filteredHomeListByMaxPrice = filterHomeListByMaxPrice(maxPrice, filteredHomes);
+            allHomesList.setHomes(filteredHomeListByMaxPrice);
+        }
+        System.out.println("wifi: "+wifi);
+        System.out.println("maxPrice: "+maxPrice);
+
+
+        return allHomesList;
+    }
+
+    private List<MyHomeDto> filterHomeListByMaxPrice(Double maxPrice, List<MyHomeDto> tempListWithAllHomes) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.getPrice()<=maxPrice)
+                .collect(Collectors.toList());
+    }
+
+
     private List<MyHomeDto> sortHomesByPrice(List<MyHomeDto> tempListWithAllHomes) {
         return tempListWithAllHomes.stream()
                 .sorted(Comparator.comparingDouble(MyHomeDto::getPrice))
@@ -126,29 +150,29 @@ public class HostServiceImpl implements HostService {
 
     private List<MyHomeDto> filterHomeListByReservationDates(Date imerominiaAfixis, Date imerominiaAnaxwrisis, List<MyHomeDto> tempListWithAllHomes) {
         List<MyHomeDto> filteredList = new ArrayList<>();
+        int einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = 0;
+        int einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = 0;
+        int einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = 0;
+        int einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = 0;
 
         for(int i=0; i<tempListWithAllHomes.size(); i++){
 
             //an den iparxei kratisi gia to spiti tote mporei na ginei book opoiadhpote hmeromhnia
-            if(tempListWithAllHomes.get(i).getReservations().isEmpty())filteredList.add(tempListWithAllHomes.get(i));
+            if(tempListWithAllHomes.get(i).getReservations().isEmpty()) {
+                filteredList.add(tempListWithAllHomes.get(i));
+            }
 
             for(int j=0; j<tempListWithAllHomes.get(i).getReservations().size(); j++) {
+                    einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                    einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
 
-                int einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
-                int einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                    einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+                    einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+                }
 
-                int einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
-                int einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
-
-//                System.out.println("einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB: "+einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB);
-//                System.out.println("einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB: "+einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB);
-//                System.out.println("einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB: "+einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB);
-//                System.out.println("einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB: "+einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB+"\n");
-
-                if ((einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB < 0) &&
+            if ((einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB < 0) &&
                         (einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB < 0 )) {
                     filteredList.add(tempListWithAllHomes.get(i));
-                }
             }
         }
         return filteredList;

@@ -20,7 +20,15 @@ public interface HostService {
 
     MyHome findByAddress(String address);
 
-    AllHomesList findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate);
+    AllHomesList findAllUsingFilters(int people,
+                                     double latitude,
+                                     double longitude,
+                                     Date bookDate,
+                                     Date leaveDate);
+
+    AllHomesList findAllUsingMoreFilters(AllHomesList allHomesList,
+                                         Double maxPrice,
+                                         Boolean wifi);
 
     List<MyHomeDto> findByUserId(Long id);
     MyHomeDto save(MyHomeDto myHomeDto);
