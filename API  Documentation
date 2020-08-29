@@ -410,7 +410,25 @@ SAMPLE RESPONSE 1:
 }
 
 SAMPLE RESPONSE 2:
-[ ]
+{
+  "homes" : [ ]
+}
+-------------------------------------------------------------------------------------------------------------
+PUBLIC FOR ALL:
+GET (with url parameters as filters) (more filters coming soon)
+/api/public/homes/more?maxPrice={double}&wifi={boolean}
+
+SAMPLE REQUEST:
+localhost:8080/api/public/homes/more?maxPrice=50.0&wifi=false
+
+SAMPLE RESPONSE 1:
+(As the above response)
+
+SAMPLE RESPONSE 2:
+{
+  "homes" : [ ]
+}
+
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 
