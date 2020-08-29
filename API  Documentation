@@ -489,3 +489,24 @@ SAMPLE RESPONSE 2:
 
     }
 ]
+
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+POST (BOOKING)
+localhost:8080/api/secure/book
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/book
+{
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 0,
+    "hostReviewDescription" : null,
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
