@@ -1,30 +1,23 @@
 package com.project.homerent.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.homerent.model.enums.HouseType;
-import com.project.homerent.model.hostmodel.HomeCategory;
-import com.project.homerent.model.usermodel.User;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
 
 @XmlRootElement
 @Data
-public class MyHomeDto {
-    private long id;
+public class MyHomePostDto {
 
-//    private UserDto owner;
     private long ownerId;
     private String ownerUsername;
 
     private List<ReservationDto> reservations;
-//    private List<UserDto> owner;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
@@ -33,9 +26,6 @@ public class MyHomeDto {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date closeBooking;
-
-//    @Enumerated(EnumType.STRING)
-//    private HouseType houseType;
 
     @Lob
     private Byte[] image;

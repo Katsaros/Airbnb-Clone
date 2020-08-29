@@ -1,8 +1,9 @@
 package com.project.homerent.model.hostmodel;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.homerent.model.enums.HouseType;
 import com.project.homerent.model.usermodel.User;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,13 +31,19 @@ public class MyHome {
 
     @Lob
     private Byte[] image;
-    
+
+    @Column(name = "house_type")
+    @Enumerated(EnumType.STRING)
+    private HouseType houseType;
+
     @Column(name = "open_booking", nullable = false)
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date openBooking;
 
     @Column(name = "close_booking", nullable = false)
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date closeBooking;
 
     @OneToMany(mappedBy = "bookedHome", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -54,9 +61,9 @@ public class MyHome {
     @Column(name = "myhome_address_longitude", nullable = false)
     private String longitude;
 
-//    @ManyToOne
-//    @JoinColumn(name ="homecategory_id", nullable = false)
-//    private HomeCategory homeCategory;
+    @ManyToOne
+    @JoinColumn(name ="homecategory_id")
+    private HomeCategory homeCategory;
 
     private String description;
 

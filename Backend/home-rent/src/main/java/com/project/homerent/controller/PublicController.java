@@ -2,12 +2,14 @@ package com.project.homerent.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.UserDto;
 import com.project.homerent.service.HostService;
 import com.project.homerent.service.ImageService;
 import com.project.homerent.service.UserService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +41,13 @@ public class PublicController {
     }
 
     @GetMapping("/homes")
-    public ResponseEntity<String> getHomesByFilter(@RequestParam String people, @RequestParam String latitude, @RequestParam String longitude, @RequestParam String arrivalDate, @RequestParam String departureDate) throws JsonProcessingException, ParseException {
+    public ResponseEntity<String> getHomesByFilter(
+            @RequestParam String people,
+            @RequestParam String latitude,
+            @RequestParam String longitude,
+            @RequestParam String arrivalDate,
+            @RequestParam String departureDate
+    ) throws JsonProcessingException, ParseException {
         if(people.isEmpty())people="0";
         if(latitude.isEmpty())latitude="0.0";
         if(longitude.isEmpty())longitude="0.0";
@@ -48,8 +56,27 @@ public class PublicController {
         Date arrivalDateConverted = new SimpleDateFormat("yyyy-MM-dd").parse(arrivalDate);
         Date departureDateConverted = new SimpleDateFormat("yyyy-MM-dd").parse(departureDate);
 
-        return ResponseEntity.ok().body(convertToJson(hostService.findAllUsingFilters(Integer.parseInt(people), Double.parseDouble(latitude), Double.parseDouble(longitude), arrivalDateConverted, departureDateConverted)));
+        return ResponseEntity.ok().body(convertToJson(hostService.findAllUsingFilters(
+                Integer.parseInt(people),
+                Double.parseDouble(latitude),
+                Double.parseDouble(longitude),
+                arrivalDateConverted,
+                departureDateConverted
+        )));
     }
+//
+//    @PostMapping("/homes/filters")
+//    public ResponseEntity<String> getHomesByMoreFilters(
+//            @RequestBody @Nullable MyHomeDto userPostDto,
+//            @RequestParam String people
+//    ) throws JsonProcessingException, ParseException {
+//        if(people.isEmpty())people="0";
+//
+//        return ResponseEntity.ok().body(
+//                convertToJson(hostService.findAllUsingMoreFilters(
+//                        Integer.parseInt(people)
+//                )));
+//    }
 
     @GetMapping("/home/{id}/image")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws Exception {

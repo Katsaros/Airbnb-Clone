@@ -3,6 +3,7 @@ package com.project.homerent.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.MyHomePostDto;
 import com.project.homerent.model.usermodel.User;
 import com.project.homerent.service.HostService;
 import com.project.homerent.service.ImageService;
@@ -51,10 +52,10 @@ public class HostModController {
     }
 
     @PostMapping("/home/new")
-    public ResponseEntity<String> createHome(@RequestBody MyHomeDto myHomeDto, Principal principal) throws Exception {
+    public ResponseEntity<String> createHome(@RequestBody MyHomeDto myHomePostDto, Principal principal) throws Exception {
         User user = userService.findByUsername(principal.getName());
         if(user.getRoles().stream().findFirst().isPresent())
-            return ResponseEntity.ok().body(convertToJson(hostService.save(myHomeDto)));
+            return ResponseEntity.ok().body(convertToJson(hostService.save(myHomePostDto)));
         else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"Error\"}");
     }

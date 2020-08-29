@@ -2,7 +2,9 @@ package com.project.homerent.service;
 
 import com.project.homerent.converter.MyHomeConverter;
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.MyHomePostDto;
 import com.project.homerent.model.dto.ReservationDto;
+import com.project.homerent.model.hostmodel.AllHomesList;
 import com.project.homerent.model.hostmodel.MyHome;
 import com.project.homerent.repository.HostRepository;
 import com.project.homerent.util.Helpers;
@@ -42,6 +44,12 @@ public class HostServiceImpl implements HostService {
                 .map(MyHomeConverter::convertToDto)
                 .collect(Collectors.toList());
     }
+    @Override
+    public MyHome findByAddress(String address)  {
+            MyHome myHome;
+            myHome = hostRepository.findByAddress(address).get();
+        return myHome;
+    }
 
     @Override
     public MyHomeDto save(MyHomeDto myHomeDto) {
@@ -53,9 +61,22 @@ public class HostServiceImpl implements HostService {
     }
 
     @Override
+    public MyHomePostDto save(MyHomePostDto myHomePostDto) {
+        MyHome myHome = MyHomeConverter.convertPostDtoToHome(myHomePostDto);
+
+        Optional<MyHome> tempHome = hostRepository.findByAddress(myHomePostDto.getAddress());
+        myHome.setId(tempHome.get().getId());
+
+        myHome = hostRepository.save(myHome);
+
+        return MyHomeConverter.convertToPostDto(myHome);
+    }
+
+    @Override
     public void deleteById(Long id) {
     }
 
+    @Override
     public List<MyHomeDto> findAll() {
         return hostRepository.findAll()
                 .stream()
@@ -63,7 +84,10 @@ public class HostServiceImpl implements HostService {
                 .collect(Collectors.toList());
     }
 
-    public List<MyHomeDto> findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate) {
+    @Override
+    public AllHomesList findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate) {
+        AllHomesList allHomesList = new AllHomesList();
+
         List<MyHomeDto> tempListWithAllHomes = hostRepository.findAll()
                 .stream()
                 .map(MyHomeConverter::convertToDto)
@@ -84,7 +108,8 @@ public class HostServiceImpl implements HostService {
         //sort by price
         List<MyHomeDto> sortedHomesByPrice = sortHomesByPrice(filteredHomeListByReservationDates);
 
-        return sortedHomesByPrice;
+        allHomesList.setHomes(sortedHomesByPrice);
+        return allHomesList;
     }
 
     private List<MyHomeDto> sortHomesByPrice(List<MyHomeDto> tempListWithAllHomes) {
