@@ -27,8 +27,16 @@ public interface HostService {
                                      Date leaveDate);
 
     AllHomesList findAllUsingMoreFilters(AllHomesList allHomesList,
-                                         Double maxPrice,
-                                         Boolean wifi);
+                                         String maxPrice,
+                                         Boolean wifi,
+                                         Boolean elevator,
+                                         Boolean heating,
+                                         Boolean kitchen,
+                                         Boolean parking,
+                                         Boolean tv,
+                                         Boolean ac,
+                                         String type
+    );
 
     List<MyHomeDto> findByUserId(Long id);
     MyHomeDto save(MyHomeDto myHomeDto);

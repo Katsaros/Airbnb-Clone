@@ -114,19 +114,93 @@ public class HostServiceImpl implements HostService {
 
     @Override
     public AllHomesList findAllUsingMoreFilters(AllHomesList allHomesList,
-                                                Double maxPrice,
-                                                Boolean wifi){
-        List<MyHomeDto> filteredHomes = allHomesList.getHomes();
+                                                String maxPrice,
+                                                Boolean wifi,
+                                                Boolean elevator,
+                                                Boolean heating,
+                                                Boolean kitchen,
+                                                Boolean parking,
+                                                Boolean tv,
+                                                Boolean ac,
+                                                String type
+    ){
         //filter homes by max price
-        if(maxPrice!=0.0){
-            List<MyHomeDto> filteredHomeListByMaxPrice = filterHomeListByMaxPrice(maxPrice, filteredHomes);
-            allHomesList.setHomes(filteredHomeListByMaxPrice);
+        if(maxPrice!=null){
+            allHomesList.setHomes(filterHomeListByMaxPrice(Double.parseDouble(maxPrice), allHomesList.getHomes()));
         }
-        System.out.println("wifi: "+wifi);
-        System.out.println("maxPrice: "+maxPrice);
-
-
+        if(wifi!=null){
+            allHomesList.setHomes(filterHomeListByWifi(allHomesList.getHomes(),wifi));
+        }
+        if(elevator!=null){
+            allHomesList.setHomes(filterHomeListByElevator(allHomesList.getHomes(),elevator));
+        }
+        if(heating!=null){
+            allHomesList.setHomes(filterHomeListByHeating(allHomesList.getHomes(),heating));
+        }
+        if(kitchen!=null){
+            allHomesList.setHomes(filterHomeListByKitchen(allHomesList.getHomes(),kitchen));
+        }
+        if(parking!=null){
+            allHomesList.setHomes(filterHomeListByParking(allHomesList.getHomes(),parking));
+        }
+        if(tv!=null){
+            allHomesList.setHomes(filterHomeListByTv(allHomesList.getHomes(),tv));
+        }
+        if(ac!=null){
+            allHomesList.setHomes(filterHomeListByAc(allHomesList.getHomes(),ac));
+        }
+        if(type!=null){
+            allHomesList.setHomes(filterHomeListByHomeType(allHomesList.getHomes(),type));
+        }
         return allHomesList;
+    }
+
+    private List<MyHomeDto> filterHomeListByHomeType(List<MyHomeDto> tempListWithAllHomes, String homeTypeName) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.getHomeCategory().getHomeCategoryTitle().equals(homeTypeName))
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByAc(List<MyHomeDto> tempListWithAllHomes, Boolean ac) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isAc()==ac)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByTv(List<MyHomeDto> tempListWithAllHomes, Boolean tv) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isTv()==tv)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByParking(List<MyHomeDto> tempListWithAllHomes, Boolean parking) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isParking()==parking)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByKitchen(List<MyHomeDto> tempListWithAllHomes, Boolean kitchen) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isKitchen()==kitchen)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByHeating(List<MyHomeDto> tempListWithAllHomes, Boolean heating) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isHeating()==heating)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByWifi(List<MyHomeDto> tempListWithAllHomes, Boolean wifi) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isWifi()==wifi)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByElevator(List<MyHomeDto> tempListWithAllHomes, Boolean elevator) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isElevator()==elevator)
+                .collect(Collectors.toList());
     }
 
     private List<MyHomeDto> filterHomeListByMaxPrice(Double maxPrice, List<MyHomeDto> tempListWithAllHomes) {
@@ -134,7 +208,6 @@ public class HostServiceImpl implements HostService {
                 .filter(t->t.getPrice()<=maxPrice)
                 .collect(Collectors.toList());
     }
-
 
     private List<MyHomeDto> sortHomesByPrice(List<MyHomeDto> tempListWithAllHomes) {
         return tempListWithAllHomes.stream()
@@ -163,12 +236,12 @@ public class HostServiceImpl implements HostService {
             }
 
             for(int j=0; j<tempListWithAllHomes.get(i).getReservations().size(); j++) {
-                    einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
-                    einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
 
-                    einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
-                    einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
-                }
+                einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+                einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+            }
 
             if ((einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB < 0) &&
                         (einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB < 0 )) {

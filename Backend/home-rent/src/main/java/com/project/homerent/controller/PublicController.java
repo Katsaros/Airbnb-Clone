@@ -69,16 +69,30 @@ public class PublicController {
     @PostMapping("/homes/more")
     public ResponseEntity<String> getHomesByMoreFilters(
             @RequestBody @Nullable AllHomesList allHomesList,
-            @RequestParam String maxPrice,
-            @RequestParam Boolean wifi
+            @RequestParam(required = false) String maxPrice,
+            @RequestParam(required = false) Boolean wifi,
+            @RequestParam(required = false) Boolean elevator,
+            @RequestParam(required = false) Boolean heating,
+            @RequestParam(required = false) Boolean kitchen,
+            @RequestParam(required = false) Boolean parking,
+            @RequestParam(required = false) Boolean tv,
+            @RequestParam(required = false) Boolean ac,
+            @RequestParam(required = false) String type
     ) throws JsonProcessingException {
-        if(maxPrice.isEmpty())maxPrice="0.0";
+//        if(maxPrice.isEmpty())maxPrice="0.0";
 
         return ResponseEntity.ok().body(
                 convertToJson(hostService.findAllUsingMoreFilters(
                         allHomesList,
-                        Double.parseDouble(maxPrice),
-                        wifi
+                        maxPrice,
+                        wifi,
+                        elevator,
+                        heating,
+                        kitchen,
+                        parking,
+                        tv,
+                        ac,
+                        type
                 )));
     }
 
