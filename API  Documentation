@@ -226,7 +226,10 @@ SAMPLE RESPONSE 1:
   "kitchen" : false,
   "parking" : false,
   "tv" : false,
-  "wifi" : false
+  "wifi" : false,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"
 } ]
 
 SAMPLE RESPONSE 2:
@@ -274,7 +277,10 @@ In Body:
   "parking" : true,
   "tv" : true,
   "wifi" : true,
-  "ac" : true
+  "ac" : true,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"
 }-------------------------------------------------------------------------------------------------------------
 HOSTS ONLY:
 
@@ -341,7 +347,10 @@ SAMPLE RESPONSE:
   "parking" : true,
   "tv" : true,
   "wifi" : true,
-  "ac" : true
+  "ac" : true,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"  
 } ]
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
@@ -405,7 +414,10 @@ SAMPLE RESPONSE 1:
     "parking" : true,
     "tv" : true,
     "wifi" : true,
-    "ac" : true
+    "ac" : true,
+    "smoking" : "Yes",
+    "pets" : "Yes",
+    "events" : "No"    
   } ]
 }
 
