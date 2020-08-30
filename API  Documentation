@@ -645,11 +645,11 @@ SAMPLE RESPONSE 1:
 }
 
 SAMPLE RESPONSE 2:
-"{\"Status\": \"Error sending the message\"}"
+"{"Status": "Error sending the message"}"
 -------------------------------------------------------------------------------------------------------------
 VISIBLE FOR ALL AUTHENTICATED:
 
-Get (get all messages from user)
+GET (get all messages from user)
 localhost:8080/api/secure/messages/receivedfrom/{id}
 
 SAMPLE REQUEST:
@@ -685,3 +685,15 @@ SAMPLE RESPONSE:
   "read" : false,
   "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
 } ]
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+DELETE (delete a message)
+localhost:8080/api/secure/message/{id}
+
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/message/1
+
+SAMPLE RESPONSE:
+"{"Status": "Successful Message Deletion"}"
