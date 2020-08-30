@@ -603,3 +603,17 @@ SAMPLE RESPONSE 1:
 
 SAMPLE RESPONSE 2:
 "{"Status": "Error updating booking"}"
+-------------------------------------------------------------------------------------------------------------
+PUBLIC FOR ALL:
+GET REVIEWS
+localhost:8080/api/public/home/{id}/reviews
+
+SAMPLE REQUEST:
+localhost:8080/api/public/home/1/reviews
+
+SAMPLE RESPONSE:
+{
+  "totalReviews" : 2,
+  "average" : 3.0,
+  "reviews" : [ 2, 4 ]
+}
