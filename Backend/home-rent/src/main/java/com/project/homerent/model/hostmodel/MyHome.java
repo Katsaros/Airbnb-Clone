@@ -2,7 +2,9 @@ package com.project.homerent.model.hostmodel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.project.homerent.model.enums.HouseType;
+import com.project.homerent.model.enums.Events;
+import com.project.homerent.model.enums.Pets;
+import com.project.homerent.model.enums.Smoking;
 import com.project.homerent.model.usermodel.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,9 +34,17 @@ public class MyHome {
     @Lob
     private Byte[] image;
 
-    @Column(name = "house_type")
+    @Column(name = "rule_smoking")
     @Enumerated(EnumType.STRING)
-    private HouseType houseType;
+    private Smoking smoking;
+
+    @Column(name = "rule_pets")
+    @Enumerated(EnumType.STRING)
+    private Pets pets;
+
+    @Column(name = "rule_events")
+    @Enumerated(EnumType.STRING)
+    private Events events;
 
     @Column(name = "open_booking", nullable = false)
     @Temporal(TemporalType.DATE)

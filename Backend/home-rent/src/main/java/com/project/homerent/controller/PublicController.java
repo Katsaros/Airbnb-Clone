@@ -79,8 +79,6 @@ public class PublicController {
             @RequestParam(required = false) Boolean ac,
             @RequestParam(required = false) String type
     ) throws JsonProcessingException {
-//        if(maxPrice.isEmpty())maxPrice="0.0";
-
         return ResponseEntity.ok().body(
                 convertToJson(hostService.findAllUsingMoreFilters(
                         allHomesList,

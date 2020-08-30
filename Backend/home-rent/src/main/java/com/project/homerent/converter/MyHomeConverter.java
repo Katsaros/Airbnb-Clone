@@ -46,7 +46,6 @@ public class MyHomeConverter {
         myHomeDto.setBathrooms(myHome.getBathrooms());
         myHomeDto.setBedrooms(myHome.getBedrooms());
         myHomeDto.setBeds(myHome.getBeds());
-
         myHomeDto.setOpenBooking(myHome.getOpenBooking());
         myHomeDto.setCloseBooking(myHome.getCloseBooking());
         myHomeDto.setDescription(myHome.getDescription());
@@ -78,6 +77,9 @@ public class MyHomeConverter {
         List<ReservationDto> reservationDtoList = myHome.getReservations().stream().map(ReservationConverter::convertToDto).collect(Collectors.toList());
         myHomeDto.setReservations(reservationDtoList);
 
+        myHomeDto.setPets(myHome.getPets());
+        myHomeDto.setSmoking(myHome.getSmoking());
+        myHomeDto.setEvents(myHome.getEvents());
         return myHomeDto;
     }
 
@@ -137,10 +139,6 @@ public class MyHomeConverter {
         myHome.setBathrooms(myHomeDto.getBathrooms());
         myHome.setBedrooms(myHomeDto.getBedrooms());
         myHome.setBeds(myHomeDto.getBeds());
-//        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(myHomeDto.getOpenBooking());
-//        myHome.setOpenBooking(date1);
-//        Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(myHomeDto.getCloseBooking());
-//        myHome.setCloseBooking(date2);
         myHome.setOpenBooking(myHomeDto.getOpenBooking());
         myHome.setCloseBooking(myHomeDto.getCloseBooking());
         myHome.setDescription(myHomeDto.getDescription());
@@ -173,6 +171,10 @@ public class MyHomeConverter {
             myHome.setReservations(reservationList);
         }
 
+        myHome.setPets(myHomeDto.getPets());
+        myHome.setSmoking(myHomeDto.getSmoking());
+        myHome.setEvents(myHomeDto.getEvents());
+
         return myHome;
     }
 
@@ -187,10 +189,7 @@ public class MyHomeConverter {
         myHome.setBathrooms(myHomePostDto.getBathrooms());
         myHome.setBedrooms(myHomePostDto.getBedrooms());
         myHome.setBeds(myHomePostDto.getBeds());
-//        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(myHomeDto.getOpenBooking());
-//        myHome.setOpenBooking(date1);
-//        Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(myHomeDto.getCloseBooking());
-//        myHome.setCloseBooking(date2);
+
         myHome.setOpenBooking(myHomePostDto.getOpenBooking());
         myHome.setCloseBooking(myHomePostDto.getCloseBooking());
         myHome.setDescription(myHomePostDto.getDescription());

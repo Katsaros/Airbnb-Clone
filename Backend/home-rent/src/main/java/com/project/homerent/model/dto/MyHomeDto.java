@@ -1,7 +1,10 @@
 package com.project.homerent.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.homerent.model.enums.HouseType;
+//import com.project.homerent.model.enums.HouseType;
+import com.project.homerent.model.enums.Events;
+import com.project.homerent.model.enums.Pets;
+import com.project.homerent.model.enums.Smoking;
 import com.project.homerent.model.hostmodel.HomeCategory;
 import com.project.homerent.model.usermodel.User;
 import lombok.Data;
@@ -34,8 +37,14 @@ public class MyHomeDto {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date closeBooking;
 
-//    @Enumerated(EnumType.STRING)
-//    private HouseType houseType;
+    @Enumerated(EnumType.STRING)
+    private Smoking smoking;
+
+    @Enumerated(EnumType.STRING)
+    private Pets pets;
+
+    @Enumerated(EnumType.STRING)
+    private Events events;
 
     @Lob
     private Byte[] image;
