@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.homerent.model.dto.MyHomeDto;
 import com.project.homerent.model.dto.UserDto;
 import com.project.homerent.model.hostmodel.AllHomesList;
+import com.project.homerent.model.hostmodel.Reviews;
 import com.project.homerent.service.HostService;
 import com.project.homerent.service.ImageService;
 import com.project.homerent.service.UserService;
@@ -122,5 +123,12 @@ public class PublicController {
         imageService.saveImageFileToUser(Long.valueOf(id), file);
 
         return "redirect:/user/" + id + "/show";
+    }
+
+    @GetMapping("/home/{id}/reviews")
+    public ResponseEntity<String> reviews(@PathVariable("id") Long id) throws Exception {
+        Reviews reviews = hostService.getHomeReviews(id);
+
+        return ResponseEntity.ok().body(convertToJson(reviews));
     }
 }

@@ -6,6 +6,8 @@ import com.project.homerent.model.dto.MyHomePostDto;
 import com.project.homerent.model.dto.ReservationDto;
 import com.project.homerent.model.hostmodel.AllHomesList;
 import com.project.homerent.model.hostmodel.MyHome;
+import com.project.homerent.model.hostmodel.Reservation;
+import com.project.homerent.model.hostmodel.Reviews;
 import com.project.homerent.repository.HostRepository;
 import com.project.homerent.util.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -314,5 +316,28 @@ public class HostServiceImpl implements HostService {
             return Collections.emptyList();
         else
             return filteredHomes;
+    }
+
+    @Override
+    public Reviews getHomeReviews(Long id) throws Exception {
+        Reviews reviews= new Reviews();
+        reviews.setReviews(new ArrayList<>());
+
+        MyHome myHome = findHomeById(id);
+
+        myHome.getReservations().forEach(t-> {
+            if(t.getHomeReviewStars()!=null) {
+                reviews.getReviews().add(t.getHomeReviewStars());
+            }
+        });
+
+        reviews.setTotalReviews(myHome.getReservations().stream().filter(r->r.getHomeReviewStars()!=null).count());
+
+        myHome.getReservations().stream()
+                .mapToInt(Reservation::getHomeReviewStars)
+                .average()
+                .ifPresent(reviews::setAverage);
+
+        return reviews;
     }
 }

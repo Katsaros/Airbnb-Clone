@@ -5,6 +5,7 @@ import com.project.homerent.model.dto.MyHomeDto;
 import com.project.homerent.model.dto.MyHomePostDto;
 import com.project.homerent.model.hostmodel.AllHomesList;
 import com.project.homerent.model.hostmodel.MyHome;
+import com.project.homerent.model.hostmodel.Reviews;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
@@ -40,8 +41,9 @@ public interface HostService {
 
     List<MyHomeDto> findByUserId(Long id);
     MyHomeDto save(MyHomeDto myHomeDto);
-    MyHomePostDto save(MyHomePostDto MyHomePostDto);
+    MyHomePostDto save(MyHomePostDto myHomePostDto);
+
     void deleteById(Long id);
 
-
+    Reviews getHomeReviews(Long id) throws Exception;
 }
