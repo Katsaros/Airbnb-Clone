@@ -416,11 +416,15 @@ SAMPLE RESPONSE 2:
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 GET (with url parameters as filters) (more filters coming soon)
-/api/public/homes/more?maxPrice={double}&wifi={boolean}
+/api/public/homes/more?type={Private Room ή Shared Room ή Full House}&maxPrice={double}&wifi={boolean}&elevator={boolean}&heating={boolean}&kitchen={boolean}&parking={boolean}&tv={boolean}&ac={boolean}
 
 SAMPLE REQUEST:
-localhost:8080/api/public/homes/more?maxPrice=50.0&wifi=false
-ΣΗΜΑΝΤΙΚΟ: πρέπει να δώσεις και στο body το json που έλαβες από το προηγούμενο endpoint προκειμένου το backend να επεξεργαστεί την υπάρχων λίστα
+localhost:8080/api/public/homes/more?type=Shared Room&maxPrice=200.0&wifi=true&elevator=true&heating=true&kitchen=true&parking=true&tv=true&ac=true
+
+ΣΗΜΑΝΤΙΚΟ: 
+1. Πρέπει να δώσεις και στο body το json που έλαβες από το προηγούμενο endpoint προκειμένου το backend να επεξεργαστεί την υπάρχων λίστα
+2. Τα φίλτρα δεν είναι ανάγκη να είναι όλα στο link. Δηλαδή σε αυτό το endpoint μπορείς να βάλεις μόνο πχ φίλτρο για τα mixPrice και Wifi, όλα τα υπόλοιπα δεν είναι υποχρεωτικά
+	Παράδειγμα: localhost:8080/api/public/homes/more?maxPrice=200.0&wifi=true
 
 SAMPLE RESPONSE 1:
 (As the above response)
