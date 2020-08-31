@@ -617,3 +617,94 @@ SAMPLE RESPONSE:
   "average" : 3.0,
   "reviews" : [ 2, 4 ]
 }
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+POST (New Message)
+localhost:8080/api/secure/message/send
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/message/send
+
+In Body Request:
+{
+    "senderId" : 1,
+    "receiverId" : 4,
+    "message" : "Hello World",
+    "read" : false
+}
+
+SAMPLE RESPONSE 1:
+{
+  "messageId" : 2,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello World",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
+}
+
+SAMPLE RESPONSE 2:
+"{"Status": "Error sending the message"}"
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+GET (get all messages from user)
+localhost:8080/api/secure/messages/receivedfrom/{id}
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/messages/receivedfrom/1
+
+SAMPLE RESPONSE:
+[ {
+  "messageId" : 1,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello Spyro",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 01:57 π.μ. EEST"
+}, {
+  "messageId" : 2,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello Taki",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 01:59 π.μ. EEST"
+}, {
+  "messageId" : 3,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello Mitso",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
+}, {
+  "messageId" : 4,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello World",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
+} ]
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+DELETE (delete a message)
+localhost:8080/api/secure/message/{id}
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/message/1
+
+SAMPLE RESPONSE:
+"{"Status": "Successful Message Deletion"}"
+
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+GET (get history between two users) (not ready yet)
+localhost:8080/api/secure/messages/sender/{sender}/receiver/{receiver}
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/messages/sender/1/receiver/4
+
+SAMPLE RESPONSE:
+All History
