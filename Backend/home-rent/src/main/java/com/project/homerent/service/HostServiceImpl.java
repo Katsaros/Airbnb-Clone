@@ -2,8 +2,12 @@ package com.project.homerent.service;
 
 import com.project.homerent.converter.MyHomeConverter;
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.MyHomePostDto;
 import com.project.homerent.model.dto.ReservationDto;
+import com.project.homerent.model.hostmodel.AllHomesList;
 import com.project.homerent.model.hostmodel.MyHome;
+import com.project.homerent.model.hostmodel.Reservation;
+import com.project.homerent.model.hostmodel.Reviews;
 import com.project.homerent.repository.HostRepository;
 import com.project.homerent.util.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +46,12 @@ public class HostServiceImpl implements HostService {
                 .map(MyHomeConverter::convertToDto)
                 .collect(Collectors.toList());
     }
+    @Override
+    public MyHome findByAddress(String address)  {
+            MyHome myHome;
+            myHome = hostRepository.findByAddress(address).get();
+        return myHome;
+    }
 
     @Override
     public MyHomeDto save(MyHomeDto myHomeDto) {
@@ -53,9 +63,22 @@ public class HostServiceImpl implements HostService {
     }
 
     @Override
+    public MyHomePostDto save(MyHomePostDto myHomePostDto) {
+        MyHome myHome = MyHomeConverter.convertPostDtoToHome(myHomePostDto);
+
+        Optional<MyHome> tempHome = hostRepository.findByAddress(myHomePostDto.getAddress());
+        myHome.setId(tempHome.get().getId());
+
+        myHome = hostRepository.save(myHome);
+
+        return MyHomeConverter.convertToPostDto(myHome);
+    }
+
+    @Override
     public void deleteById(Long id) {
     }
 
+    @Override
     public List<MyHomeDto> findAll() {
         return hostRepository.findAll()
                 .stream()
@@ -63,7 +86,10 @@ public class HostServiceImpl implements HostService {
                 .collect(Collectors.toList());
     }
 
-    public List<MyHomeDto> findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate) {
+    @Override
+    public AllHomesList findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate) {
+        AllHomesList allHomesList = new AllHomesList();
+
         List<MyHomeDto> tempListWithAllHomes = hostRepository.findAll()
                 .stream()
                 .map(MyHomeConverter::convertToDto)
@@ -81,8 +107,114 @@ public class HostServiceImpl implements HostService {
         //filter homes the checking the other reservations
         List<MyHomeDto> filteredHomeListByReservationDates = filterHomeListByReservationDates(bookDate, leaveDate, filteredHomeListByDates);
 
+        //sort by price
+        List<MyHomeDto> sortedHomesByPrice = sortHomesByPrice(filteredHomeListByReservationDates);
 
-        return filteredHomeListByReservationDates;
+        allHomesList.setHomes(sortedHomesByPrice);
+        return allHomesList;
+    }
+
+    @Override
+    public AllHomesList findAllUsingMoreFilters(AllHomesList allHomesList,
+                                                String maxPrice,
+                                                Boolean wifi,
+                                                Boolean elevator,
+                                                Boolean heating,
+                                                Boolean kitchen,
+                                                Boolean parking,
+                                                Boolean tv,
+                                                Boolean ac,
+                                                String type
+    ){
+        //filter homes by max price
+        if(maxPrice!=null){
+            allHomesList.setHomes(filterHomeListByMaxPrice(Double.parseDouble(maxPrice), allHomesList.getHomes()));
+        }
+        if(wifi!=null){
+            allHomesList.setHomes(filterHomeListByWifi(allHomesList.getHomes(),wifi));
+        }
+        if(elevator!=null){
+            allHomesList.setHomes(filterHomeListByElevator(allHomesList.getHomes(),elevator));
+        }
+        if(heating!=null){
+            allHomesList.setHomes(filterHomeListByHeating(allHomesList.getHomes(),heating));
+        }
+        if(kitchen!=null){
+            allHomesList.setHomes(filterHomeListByKitchen(allHomesList.getHomes(),kitchen));
+        }
+        if(parking!=null){
+            allHomesList.setHomes(filterHomeListByParking(allHomesList.getHomes(),parking));
+        }
+        if(tv!=null){
+            allHomesList.setHomes(filterHomeListByTv(allHomesList.getHomes(),tv));
+        }
+        if(ac!=null){
+            allHomesList.setHomes(filterHomeListByAc(allHomesList.getHomes(),ac));
+        }
+        if(type!=null){
+            allHomesList.setHomes(filterHomeListByHomeType(allHomesList.getHomes(),type));
+        }
+        return allHomesList;
+    }
+
+    private List<MyHomeDto> filterHomeListByHomeType(List<MyHomeDto> tempListWithAllHomes, String homeTypeName) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.getHomeCategory().getHomeCategoryTitle().equals(homeTypeName))
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByAc(List<MyHomeDto> tempListWithAllHomes, Boolean ac) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isAc()==ac)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByTv(List<MyHomeDto> tempListWithAllHomes, Boolean tv) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isTv()==tv)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByParking(List<MyHomeDto> tempListWithAllHomes, Boolean parking) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isParking()==parking)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByKitchen(List<MyHomeDto> tempListWithAllHomes, Boolean kitchen) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isKitchen()==kitchen)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByHeating(List<MyHomeDto> tempListWithAllHomes, Boolean heating) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isHeating()==heating)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByWifi(List<MyHomeDto> tempListWithAllHomes, Boolean wifi) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isWifi()==wifi)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByElevator(List<MyHomeDto> tempListWithAllHomes, Boolean elevator) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.isElevator()==elevator)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> filterHomeListByMaxPrice(Double maxPrice, List<MyHomeDto> tempListWithAllHomes) {
+        return tempListWithAllHomes.stream()
+                .filter(t->t.getPrice()<=maxPrice)
+                .collect(Collectors.toList());
+    }
+
+    private List<MyHomeDto> sortHomesByPrice(List<MyHomeDto> tempListWithAllHomes) {
+        return tempListWithAllHomes.stream()
+                .sorted(Comparator.comparingDouble(MyHomeDto::getPrice))
+                .collect(Collectors.toList());
     }
 
     private List<MyHomeDto> filterHomeListByMaxPeople(int people, List<MyHomeDto> tempListWithAllHomes) {
@@ -93,27 +225,29 @@ public class HostServiceImpl implements HostService {
 
     private List<MyHomeDto> filterHomeListByReservationDates(Date imerominiaAfixis, Date imerominiaAnaxwrisis, List<MyHomeDto> tempListWithAllHomes) {
         List<MyHomeDto> filteredList = new ArrayList<>();
+        int einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = 0;
+        int einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = 0;
+        int einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = 0;
+        int einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = 0;
 
         for(int i=0; i<tempListWithAllHomes.size(); i++){
 
+            //an den iparxei kratisi gia to spiti tote mporei na ginei book opoiadhpote hmeromhnia
+            if(tempListWithAllHomes.get(i).getReservations().isEmpty()) {
+                filteredList.add(tempListWithAllHomes.get(i));
+            }
+
             for(int j=0; j<tempListWithAllHomes.get(i).getReservations().size(); j++) {
+                einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
 
-                int einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
-                int einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAfixis, tempListWithAllHomes.get(i).getReservations(), j);
+                einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+                einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
+            }
 
-                int einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB = checkBookingArrivalInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
-                int einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB = checkBookingLeaveInReservations(imerominiaAnaxwrisis, tempListWithAllHomes.get(i).getReservations(), j);
-
-//                System.out.println("einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB: "+einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB);
-//                System.out.println("einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB: "+einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB);
-//                System.out.println("einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB: "+einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB);
-//                System.out.println("einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB: "+einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB+"\n");
-
-                if ((einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB < 0) &&
+            if ((einaiHImerominiaAfixisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAfixisMetaTinImerominiaAnaxwrisisApoDB < 0) &&
                         (einaiHImerominiaAnaxwrisisPrinTinImerominiaAfixisApoDB > 0 || einaiHImerominiaAnaxwrisisMetaTinImerominiaAnaxwrisisApoDB < 0 )) {
                     filteredList.add(tempListWithAllHomes.get(i));
-                }
-
             }
         }
         return filteredList;
@@ -182,5 +316,28 @@ public class HostServiceImpl implements HostService {
             return Collections.emptyList();
         else
             return filteredHomes;
+    }
+
+    @Override
+    public Reviews getHomeReviews(Long id) throws Exception {
+        Reviews reviews= new Reviews();
+        reviews.setReviews(new ArrayList<>());
+
+        MyHome myHome = findHomeById(id);
+
+        myHome.getReservations().forEach(t-> {
+            if(t.getHomeReviewStars()!=null) {
+                reviews.getReviews().add(t.getHomeReviewStars());
+            }
+        });
+
+        reviews.setTotalReviews(myHome.getReservations().stream().filter(r->r.getHomeReviewStars()!=null).count());
+
+        myHome.getReservations().stream()
+                .mapToInt(Reservation::getHomeReviewStars)
+                .average()
+                .ifPresent(reviews::setAverage);
+
+        return reviews;
     }
 }

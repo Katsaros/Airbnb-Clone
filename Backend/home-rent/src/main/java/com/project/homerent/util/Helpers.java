@@ -4,12 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.project.homerent.model.dto.MyHomeDto;
-import com.project.homerent.model.dto.UserPostDto;
-import com.project.homerent.model.hostmodel.XmlHomeList;
+import com.project.homerent.model.hostmodel.AllHomesList;
 import com.thoughtworks.xstream.XStream;
-import org.springframework.lang.Nullable;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -18,7 +14,6 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Helpers {
 
@@ -70,12 +65,12 @@ public class Helpers {
     public static String myHomesToXML(List<MyHomeDto> usersHomeList) {
         XStream xstream = new XStream();
         xstream.alias("Home", MyHomeDto.class);
-        xstream.alias("Homes", XmlHomeList.class);
-        xstream.addImplicitCollection(XmlHomeList.class, "list");
+        xstream.alias("Homes", AllHomesList.class);
+        xstream.addImplicitCollection(AllHomesList.class, "list");
 
-        XmlHomeList list = new XmlHomeList();
+        AllHomesList list = new AllHomesList();
 
-        list.getList().addAll(usersHomeList);
+        list.getHomes().addAll(usersHomeList);
 
         String xml = xstream.toXML(list);
         return xml;

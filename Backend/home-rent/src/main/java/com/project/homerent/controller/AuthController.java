@@ -69,7 +69,10 @@ public class AuthController {
                 userDetails.getEmail(),
                 roles,
                 userDetails.getTelephone(),
-                Integer.toString(userDetails.getApproved())));
+                Integer.toString(userDetails.getApproved()),
+                userDetails.getFirstName(),
+                userDetails.getLastName()
+                ));
     }
 
     @PostMapping("/signup")

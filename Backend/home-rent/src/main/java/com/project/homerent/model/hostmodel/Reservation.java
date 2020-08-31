@@ -36,9 +36,21 @@ public class Reservation {
     private Date leaveDate;
 
     @Column(name = "booked")
-    int booked;
+    private int booked;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id", nullable = false)
     private User userBooked;
+
+    @Column(name = "host_review_stars")
+    private Integer hostReviewStars;
+
+    @Column(name = "host_review_description")
+    private String hostReviewDescription;
+
+    @Column(name = "home_review_stars")
+    private Integer homeReviewStars;
+
+    @Column(name = "home_review_description")
+    private String homeReviewDescription;
 }

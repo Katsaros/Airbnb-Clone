@@ -34,6 +34,15 @@ public class ReservationConverter {
         reservationDto.setUserIdBooked(reservation.getUserBooked().getId());
         reservationDto.setUserNameBooked(reservation.getUserBooked().getUsername());
 
+        reservationDto.setHomeReviewDescription(reservation.getHomeReviewDescription());
+        if(reservation.getHomeReviewStars()==null)reservationDto.setHomeReviewStars(0);
+        else reservationDto.setHomeReviewStars(reservation.getHomeReviewStars());
+
+        reservationDto.setHostReviewDescription(reservation.getHostReviewDescription());
+
+        if(reservation.getHostReviewStars()==null)reservationDto.setHostReviewStars(0);
+        else reservationDto.setHostReviewStars(reservation.getHostReviewStars());
+
         return reservationDto;
     }
 
@@ -44,6 +53,11 @@ public class ReservationConverter {
         reservation.setLeaveDate(reservationDto.getLeaveDate());
         reservation.setBookedHome(hostServiceStatic.findHomeById(reservationDto.getBookedHomeId()));
         reservation.setUserBooked(userServiceStatic.findById(reservationDto.getUserIdBooked()));
+
+        reservation.setHomeReviewDescription(reservationDto.getHomeReviewDescription());
+        reservation.setHomeReviewStars(reservationDto.getHomeReviewStars());
+        reservation.setHostReviewDescription(reservationDto.getHostReviewDescription());
+        reservation.setHostReviewStars(reservationDto.getHostReviewStars());
         return reservation;
     }
 }

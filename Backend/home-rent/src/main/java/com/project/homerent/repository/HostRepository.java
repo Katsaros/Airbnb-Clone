@@ -12,4 +12,6 @@ public interface HostRepository extends JpaRepository<MyHome, Long> {
     List<MyHome> findByOwnerId(Long homeId);
     List<MyHome> findAll();
     Optional<MyHome> findById(Long id);
+
+    Optional<MyHome> findByAddress(String address);
 }

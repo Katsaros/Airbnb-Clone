@@ -1,5 +1,6 @@
 package com.project.homerent.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.homerent.model.hostmodel.MyHome;
 import com.project.homerent.model.usermodel.User;
@@ -18,9 +19,11 @@ public class ReservationDto {
 
     private long bookedHomeId;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date bookedDate;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date leaveDate;
 
@@ -28,4 +31,12 @@ public class ReservationDto {
 
     private long userIdBooked;
     private String userNameBooked;
+
+    int hostReviewStars;
+
+    String hostReviewDescription;
+
+    int homeReviewStars;
+
+    String homeReviewDescription;
 }

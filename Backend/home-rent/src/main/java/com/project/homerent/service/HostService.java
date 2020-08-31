@@ -2,7 +2,11 @@ package com.project.homerent.service;
 
 
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.MyHomePostDto;
+import com.project.homerent.model.hostmodel.AllHomesList;
 import com.project.homerent.model.hostmodel.MyHome;
+import com.project.homerent.model.hostmodel.Reviews;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
@@ -15,10 +19,31 @@ public interface HostService {
 
     List<MyHomeDto> findAll();
 
-//    MyHomeDto findDtoById(Long id);
-    List<MyHomeDto> findAllUsingFilters(int people, double latitude, double longitude, Date bookDate, Date leaveDate);
+    MyHome findByAddress(String address);
+
+    AllHomesList findAllUsingFilters(int people,
+                                     double latitude,
+                                     double longitude,
+                                     Date bookDate,
+                                     Date leaveDate);
+
+    AllHomesList findAllUsingMoreFilters(AllHomesList allHomesList,
+                                         String maxPrice,
+                                         Boolean wifi,
+                                         Boolean elevator,
+                                         Boolean heating,
+                                         Boolean kitchen,
+                                         Boolean parking,
+                                         Boolean tv,
+                                         Boolean ac,
+                                         String type
+    );
 
     List<MyHomeDto> findByUserId(Long id);
     MyHomeDto save(MyHomeDto myHomeDto);
+    MyHomePostDto save(MyHomePostDto myHomePostDto);
+
     void deleteById(Long id);
+
+    Reviews getHomeReviews(Long id) throws Exception;
 }

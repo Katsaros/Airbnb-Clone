@@ -2,12 +2,16 @@ package com.project.homerent.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.homerent.model.dto.MyHomeDto;
+import com.project.homerent.model.dto.UserDto;
+import com.project.homerent.model.hostmodel.AllHomesList;
+import com.project.homerent.model.hostmodel.Reviews;
 import com.project.homerent.service.HostService;
 import com.project.homerent.service.ImageService;
 import com.project.homerent.service.UserService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +43,13 @@ public class PublicController {
     }
 
     @GetMapping("/homes")
-    public ResponseEntity<String> getHomesByFilter(@RequestParam String people, @RequestParam String latitude, @RequestParam String longitude, @RequestParam String arrivalDate, @RequestParam String departureDate) throws JsonProcessingException, ParseException {
+    public ResponseEntity<String> getHomesByFilter(
+            @RequestParam String people,
+            @RequestParam String latitude,
+            @RequestParam String longitude,
+            @RequestParam String arrivalDate,
+            @RequestParam String departureDate
+    ) throws JsonProcessingException, ParseException {
         if(people.isEmpty())people="0";
         if(latitude.isEmpty())latitude="0.0";
         if(longitude.isEmpty())longitude="0.0";
@@ -48,7 +58,41 @@ public class PublicController {
         Date arrivalDateConverted = new SimpleDateFormat("yyyy-MM-dd").parse(arrivalDate);
         Date departureDateConverted = new SimpleDateFormat("yyyy-MM-dd").parse(departureDate);
 
-        return ResponseEntity.ok().body(convertToJson(hostService.findAllUsingFilters(Integer.parseInt(people), Double.parseDouble(latitude), Double.parseDouble(longitude), arrivalDateConverted, departureDateConverted)));
+        return ResponseEntity.ok().body(convertToJson(hostService.findAllUsingFilters(
+                Integer.parseInt(people),
+                Double.parseDouble(latitude),
+                Double.parseDouble(longitude),
+                arrivalDateConverted,
+                departureDateConverted
+        )));
+    }
+
+    @PostMapping("/homes/more")
+    public ResponseEntity<String> getHomesByMoreFilters(
+            @RequestBody @Nullable AllHomesList allHomesList,
+            @RequestParam(required = false) String maxPrice,
+            @RequestParam(required = false) Boolean wifi,
+            @RequestParam(required = false) Boolean elevator,
+            @RequestParam(required = false) Boolean heating,
+            @RequestParam(required = false) Boolean kitchen,
+            @RequestParam(required = false) Boolean parking,
+            @RequestParam(required = false) Boolean tv,
+            @RequestParam(required = false) Boolean ac,
+            @RequestParam(required = false) String type
+    ) throws JsonProcessingException {
+        return ResponseEntity.ok().body(
+                convertToJson(hostService.findAllUsingMoreFilters(
+                        allHomesList,
+                        maxPrice,
+                        wifi,
+                        elevator,
+                        heating,
+                        kitchen,
+                        parking,
+                        tv,
+                        ac,
+                        type
+                )));
     }
 
     @GetMapping("/home/{id}/image")
@@ -79,5 +123,12 @@ public class PublicController {
         imageService.saveImageFileToUser(Long.valueOf(id), file);
 
         return "redirect:/user/" + id + "/show";
+    }
+
+    @GetMapping("/home/{id}/reviews")
+    public ResponseEntity<String> reviews(@PathVariable("id") Long id) throws Exception {
+        Reviews reviews = hostService.getHomeReviews(id);
+
+        return ResponseEntity.ok().body(convertToJson(reviews));
     }
 }

@@ -44,6 +44,8 @@ SAMPLE RESPONSE:
 {
     "id": 1,
     "username": "admin",
+    "firstName": "admin",
+    "lastName": "admin",
     "email": "admin@homerent.com",
     "telephone": "+306911111111",
     "approved": "1",
@@ -51,9 +53,9 @@ SAMPLE RESPONSE:
         "ROLE_ADMIN"
     ],
     "tokenType": "Bearer",
-    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE1OTgyMTkxNjQsImV4cCI6MTU5ODMwNTU2NH0.sSOaJswdb7Yz4nYNhjyOmT-CMVTxxpqI9Sepxh-Kr8TNPbOcVeFWlNSRBiOkZJ85kifNuaSY6Y8Lyfr48HAGag"
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5ODY1Mzg4MSwiZXhwIjoxNTk4NzQwMjgxfQ.lnrcahK4ODx0emZ5xJl7WGDSorc4hk33zGddSAskomognPwmLgdAZ9Rdby8q8K_jBnNTkda1oNdEx2pEAVfXSg"
 }
--------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 ADMINS ONLY:
 GET
 /api/admin/users
@@ -63,8 +65,42 @@ SAMPLE RESPONSE:
     {
         "id": 1,
         "username": "admin",
-        "firstName": "admin",
-        "lastName": "admin"
+        "firstname": "admin",
+        "lastname": "admin",
+        "email": "admin@homerent.com",
+        "telephone": "+306911111111",
+        "approved": 1,
+        "image": null
+    },
+    {
+        "id": 2,
+        "username": "nikos",
+        "firstname": "Nikos",
+        "lastname": "Papadopoulos",
+        "email": "nikos@homerent.com",
+        "telephone": "+306911111111",
+        "approved": 0,
+        "image": null
+    },
+    {
+        "id": 3,
+        "username": "giorgos",
+        "firstname": "Giorgos",
+        "lastname": "Papathanasiou",
+        "email": "giorgos@homerent.com",
+        "telephone": "+306911111111",
+        "approved": 1,
+        "image": null
+    },
+    {
+        "id": 4,
+        "username": "user",
+        "firstname": "Sir",
+        "lastname": "User",
+        "email": "user@homerent.com",
+        "telephone": "+306911111111",
+        "approved": 1,
+        "image": null
     }
 ]
 -------------------------------------------------------------------------------------------------------------
@@ -73,14 +109,18 @@ GET
 /api/admin/users/{id}
 
 SAMPLE REQUEST:
-/api/admin/users/1
+localhost:8080/api/admin/users/1
 
 SAMPLE RESPONSE:
 {
   "id" : 1,
   "username" : "admin",
-  "firstName" : "admin",
-  "lastName" : "admin"
+  "firstname" : "admin",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
 }
 -------------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
@@ -89,20 +129,28 @@ PUT
 
 SAMPLE BODY REQUEST: (right now you can change only firstname and lastname)
 {
-	"id": "1",
-	"username": "admin",
-	"firstname": "ADMINADMINADMIN",
-	"lastname": "ADMINADMINADMIN"
+  "id" : 1,
+  "username" : "admin",
+  "firstname" : "THIS IS MY NEW NAME",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
 }
 
 SAMPLE RESPONSE: (the changed user)
 {
-	"id": "1",
-	"username": "admin",
-	"firstname": "ADMINADMINADMIN",
-	"lastname": "ADMINADMINADMIN"
+  "id" : 1,
+  "username" : "admin",
+  "firstname" : "THIS IS MY NEW NAME",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
 }
--------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
 DELETE
 /api/admin/users/{id}
@@ -125,18 +173,19 @@ SAMPLE RESPONSE:
 -------------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
 GET
-/api/admin/users/unapproved
+localhost:8080/api/admin/users/unapproved
 
 SAMPLE RESPONSE:
 [
     {
         "id": 2,
-        "username": "host",
-        "firstname": "host",
-        "lastname": "host",
-        "email": "host@homerent.com",
-        "telephone": +305483754983,
-        "approved": 0
+        "username": "nikos",
+        "firstname": "Nikos",
+        "lastname": "Papadopoulos",
+        "email": "nikos@homerent.com",
+        "telephone": "+306911111111",
+        "approved": 0,
+        "image": null
     }
 ]
 -------------------------------------------------------------------------------------------------------------
@@ -177,7 +226,10 @@ SAMPLE RESPONSE 1:
   "kitchen" : false,
   "parking" : false,
   "tv" : false,
-  "wifi" : false
+  "wifi" : false,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"
 } ]
 
 SAMPLE RESPONSE 2:
@@ -190,38 +242,46 @@ POST
 /api/home/new
 
 SAMPLE REQUEST:
+localhost:8080/api/host/home/new
+
+In Body:
 {
-  "id" : 2,
-  "ownerId" : 1,
-  "ownerUsername" : "admin",
-  "reservations" : [],
-  "openBooking" : "2020-06-01",
-  "closeBooking" : "2021-12-01",
-  "price" : 100.0,
-  "address" : "Agwnistwn Stratopedou",
-  "latitude" : "0.513545",
-  "longitude" : "0.513545",
-  "description" : "It is a nice place to stay too",
-  "squareMeters" : 122,
-  "overnightPrice" : 90.0,
-  "extraPersonPrice" : 120.0,
-  "maxPeople" : 15,
+  "ownerId" : 3,
+  "ownerUsername" : "giorgos",
+  "reservations" : [ ],
+  "openBooking" : "2020-01-01",
+  "closeBooking" : "2020-10-01",
+  "image" : null,
+  "price" : 50.0,
+  "address" : "Aghsilaou",
+  "latitude" : "0.543545",
+  "longitude" : "0.553545",
+  "homeCategory" : {
+    "homeCategoryTitle" : "Shared Room"
+  },
+  "description" : "It is a nice place to stay",
+  "squareMeters" : 78,
+  "overnightPrice" : 50.0,
+  "extraPersonPrice" : 100.0,
+  "maxPeople" : 5,
   "minOvernights" : 1,
-  "beds" : 5,
-  "bathrooms" : 8,
-  "bedrooms" : 7,
+  "beds" : 3,
+  "bathrooms" : 4,
+  "bedrooms" : 3,
   "transport" : "1",
   "neighborhood" : "0",
   "houseRules" : "There are not house rules",
-  "ac" : true,
   "elevator" : true,
   "heating" : true,
   "kitchen" : true,
   "parking" : true,
   "tv" : true,
-  "wifi" : true
-}
--------------------------------------------------------------------------------------------------------------
+  "wifi" : true,
+  "ac" : true,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"
+}-------------------------------------------------------------------------------------------------------------
 HOSTS ONLY:
 
 POST (add photo to home)
@@ -237,21 +297,38 @@ SAMPLE RESPONSE:
 redirect:/home/2/show
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
-GET
+GET (all homes without filters)
 /api/public/homes/all
 
 SAMPLE RESPONSE:
 [ {
   "id" : 1,
-  "ownerId" : 1,
-  "ownerUsername" : "admin",
-  "reservations" : [ ],
+  "ownerId" : 3,
+  "ownerUsername" : "giorgos",
+  "reservations" : [ {
+    "reservationId" : 1,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2020-09-02",
+    "leaveDate" : "2020-09-29",
+    "isBooked" : 0,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 0,
+    "hostReviewDescription" : null,
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+  } ],
   "openBooking" : "2020-01-01",
   "closeBooking" : "2020-10-01",
+  "image" : null,
   "price" : 50.0,
   "address" : "Aghsilaou",
   "latitude" : "0.543545",
   "longitude" : "0.553545",
+  "homeCategory" : {
+    "id" : 2,
+    "homeCategoryTitle" : "Shared Room"
+  },
   "description" : "It is a nice place to stay",
   "squareMeters" : 78,
   "overnightPrice" : 50.0,
@@ -264,13 +341,16 @@ SAMPLE RESPONSE:
   "transport" : "1",
   "neighborhood" : "0",
   "houseRules" : "There are not house rules",
-  "ac" : false,
-  "elevator" : false,
-  "heating" : false,
-  "kitchen" : false,
-  "parking" : false,
-  "tv" : false,
-  "wifi" : false
+  "elevator" : true,
+  "heating" : true,
+  "kitchen" : true,
+  "parking" : true,
+  "tv" : true,
+  "wifi" : true,
+  "ac" : true,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"  
 } ]
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
@@ -284,51 +364,88 @@ NOTE: (How filtering works)
 4. We search for homes that have not any reservations between the arrival and departure dates
 
 SAMPLE REQUEST:
-/api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-09-30&departureDate=2020-09-31
+localhost:8080/api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-09-30&departureDate=2020-09-31
 
 SAMPLE RESPONSE 1:
-[ {
-  "id" : 1,
-  "ownerId" : 1,
-  "ownerUsername" : "admin",
-  "reservations" : [ {
-    "reservationId" : 1,
-    "bookedHomeId" : 1,
-    "bookedDate" : "2020-09-02",
-    "leaveDate" : "2020-09-29",
-    "isBooked" : 0,
-    "userIdBooked" : 1,
-    "userNameBooked" : "admin"
-  } ],
-  "openBooking" : "2020-01-01",
-  "closeBooking" : "2021-12-01",
-  "price" : 50.0,
-  "address" : "Aghsilaou",
-  "latitude" : "0.543545",
-  "longitude" : "0.553545",
-  "description" : "It is a nice place to stay",
-  "squareMeters" : 78,
-  "overnightPrice" : 50.0,
-  "extraPersonPrice" : 100.0,
-  "maxPeople" : 5,
-  "minOvernights" : 1,
-  "beds" : 3,
-  "bathrooms" : 4,
-  "bedrooms" : 3,
-  "transport" : "1",
-  "neighborhood" : "0",
-  "houseRules" : "There are not house rules",
-  "ac" : false,
-  "elevator" : false,
-  "heating" : false,
-  "kitchen" : false,
-  "parking" : false,
-  "tv" : false,
-  "wifi" : false
-} ]
+{
+  "homes" : [ {
+    "id" : 1,
+    "ownerId" : 3,
+    "ownerUsername" : "giorgos",
+    "reservations" : [ {
+      "reservationId" : 1,
+      "bookedHomeId" : 1,
+      "bookedDate" : "2020-09-02",
+      "leaveDate" : "2020-09-29",
+      "isBooked" : 0,
+      "userIdBooked" : 4,
+      "userNameBooked" : "user",
+      "hostReviewStars" : 0,
+      "hostReviewDescription" : null,
+      "homeReviewStars" : 0,
+      "homeReviewDescription" : null
+    } ],
+    "openBooking" : "2020-01-01",
+    "closeBooking" : "2020-10-01",
+    "image" : [],
+    "price" : 50.0,
+    "address" : "Aghsilaou",
+    "latitude" : "0.543545",
+    "longitude" : "0.553545",
+    "homeCategory" : {
+      "id" : 2,
+      "homeCategoryTitle" : "Shared Room"
+    },
+    "description" : "It is a nice place to stay",
+    "squareMeters" : 78,
+    "overnightPrice" : 50.0,
+    "extraPersonPrice" : 100.0,
+    "maxPeople" : 5,
+    "minOvernights" : 1,
+    "beds" : 3,
+    "bathrooms" : 4,
+    "bedrooms" : 3,
+    "transport" : "1",
+    "neighborhood" : "0",
+    "houseRules" : "There are not house rules",
+    "elevator" : true,
+    "heating" : true,
+    "kitchen" : true,
+    "parking" : true,
+    "tv" : true,
+    "wifi" : true,
+    "ac" : true,
+    "smoking" : "Yes",
+    "pets" : "Yes",
+    "events" : "No"    
+  } ]
+}
 
 SAMPLE RESPONSE 2:
-[ ]
+{
+  "homes" : [ ]
+}
+-------------------------------------------------------------------------------------------------------------
+PUBLIC FOR ALL:
+GET (with url parameters as filters) (more filters coming soon)
+/api/public/homes/more?type={Private Room ή Shared Room ή Full House}&maxPrice={double}&wifi={boolean}&elevator={boolean}&heating={boolean}&kitchen={boolean}&parking={boolean}&tv={boolean}&ac={boolean}
+
+SAMPLE REQUEST:
+localhost:8080/api/public/homes/more?type=Shared Room&maxPrice=200.0&wifi=true&elevator=true&heating=true&kitchen=true&parking=true&tv=true&ac=true
+
+ΣΗΜΑΝΤΙΚΟ: 
+1. Πρέπει να δώσεις και στο body το json που έλαβες από το προηγούμενο endpoint προκειμένου το backend να επεξεργαστεί την υπάρχων λίστα
+2. Τα φίλτρα δεν είναι ανάγκη να είναι όλα στο link. Δηλαδή σε αυτό το endpoint μπορείς να βάλεις μόνο πχ φίλτρο για τα mixPrice και Wifi, όλα τα υπόλοιπα δεν είναι υποχρεωτικά
+	Παράδειγμα: localhost:8080/api/public/homes/more?maxPrice=200.0&wifi=true
+
+SAMPLE RESPONSE 1:
+(As the above response)
+
+SAMPLE RESPONSE 2:
+{
+  "homes" : [ ]
+}
+
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
 
@@ -389,7 +506,7 @@ SAMPLE RESPONSE 2:
 -------------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
 GET (get all details for all homes)
-/api/admin/export/homes/details?format=json
+localhost:8080/api/admin/export/homes/details?format=json
 
 NOTE: format=xml or format=json
 
@@ -407,3 +524,187 @@ SAMPLE RESPONSE 2:
 
     }
 ]
+
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+POST (BOOKING)
+localhost:8080/api/secure/book
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/book
+{
+ //h diafora tou panw me tou katw einai oti edw den vazeis reservationId
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 0,
+    "hostReviewDescription" : null,
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 1:
+{
+    "reservationId" : 2,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 0,
+    "hostReviewDescription" : null,
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 2:
+"{"Status": "Error booking the room"}"
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+PUT (Update Booking)
+localhost:8080/api/secure/book
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/book
+{
+    "reservationId" : 2,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 2,
+    "hostReviewDescription" : "evala review",
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 1:
+{
+    "reservationId" : 2,
+    "bookedHomeId" : 1,
+    "bookedDate" : "2030-03-01",
+    "leaveDate" : "2030-04-14",
+    "isBooked" : 1,
+    "userIdBooked" : 4,
+    "userNameBooked" : "user",
+    "hostReviewStars" : 2,
+    "hostReviewDescription" : "evala review",
+    "homeReviewStars" : 0,
+    "homeReviewDescription" : null
+}
+
+SAMPLE RESPONSE 2:
+"{"Status": "Error updating booking"}"
+-------------------------------------------------------------------------------------------------------------
+PUBLIC FOR ALL:
+GET REVIEWS
+localhost:8080/api/public/home/{id}/reviews
+
+SAMPLE REQUEST:
+localhost:8080/api/public/home/1/reviews
+
+SAMPLE RESPONSE:
+{
+  "totalReviews" : 2,
+  "average" : 3.0,
+  "reviews" : [ 2, 4 ]
+}
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+POST (New Message)
+localhost:8080/api/secure/message/send
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/message/send
+
+In Body Request:
+{
+    "senderId" : 1,
+    "receiverId" : 4,
+    "message" : "Hello World",
+    "read" : false
+}
+
+SAMPLE RESPONSE 1:
+{
+  "messageId" : 2,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello World",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
+}
+
+SAMPLE RESPONSE 2:
+"{"Status": "Error sending the message"}"
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+GET (get all messages from user)
+localhost:8080/api/secure/messages/receivedfrom/{id}
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/messages/receivedfrom/1
+
+SAMPLE RESPONSE:
+[ {
+  "messageId" : 1,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello Spyro",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 01:57 π.μ. EEST"
+}, {
+  "messageId" : 2,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello Taki",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 01:59 π.μ. EEST"
+}, {
+  "messageId" : 3,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello Mitso",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
+}, {
+  "messageId" : 4,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello World",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:02 π.μ. EEST"
+} ]
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+DELETE (delete a message)
+localhost:8080/api/secure/message/{id}
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/message/1
+
+SAMPLE RESPONSE:
+"{"Status": "Successful Message Deletion"}"
+
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+GET (get history between two users) (not ready yet)
+localhost:8080/api/secure/messages/sender/{sender}/receiver/{receiver}
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/messages/sender/1/receiver/4
+
+SAMPLE RESPONSE:
+All History

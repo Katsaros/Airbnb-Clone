@@ -72,11 +72,18 @@ export class RegisterComponent implements OnInit {
     }
     this.body.telephone = this.telephone.value;
 
+<<<<<<< HEAD
     this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
       alert(data.message);
       if(data.message == 'User registered successfully!') {
         this.router.navigate(['/welcome']);
       }
+=======
+    // console.log(this.body);
+
+    this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
+      console.log(data);
+>>>>>>> 665a7a4c604f1c22fbb7489ec61474cf26827951
 
     });
   }
