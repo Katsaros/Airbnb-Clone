@@ -20,13 +20,13 @@
     <mat-form-field appearance="outline" style="padding: 8px">
         <mat-label style="color: white;">Κωδικός</mat-label>
         <input type="password" matInput placeholder="Κωδικός" style="color: white"[formControl]="password" required>
-        <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="password.invalid">{{getErrorMessagePass()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="padding: 8px">
         <mat-label style="color: white;">Επιβεβαίωση Κωδικού</mat-label>
         <input type="password" matInput placeholder="Επιβεβαίωση Κωδικού" style="color: white" [formControl]="passVerif" required>
-        <mat-error *ngIf="passVerif.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="passVerif.invalid">{{getErrorMessagePassVer()}}</mat-error>
     </mat-form-field>
 
     <br>

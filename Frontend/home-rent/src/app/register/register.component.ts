@@ -15,14 +15,11 @@ export class RegisterComponent implements OnInit {
   lastName = new FormControl('', [Validators.required]);
   firstName = new FormControl('', [Validators.required]);
   username = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
   passVerif = new FormControl('', [Validators.required]);
   telephone = new FormControl('', [Validators.required, Validators.minLength(10)]);
 
   role = new FormControl();
-  // mpla = new FormControl();
-
-  // role: string;
   roleList: string[] = ['Ενοικιαστής', 'Οικοδεσπότης'];
 
   body: Signup;
@@ -45,15 +42,34 @@ export class RegisterComponent implements OnInit {
 
   getErrorMessage() {
     if (this.email.hasError('required') || this.lastName.hasError('required') || this.firstName.hasError('required') ||
-        this.username.hasError('required') || this.password.hasError('required') || this.passVerif.hasError('required')) {
+        this.username.hasError('required')) {
       return 'You must enter a value';
     }
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
+  getErrorMessagePass() {
+    if (this.password.errors.required) {
+      return 'You must enter a value';
+    }
+    if (this.password.errors.minlength) {
+      return 'Password must has at least 6 digits length';
+    }
+  }
+
+  getErrorMessagePassVer() {
+    if (this.passVerif.errors.required) {
+      return 'You must enter a value';
+    }
+  }
+
   register() {
 
+    if(this.password.value != this.passVerif.value) {
+      alert('Please check the password!');
+      return;
+    }
     this.body = new Signup();
     this.body.email = this.email.value;
     this.body.username = this.username.value;
@@ -72,21 +88,14 @@ export class RegisterComponent implements OnInit {
     }
     this.body.telephone = this.telephone.value;
 
-<<<<<<< HEAD
     this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
       alert(data.message);
       if(data.message == 'User registered successfully!') {
         this.router.navigate(['/welcome']);
       }
-=======
-    // console.log(this.body);
-
-    this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
-      console.log(data);
->>>>>>> 665a7a4c604f1c22fbb7489ec61474cf26827951
-
     });
   }
+
 
 
   onFileChanged(event) {

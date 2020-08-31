@@ -63,7 +63,6 @@ export class UserRequestsComponent implements OnInit {
   userInfo(id: number) {
     this.selected = true;
     this.id = id;
-    // console.log(id);
 
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
     this.http.get<Users>('http://localhost:8080/api/admin/users/' + id.toString(), {headers: header}).subscribe(data => {
