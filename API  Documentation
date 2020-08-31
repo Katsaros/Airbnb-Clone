@@ -150,6 +150,35 @@ SAMPLE RESPONSE: (the changed user)
   "approved" : 1,
   "image" : null
 }
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+PUT
+localhost:8080/api/secure/user
+
+SAMPLE BODY REQUEST: (right now you can change only firstname and lastname)
+{
+  "id" : 1,
+  "username" : "admin",
+  "firstname" : "THIS IS MY NEW NAME",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
+}
+
+SAMPLE RESPONSE: (the changed user)
+{
+  "id" : 1,
+  "username" : "admin",
+  "firstname" : "THIS IS MY NEW NAME",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
+}
 ---------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
 DELETE
@@ -700,11 +729,46 @@ SAMPLE RESPONSE:
 -------------------------------------------------------------------------------------------------------------
 VISIBLE FOR ALL AUTHENTICATED:
 
-GET (get history between two users) (not ready yet)
+GET (get history between two users)
 localhost:8080/api/secure/messages/sender/{sender}/receiver/{receiver}
 
 SAMPLE REQUEST:
 localhost:8080/api/secure/messages/sender/1/receiver/4
 
 SAMPLE RESPONSE:
-All History
+[ {
+  "messageId" : 1,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "Hello user 1",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 01:00 π.μ. EEST"
+}, {
+  "messageId" : 5,
+  "senderId" : 4,
+  "receiverId" : 1,
+  "message" : "Hello admin",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 01:30 π.μ. EEST"
+}, {
+  "messageId" : 2,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "How are you user?",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 02:00 π.μ. EEST"
+}, {
+  "messageId" : 4,
+  "senderId" : 1,
+  "receiverId" : 4,
+  "message" : "User? Are you here?",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 03:00 π.μ. EEST"
+}, {
+  "messageId" : 6,
+  "senderId" : 4,
+  "receiverId" : 1,
+  "message" : "Sure i am fine and yes i am here",
+  "read" : false,
+  "creationTimestamp" : "2020-08-31 03:13 π.μ. EEST"
+} ]

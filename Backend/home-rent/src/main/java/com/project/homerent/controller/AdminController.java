@@ -47,8 +47,8 @@ public class AdminController {
     }
 
     @PutMapping("/users")
-    public ResponseEntity<String> updateUser(@RequestBody @Nullable UserDto userPostDto) throws JsonProcessingException {
-            return ResponseEntity.ok().body(convertToJson(userService.save(userPostDto)));
+    public ResponseEntity<String> updateUser(@RequestBody @Nullable UserDto userDto) throws JsonProcessingException {
+            return ResponseEntity.ok().body(convertToJson(userService.save(userDto)));
     }
 
     @DeleteMapping("/users/{id}")

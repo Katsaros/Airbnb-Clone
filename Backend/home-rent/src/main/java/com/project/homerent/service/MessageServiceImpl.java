@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,6 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageDto> findHistory(Long sender, Long receiver) {
-        List<MessageDto> historyMessages = new ArrayList<>();
 
         List<MessageDto> senderMessages = messageRepository.findBySenderId(sender)
             .stream()
@@ -63,37 +63,11 @@ public class MessageServiceImpl implements MessageService {
             .map(MessageConverter::convertToDto)
             .collect(Collectors.toList());
 
-        int historySize = senderMessages.size() + receivedMessages.size();
-        int priority;
 
-        for (int senderLoop=0; senderLoop<senderMessages.size(); senderLoop++) {
-            for (int receiverLoop=0; receiverLoop<receivedMessages.size(); receiverLoop++) {
+        List<MessageDto> historyMessages = new ArrayList<>(senderMessages);
+        historyMessages.addAll(receivedMessages);
 
-                priority = findPriorityMessage(senderMessages.get(senderLoop), receivedMessages.get(receiverLoop));
-                if (priority == -1) {
-                    int loop = senderLoop+1;
-                    if(loop>=senderMessages.size()){
-                        historyMessages.add(receivedMessages.get(receiverLoop));
-                        priority=100;
-                    }
-                    if(priority!=100) {
-                        historyMessages.add(senderMessages.get(senderLoop));
-                        if (loop < senderMessages.size()) senderLoop++;
-                        receiverLoop--;
-                    }
-                }
-                if (priority == 0) {
-                    int loop = senderLoop+1;
-                    if(loop<senderMessages.size())senderLoop++;
-                    historyMessages.add(receivedMessages.get(receiverLoop));
-                    senderLoop++;
-                }
-                if (priority > 0) {
-                    historyMessages.add(receivedMessages.get(receiverLoop));
-                }
-                if(priority==100)break;
-            }
-        }
+        historyMessages.sort(Comparator.comparing(MessageDto::getCreationTimestamp));
 
         return historyMessages;
     }
