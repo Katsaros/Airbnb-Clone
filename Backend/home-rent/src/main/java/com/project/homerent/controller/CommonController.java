@@ -48,6 +48,16 @@ public class CommonController {
     @Autowired
     private ImageService imageService;
 
+    @PutMapping("/user")
+    public ResponseEntity<String> updateUser(@RequestBody @Nullable UserDto userDto, Principal principal) throws JsonProcessingException {
+        User user = userService.findByUsername(principal.getName());
+        if(user.getRoles().stream().findFirst().isPresent())
+            return ResponseEntity.ok().body(convertToJson(userService.save(userDto)));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
+    }
+
+
     @GetMapping("/user/{id}/image")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws Exception {
         UserDto userDto = userService.findDtoById(Long.valueOf(id));
