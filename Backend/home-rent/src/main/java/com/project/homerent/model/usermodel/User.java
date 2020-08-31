@@ -2,6 +2,7 @@ package com.project.homerent.model.usermodel;
 
 import com.project.homerent.model.hostmodel.Reservation;
 import com.project.homerent.model.hostmodel.MyHome;
+import com.project.homerent.model.messagemodel.Message;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(	name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,10 +55,13 @@ public class User {
     @OneToMany(mappedBy = "userBooked" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Reservation> reservations;
 
+    @OneToMany(mappedBy = "sender" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Message> sentMessages;
+
     public User() {
     }
 
-    public User(String username, String email, String password, String firstName, String lastName, String telephone,  String approved) {
+    public User(String username, String email, String password, String firstName, String lastName, String telephone, String approved) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -161,5 +165,13 @@ public class User {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public List<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public void setSentMessages(List<Message> sentMessages) {
+        this.sentMessages = sentMessages;
     }
 }

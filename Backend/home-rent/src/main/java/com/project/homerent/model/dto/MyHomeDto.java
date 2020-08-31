@@ -22,12 +22,10 @@ import java.util.List;
 public class MyHomeDto {
     private long id;
 
-//    private UserDto owner;
     private long ownerId;
     private String ownerUsername;
 
     private List<ReservationDto> reservations;
-//    private List<UserDto> owner;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
