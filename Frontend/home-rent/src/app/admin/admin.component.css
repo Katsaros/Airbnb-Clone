@@ -7,9 +7,10 @@ body {
 }
 
 .right_card {
-    position: absolute;
-    right: 30px;
-    width: 30%;
+    /*position: absolute;*/
+    /*right: 30px;*/
+    width: 90%;
+    margin-top: 20%;
     border-radius: 0px;
     text-align: center;
 }

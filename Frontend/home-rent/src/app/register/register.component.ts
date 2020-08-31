@@ -3,6 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Signup} from '../signup';
 import {Response} from '../response';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,7 @@ export class RegisterComponent implements OnInit {
   body: Signup;
   selectedFile: File;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -59,13 +60,30 @@ export class RegisterComponent implements OnInit {
     this.body.firstname = this.firstName.value;
     this.body.lastname = this.lastName.value;
     this.body.password = this.password.value;
-    this.body.role = this.role.value;
+    this.body.role = [];
+
+    for(let i = 0; i < this.role.value.length; i++) {
+      if(this.role.value[i] == 'Ενοικιαστής') {
+        this.body.role.push('user');
+      }
+      else {
+        this.body.role.push('mod');
+      }
+    }
     this.body.telephone = this.telephone.value;
 
+<<<<<<< HEAD
+    this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
+      alert(data.message);
+      if(data.message == 'User registered successfully!') {
+        this.router.navigate(['/welcome']);
+      }
+=======
     // console.log(this.body);
 
     this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
       console.log(data);
+>>>>>>> 665a7a4c604f1c22fbb7489ec61474cf26827951
 
     });
   }

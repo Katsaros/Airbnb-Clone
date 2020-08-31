@@ -1,5 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
+import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
+import {Router} from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Users} from '../users';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-admin',
@@ -9,19 +14,63 @@ import {MatPaginator} from '@angular/material/paginator';
 export class AdminComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  dataSource = ['kati', 'kati allo', 'kati trito'];
-  displayedColumns: string[];
+  // dataSource = ['kati', 'kati allo', 'kati trito'];
+  dataSource;
+
+  displayedColumns: string[] = ['name', 'weight', 'symbol'];
+
+  // displayedColumns: string[];
+  unapproved: Users[];
+
   aitimata: number;
-  constructor() {
-    this.displayedColumns = ['select', 'position', 'name', 'weight', 'symbol'];
-    this.aitimata = 0;
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient) {
+    this.displayedColumns = ['name', 'weight', 'symbol'];
+    // this.aitimata = 0;
   }
 
   ngOnInit(): void {
+
+    // check if the user is admin and if he is signed in
+    let token = this.storage.get('token');
+    if(token == undefined) {
+      this.router.navigate(['/not-found']);
+    }
+    else {
+      let found = false;
+      for(let i = 0; i < token.roles.length; i++) {
+        if(token.roles[i] == 1) {
+          found = true;
+        }
+      }
+      if(found == false) {
+        this.router.navigate(['/not-found']);
+
+      }
+    }
+
+    // get all users
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    this.http.get<Users[]>('http://localhost:8080/api/admin/users', {headers: header}).subscribe(data => {
+      console.log(data);
+      this.dataSource = new MatTableDataSource<Users>(data);
+      this.dataSource.paginator = this.paginator;
+
+
+    });
+
+    this.http.get<Users[]>('http://localhost:8080/api/admin/users/unapproved', {headers: header}).subscribe(data => {
+      console.log(data);
+      this.unapproved = data;
+
+      this.aitimata = this.unapproved.length;
+
+    });
+
+
   }
 
-  open(content, pos) {
-
+  userInfo(id: number) {
+    console.log(id);
+    this.router.navigate(['/userinfo', id]);
   }
-
 }

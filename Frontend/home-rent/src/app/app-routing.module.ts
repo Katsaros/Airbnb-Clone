@@ -10,6 +10,7 @@ import {SearchComponent} from './search/search.component';
 import {UserInfoComponent} from './user-info/user-info.component';
 import {NewHomeComponent} from './new-home/new-home.component';
 import {MyhomesComponent} from './myhomes/myhomes.component';
+import {UserRequestsComponent} from './user-requests/user-requests.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,14 @@ const routes: Routes = [
   {
     path: '',
     component: WelcomeComponent
+  },
+  {
+    path: 'userinfo/:id',
+    component: UserInfoComponent
+  },
+  {
+    path: 'user-requests',
+    component: UserRequestsComponent
   },
   {
     path: '**',

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -25,13 +27,18 @@ export class AccountComponent implements OnInit {
   roleList: string[] = ['Ενοικιαστής', 'Οικοδεσπότης'];
 
 
-  constructor() {
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router) {
     this.disabled = true;
     this.username = 'ckats';
     this.password = 'mpla';
   }
 
   ngOnInit(): void {
+
+    let token = this.storage.get('token');
+    if(token == undefined) {
+      this.router.navigate(['/not-found']);
+    }
   }
 
   change_disabled() {
