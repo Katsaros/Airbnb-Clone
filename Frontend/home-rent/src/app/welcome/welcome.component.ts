@@ -26,6 +26,7 @@ export class WelcomeComponent implements OnInit {
 
   search() {
 
+
       this.router.navigate(['/search']);
   }
 

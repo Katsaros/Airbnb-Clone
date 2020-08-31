@@ -34,7 +34,7 @@
 
         <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item" *ngIf="admin == true">
-                <a class="nav-link">1 <mdb-icon fas icon="envelope"></mdb-icon></a>
+                <a class="nav-link">{{aitimata}}<mdb-icon fas icon="envelope" [routerLink]="'/admin'"></mdb-icon></a>
             </li>
             <li class="nav-item avatar dropdown" dropdown>
                 <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
