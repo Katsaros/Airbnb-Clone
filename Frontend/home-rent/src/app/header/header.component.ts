@@ -40,8 +40,6 @@ export class HeaderComponent implements OnInit{
     body.password = this.password.value;
     body.username = this.username.value;
 
-
-
     this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body).subscribe(data => {
 
       let token = {

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {Search} from '../search';
 
 @Component({
   selector: 'app-welcome',
@@ -26,6 +27,7 @@ export class WelcomeComponent implements OnInit {
 
   search() {
 
+      let body: Search;
 
       this.router.navigate(['/search']);
   }
