@@ -40,22 +40,36 @@ export class HeaderComponent implements OnInit{
     body.password = this.password.value;
     body.username = this.username.value;
 
-    this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body).subscribe(data => {
-      for (let i = 0; i < data.roles.length; i++) {
-        console.log(data.roles[i]);
-        if (data.roles[i] == 'ROLE_ADMIN') {
-          this.router.navigate(['/admin']);
-        }
-      }
 
-      const token = {
-        roles: [1],
+
+    this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body).subscribe(data => {
+
+      let token = {
+        roles: [],
         type: data.tokenType,
         accessToken: data.accessToken
       };
+      let next_page : string;
+
+      for (let i = 0; i < data.roles.length; i++) {
+        if (data.roles[i] == 'ROLE_ADMIN') {
+          token.roles.push(1);
+          next_page = '/admin';
+        }
+        if (data.roles[i] == 'ROLE_MOD') {
+          token.roles.push(2);
+          next_page = '/mod';
+        }
+        if (data.roles[i] == 'ROLE_USER') {
+          token.roles.push(3);
+          next_page = '/user';
+        }
+      }
 
       // store in local memory the token
       this.storage.set(this.STORAGE_KEY, token);
+      this.router.navigate([next_page]); // go to the next page
+
 
     });
 
