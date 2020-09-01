@@ -157,6 +157,23 @@ SAMPLE RESPONSE: (the changed user)
 -------------------------------------------------------------------------------------------------------------
 VISIBLE FOR ALL AUTHENTICATED:
 
+GET
+localhost:8080/api/secure/user
+
+SAMPLE BODY REQUEST:
+{
+  "id" : 1,
+  "username" : "admin",
+  "firstname" : "admin",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
+}
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
 PUT
 localhost:8080/api/secure/user
 
