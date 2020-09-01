@@ -175,7 +175,7 @@ SAMPLE BODY REQUEST:
 VISIBLE FOR ALL AUTHENTICATED:
 
 PUT 
-NOTE: if you add "password": "m newpassword" will change the password too. If you don't add it in json, password will stay the same as before.
+NOTE: if you add "password": "newpassword" will change the password too. If you don't add it in json, password will stay the same as before.
 localhost:8080/api/secure/user/update-all
 
 SAMPLE BODY REQUEST:
