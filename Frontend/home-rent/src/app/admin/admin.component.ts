@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Users} from '../users';
 import {MatTableDataSource} from '@angular/material/table';
@@ -72,5 +72,27 @@ export class AdminComponent implements OnInit {
   userInfo(id: number) {
     console.log(id);
     this.router.navigate(['/userinfo', id]);
+  }
+
+  export(type: string) {
+    let url = 'http://localhost:8080/api/admin/export/homes/details?format=' + type;
+
+
+
+    // export file
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+
+    this.http.get<any>(url, {headers: header}).subscribe(data => {
+      console.log(data);
+      // let str = JSON.parse(data);
+
+      let navigationExtras: NavigationExtras = {
+        state: {
+          data: data
+        }
+      }
+      this.router.navigate(['/results'], navigationExtras);
+
+    });
   }
 }

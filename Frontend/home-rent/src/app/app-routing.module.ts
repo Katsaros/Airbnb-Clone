@@ -11,6 +11,7 @@ import {UserInfoComponent} from './user-info/user-info.component';
 import {NewHomeComponent} from './new-home/new-home.component';
 import {MyhomesComponent} from './myhomes/myhomes.component';
 import {UserRequestsComponent} from './user-requests/user-requests.component';
+import {ResultsComponent} from './results/results.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     path: 'user-requests',
     component: UserRequestsComponent
+  },
+  {
+    path: 'results',
+    component: ResultsComponent
   },
   {
     path: '**',
