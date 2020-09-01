@@ -77,6 +77,8 @@ export class HeaderComponent implements OnInit{
 
       // store in local memory the token
       this.storage.set(this.STORAGE_KEY, token);
+      this.storage.set('my_info', data);
+
       this.router.navigate([next_page]); // go to the next page
 
     });

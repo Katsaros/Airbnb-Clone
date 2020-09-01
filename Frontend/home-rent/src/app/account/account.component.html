@@ -46,21 +46,21 @@
                             </mat-form-field>
                         </p>
 
-                        <section class="example-section" style="margin-right: 10px; margin-bottom: 30px">
-                            <mat-checkbox class="example-margin" [disabled]="disabled"
-                                          [checked]="enoikiastis_check" style="margin-right: 10px">
-                                Ενοικιαστής
-                            </mat-checkbox>
-                            <mat-checkbox class="example-margin" [disabled]="disabled"
-                                          [checked]="oikodespotis_check" style="margin-left: 10px">
-                                Οικοδεσπότης
-                            </mat-checkbox>
-                        </section>
+<!--                        <section class="example-section" style="margin-right: 10px; margin-bottom: 30px">-->
+<!--                            <mat-checkbox class="example-margin" [disabled]="disabled"-->
+<!--                                          [checked]="enoikiastis_check" style="margin-right: 10px">-->
+<!--                                Ενοικιαστής-->
+<!--                            </mat-checkbox>-->
+<!--                            <mat-checkbox class="example-margin" [disabled]="disabled"-->
+<!--                                          [checked]="oikodespotis_check" style="margin-left: 10px">-->
+<!--                                Οικοδεσπότης-->
+<!--                            </mat-checkbox>-->
+<!--                        </section>-->
                     </mat-card-content>
 
                     <mat-card-footer *ngIf="disabled == true">
                         <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="change_disabled()">Αλλαγή στοιχείων</button>
-                        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="delete_account()">Διαγραφή Λογαριασμού</button>
+<!--                        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="delete_account()">Διαγραφή Λογαριασμού</button>-->
                     </mat-card-footer>
 
                     <mat-card-footer *ngIf="disabled == false">

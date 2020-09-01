@@ -16,14 +16,18 @@ export class HeaderUserComponent implements OnInit {
   unapproved: Users[];
   aitimata: number;
 
+  arxiki: string;
   constructor(public router: Router, @Inject(LOCAL_STORAGE) private storage: StorageService, private http: HttpClient) { }
 
   ngOnInit(): void {
+
     this.admin = false;
     let token = this.storage.get(this.STORAGE_KEY);
-    for(let i = 0; i < token.roles.length; i++) {
-      if(token.roles[i] == 1) {
+
+    if(token.roles.length == 1) { // one role
+      if(token.roles[0] == 1) {
         this.admin = true;
+        this.arxiki = '/admin';
 
         let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
         this.http.get<Users[]>('http://localhost:8080/api/admin/users/unapproved', {headers: header}).subscribe(data => {
@@ -33,9 +37,17 @@ export class HeaderUserComponent implements OnInit {
           this.aitimata = this.unapproved.length;
 
         });
-
       }
+
     }
+    else { // tow roles
+      // for(let i = 0; i < token.roles.length; i++) {
+
+
+      // }
+    }
+
+
   }
 
   logOut() {

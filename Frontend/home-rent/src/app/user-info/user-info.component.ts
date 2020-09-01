@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Users} from '../users';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
+import {SigninResp} from '../signin-resp';
 
 @Component({
   selector: 'app-user-info',
@@ -62,6 +63,19 @@ export class UserInfoComponent implements OnInit {
     this.http.get<Users>('http://localhost:8080/api/admin/users/' + this.id.toString() + '/approve', {headers: header}).subscribe(data => {
       // alert(data.Status);
     });
+  }
+
+  delete_account() {
+
+    // delete user
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    this.http.delete<any>('http://localhost:8080/api/admin/users/' + this.id, {headers: header}).subscribe(data => {
+      // console.log(data);
+      alert(data.Status);
+
+    });
+
+
   }
 
 }
