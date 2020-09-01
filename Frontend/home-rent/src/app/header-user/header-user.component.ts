@@ -16,7 +16,7 @@ export class HeaderUserComponent implements OnInit {
   unapproved: Users[];
   aitimata: number;
 
-  constructor(private router: Router, @Inject(LOCAL_STORAGE) private storage: StorageService, private http: HttpClient) { }
+  constructor(public router: Router, @Inject(LOCAL_STORAGE) private storage: StorageService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.admin = false;

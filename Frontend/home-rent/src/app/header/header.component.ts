@@ -47,27 +47,37 @@ export class HeaderComponent implements OnInit{
         type: data.tokenType,
         accessToken: data.accessToken
       };
+
       let next_page : string;
 
-      for (let i = 0; i < data.roles.length; i++) {
-        if (data.roles[i] == 'ROLE_ADMIN') {
+      if(data.roles.length == 1) { // one role
+        if (data.roles[0] == 'ROLE_ADMIN') {
           token.roles.push(1);
           next_page = '/admin';
         }
-        if (data.roles[i] == 'ROLE_MOD') {
+        if (data.roles[0] == 'ROLE_MOD') {
           token.roles.push(2);
           next_page = '/mod';
+
+          if(data.approved == "0") {
+            alert('The account has not been approved from the administrator yet!');
+            return;
+          }
         }
-        if (data.roles[i] == 'ROLE_USER') {
+        if (data.roles[0] == 'ROLE_USER') {
           token.roles.push(3);
           next_page = '/user';
         }
+      }
+      else { // tow roles, user and mod
+        token.roles.push(2);
+        token.roles.push(3);
+        next_page = '/both'
       }
 
       // store in local memory the token
       this.storage.set(this.STORAGE_KEY, token);
       this.router.navigate([next_page]); // go to the next page
-
 
     });
 
