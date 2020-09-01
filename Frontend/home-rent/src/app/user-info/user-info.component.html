@@ -42,7 +42,6 @@
 
         <div class="col-6" align="center">
 
-
             <mat-card style="margin-top: 20%; width: 90%; border-radius: 0px; text-align: center; align-items: center; position: absolute; height: 60vh">
                 <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 30px;border-bottom: 1px solid #ccc">
                     Φωτογραφία Λογαριασμού
@@ -55,6 +54,7 @@
             </mat-card>
 
             <button *ngIf="oikodespotis_to_be == true" mat-raised-button style="background-color: #81d9c4; margin-top: 10%" (click)="accept()">Αποδοχή Αιτήματος Οικοδεσπότη</button>
+            <button mat-raised-button style="background-color: #81d9c4; margin-top: 10%" (click)="delete_account()">Διαγραφή Λογαριασμού</button>
 
         </div>
     </div>

@@ -9,4 +9,3 @@ export class Users {
     approved: number;
     // roles: string[];
 }
-

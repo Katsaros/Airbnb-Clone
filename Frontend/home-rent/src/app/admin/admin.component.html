@@ -61,8 +61,8 @@
                 </mat-card-content>
 
                 <mat-card-footer>
-                    <button mat-button style="padding-right: 20px; padding-left: 20px">XML</button>
-                    <button mat-button style="padding-left: 20px; padding-right: 20px">JSON</button>
+                    <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="export('xml')">XML</button>
+                    <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="export('json')">JSON</button>
                 </mat-card-footer>
             </mat-card>
 
