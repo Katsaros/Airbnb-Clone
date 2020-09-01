@@ -2,10 +2,7 @@ package com.project.homerent.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.project.homerent.model.dto.MessageDto;
-import com.project.homerent.model.dto.MyHomeDto;
-import com.project.homerent.model.dto.ReservationDto;
-import com.project.homerent.model.dto.UserDto;
+import com.project.homerent.model.dto.*;
 import com.project.homerent.model.usermodel.User;
 import com.project.homerent.service.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -48,8 +45,17 @@ public class CommonController {
     @Autowired
     private ImageService imageService;
 
-    @PutMapping("/user")
-    public ResponseEntity<String> updateUser(@RequestBody @Nullable UserDto userDto, Principal principal) throws JsonProcessingException {
+    @GetMapping("/user")
+    public ResponseEntity<String> getUser(Principal principal) throws JsonProcessingException {
+        User user = userService.findByUsername(principal.getName());
+        if(user.getRoles().stream().findFirst().isPresent())
+            return ResponseEntity.ok().body(convertToJson(userService.findDtoById(user.getId())));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
+    }
+
+    @PutMapping("/user/update")
+    public ResponseEntity<String> simpleUpdate(@RequestBody @Nullable UserDto userDto, Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
         if(user.getRoles().stream().findFirst().isPresent())
             return ResponseEntity.ok().body(convertToJson(userService.save(userDto)));
@@ -57,6 +63,14 @@ public class CommonController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
     }
 
+    @PutMapping("/user/update-all")
+    public ResponseEntity<String> updateUserAndPassword(@RequestBody @Nullable UserPostDto userPostDto, Principal principal) throws JsonProcessingException {
+        User user = userService.findByUsername(principal.getName());
+        if(user.getRoles().stream().findFirst().isPresent())
+            return ResponseEntity.ok().body(convertToJson(userService.save(userPostDto)));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
+    }
 
     @GetMapping("/user/{id}/image")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws Exception {
