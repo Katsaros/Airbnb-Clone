@@ -54,16 +54,19 @@ public class CommonController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
     }
 
-    @PutMapping("/user/update")
-    public ResponseEntity<String> simpleUpdate(@RequestBody @Nullable UserDto userDto, Principal principal) throws JsonProcessingException {
+    @DeleteMapping("/user/delete")
+    public ResponseEntity<String> simpleUpdate(Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
-        if(user.getRoles().stream().findFirst().isPresent())
-            return ResponseEntity.ok().body(convertToJson(userService.save(userDto)));
-        else
+        if(user.getRoles().stream().findFirst().isPresent()) {
+            userService.deleteById(user.getId());
+            return ResponseEntity.ok().body("{\"Status\": \"Successful Deletion\"}");
+        }
+        else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
+        }
     }
 
-    @PutMapping("/user/update-all")
+    @PutMapping("/user/update")
     public ResponseEntity<String> updateUserAndPassword(@RequestBody @Nullable UserPostDto userPostDto, Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
         if(user.getRoles().stream().findFirst().isPresent())
