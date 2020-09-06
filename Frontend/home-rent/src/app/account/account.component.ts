@@ -2,10 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {Router} from '@angular/router';
-import {Users} from '../users';
 import {SigninResp} from '../signin-resp';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-account',
@@ -25,6 +23,10 @@ export class AccountComponent implements OnInit {
   phone: string;
 
   hide = true;
+
+  imageUrl: any;
+
+  photo: any;
 
   // username = new FormControl();
 
@@ -47,6 +49,10 @@ export class AccountComponent implements OnInit {
     this.last_name = this.my_info.lastName;
     this.email = this.my_info.email;
     this.phone = this.my_info.telephone;
+    // this.getPhoto();
+
+    // this.photo = this.getPhoto();
+
 
   }
 
@@ -56,6 +62,9 @@ export class AccountComponent implements OnInit {
     if(token == undefined) {
       this.router.navigate(['/not-found']);
     }
+
+    this.getPhoto();
+    // this.photo = this.getPhoto();
   }
 
   change_disabled() {
@@ -103,5 +112,17 @@ export class AccountComponent implements OnInit {
 
   }
 
+  getPhoto() {
+
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    // header.append('Content-Type', 'image/jpeg');
+    let url = 'http://localhost:8080/api/secure/user/' + this.my_info.id + '/image';
+    this.http.get(url, {headers: header}).subscribe(data => {
+      // this.imageUrl = URL.createObjectURL(data);
+    });
+
+
+
+  }
 
 }

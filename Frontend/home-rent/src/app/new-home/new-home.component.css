@@ -4,3 +4,8 @@ body {
     height: 100vh;
     padding: 0;
 }
+
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+}

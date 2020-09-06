@@ -43,6 +43,10 @@ const routes: Routes = [
     component: MyhomesComponent
   },
   {
+    path: 'mod',
+    component: MyhomesComponent
+  },
+  {
     path: 'newhome',
     component: NewHomeComponent
   },

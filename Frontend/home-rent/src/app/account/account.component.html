@@ -75,7 +75,11 @@
                     <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Φωτογραφία Λογαριασμού</mat-card-title>
 
                     <mat-card-content>
-                        <img src="assets/avatar.jpeg">
+                        <img [src]="imageUrl">
+<!--                        <iframe [srcdoc]="getPhoto()"></iframe>-->
+<!--                        <img [src]="photo">-->
+<!--                        <img [src]="getPhoto()">-->
+<!--                        <img src="assets/avatar.jpeg">-->
                     </mat-card-content>
 
                     <mat-card-footer>

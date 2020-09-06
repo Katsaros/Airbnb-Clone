@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Signup} from '../signup';
 import {Response} from '../response';
 import {Router} from '@angular/router';
+import {SigninResp} from '../signin-resp';
+import {Signin} from '../signin';
+import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-register',
@@ -22,10 +25,12 @@ export class RegisterComponent implements OnInit {
   role = new FormControl();
   roleList: string[] = ['Ενοικιαστής', 'Οικοδεσπότης'];
 
+  STORAGE_KEY = 'token';
+
   body: Signup;
   selectedFile: File;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
   ngOnInit(): void {
   }
@@ -91,7 +96,56 @@ export class RegisterComponent implements OnInit {
     this.http.post<Response>('http://localhost:8080/api/auth/signup', this.body).subscribe(data => {
       alert(data.message);
       if(data.message == 'User registered successfully!') {
-        this.router.navigate(['/welcome']);
+
+        let signin: Signin;
+        signin = new Signin();
+        signin.username = this.body.username;
+        signin.password = this.body.password;
+        this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', signin).subscribe(data => {
+          let token = {
+            roles: [],
+            type: data.tokenType,
+            accessToken: data.accessToken
+          };
+
+          let next_page : string;
+
+          if(data.roles.length == 1) { // one role
+            if (data.roles[0] == 'ROLE_ADMIN') {
+              token.roles.push(1);
+              next_page = '/admin';
+            }
+            if (data.roles[0] == 'ROLE_MOD') {
+              token.roles.push(2);
+              next_page = '/mod';
+
+              if(data.approved == "0") {
+                alert('The account has not been approved from the administrator yet!');
+                return;
+              }
+            }
+            if (data.roles[0] == 'ROLE_USER') {
+              token.roles.push(3);
+              next_page = '/user';
+            }
+          }
+          else { // tow roles, user and mod
+            token.roles.push(2);
+            token.roles.push(3);
+            next_page = '/both'
+          }
+
+          // store in local memory the token
+          this.storage.set(this.STORAGE_KEY, token);
+          this.storage.set('my_info', data);
+
+
+          let user_id = data.id;
+          this.onUpload(user_id);
+
+          this.router.navigate([next_page]); // go to the next page
+
+        });
       }
       else {
         alert(data.message);
@@ -99,17 +153,17 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-
-
   onFileChanged(event) {
     this.selectedFile = event.target.files[0];
   }
 
-  onUpload() {
+  onUpload(id) {
     // upload code goes here
 
-    // this.http.post('http://localhost:8080/api/public/home/' + /image', this.selectedFile)
-    //     .subscribe(...);
+    const formData: FormData = new FormData();
+    formData.append('imagefile', this.selectedFile, this.selectedFile.name);
+    this.http.post('http://localhost:8080/api/public/user/' + id.toString() + '/image', formData).subscribe( data => {
+    });
   }
 
 }
