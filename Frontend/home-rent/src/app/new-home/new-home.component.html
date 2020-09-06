@@ -113,7 +113,7 @@
                     <p>
                         <mat-form-field appearance="outline" style="width: 300px">
                             <mat-label>Events</mat-label>
-                            <textarea matInput [formControl]="events"></textarea>
+                            <textarea matInput [formControl]="events" [disabled]="disabled"></textarea>
                         </mat-form-field>
 
                     </p>
@@ -123,7 +123,7 @@
                     <mat-checkbox class="example-margin"
                                   [checked]="allComplete"
                                   [indeterminate]="someComplete()"
-                                  (change)="setAll($event.checked)">
+                                  (change)="setAll($event.checked)" [disabled]="disabled">
                       {{task.name}}
                     </mat-checkbox>
                   </span>
@@ -133,7 +133,7 @@
                             <div class="row">
                                 <div class="col-2" *ngFor="let subtask of task.subtasks">
                                     <mat-checkbox [(ngModel)]="subtask.completed"
-                                                  (ngModelChange)="updateAllComplete()">
+                                                  (ngModelChange)="updateAllComplete()" [disabled]="disabled">
                                     {{subtask.name}}
                                     </mat-checkbox>
                                 </div>
@@ -144,7 +144,8 @@
                   </span>
                 </section>
 
-                    <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="save()">Αποθήκευση</button>
+                    <button mat-button *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px" (click)="save()">Αποθήκευση</button>
+                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="change()">Τροποποίηση</button>
 
                 </mat-card-content>
             </mat-card>

@@ -2,9 +2,10 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {NavigationExtras, Router} from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Users} from '../users';
 import {MatTableDataSource} from '@angular/material/table';
+import { NgxXml2jsonService } from 'ngx-xml2json';
 
 @Component({
   selector: 'app-admin',
@@ -14,16 +15,13 @@ import {MatTableDataSource} from '@angular/material/table';
 export class AdminComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  // dataSource = ['kati', 'kati allo', 'kati trito'];
   dataSource;
-
   displayedColumns: string[] = ['name', 'weight', 'symbol'];
-
-  // displayedColumns: string[];
   unapproved: Users[];
 
   aitimata: number;
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient) {
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient,
+              private ngxXml2jsonService: NgxXml2jsonService) {
     this.displayedColumns = ['name', 'weight', 'symbol'];
     // this.aitimata = 0;
   }
@@ -77,22 +75,47 @@ export class AdminComponent implements OnInit {
   export(type: string) {
     let url = 'http://localhost:8080/api/admin/export/homes/details?format=' + type;
 
-
-
     // export file
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
 
-    this.http.get<any>(url, {headers: header}).subscribe(data => {
-      console.log(data);
-      // let str = JSON.parse(data);
+    if(type == 'json') {
+      this.http.get<any>(url, {headers: header}).subscribe(data => {
+        console.log(data);
 
-      let navigationExtras: NavigationExtras = {
-        state: {
-          data: data
+        let navigationExtras: NavigationExtras = {
+          state: {
+            data: data
+          }
         }
-      }
-      this.router.navigate(['/results'], navigationExtras);
+        this.router.navigate(['/results'], navigationExtras);
 
-    });
+      });
+    }
+    else {
+
+      // header = header.append('Content-Type', 'text/plain;charset=UTF-8');
+      let params = new HttpParams().append('format', 'xml');
+      url = 'http://localhost:8080/api/admin/export/homes/details';
+      // console.log(url);
+
+      this.http.get<any>(url, {headers: header, params: params, responseType: 'text' as 'json' }).subscribe(data => {
+        console.log(data);
+        // let str = JSON.parse(data);
+        // let json_data = converter.xml2json(data);
+
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data, 'text/xml');
+        const obj = this.ngxXml2jsonService.xmlToJson(xml);
+
+        let navigationExtras: NavigationExtras = {
+          state: {
+            data: data
+          }
+        }
+        this.router.navigate(['/results'], navigationExtras);
+
+      });
+    }
+
   }
 }

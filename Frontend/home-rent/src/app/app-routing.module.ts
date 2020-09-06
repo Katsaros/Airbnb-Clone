@@ -51,6 +51,10 @@ const routes: Routes = [
     component: NewHomeComponent
   },
   {
+    path: 'newhome/:extras',
+    component: NewHomeComponent
+  },
+  {
     path: 'userinfo',
     component: UserInfoComponent
   },

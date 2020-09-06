@@ -3,8 +3,8 @@ import {NominatimResponse} from '../nominati-response';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {NominatimService} from '../nominatim.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {HomeCategory, NewHome} from '../home';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Home, HomeCategory, NewHome} from '../home';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {Response} from '../response';
 
@@ -27,11 +27,12 @@ export interface Task {
 
 export class NewHomeComponent implements OnInit {
 
-  constructor(private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(private route: ActivatedRoute, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
   newHome: NewHome = new NewHome();
 
-  dieuthinsi: FormControl = new FormControl();
+  current_home: Home = new Home();
+  dieuthinsi: FormControl = new FormControl({disabled: true});
   perigrafi: FormControl = new FormControl();
   tetragonika: FormControl = new FormControl();
   odigies: FormControl = new FormControl();
@@ -47,7 +48,7 @@ export class NewHomeComponent implements OnInit {
   events: FormControl = new FormControl();
   eidos: FormControl = new FormControl();
 
-
+  extras;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -60,6 +61,7 @@ export class NewHomeComponent implements OnInit {
   mouseY: number;
 
   mymap: any;
+  disabled: boolean;
 
 
   long: number = 23.729762;
@@ -84,9 +86,76 @@ export class NewHomeComponent implements OnInit {
     ]
   };
 
-
-
   ngOnInit() {
+
+    this.extras = this.route.snapshot.paramMap.get('extras');
+    if(this.extras != null) {
+      this.current_home = this.storage.get('home');
+      this.disabled = true;
+      this.dieuthinsi.setValue(this.current_home.address);
+      this.dieuthinsi.disable();
+      this.atoma.setValue(this.current_home.maxPeople);
+      this.atoma.disable();
+
+      this.range.setValue({start: this.current_home.openBooking, end: this.current_home.closeBooking});
+      // console.log(this.range.value);
+      // this.range.value.start.setValue(this.current_home.openBooking);
+      // this.range.value.end.setValue(this.current_home.closeBooking);
+      this.epipleontimi.setValue(this.current_home.extraPersonPrice);
+      this.epipleontimi.disable();
+
+      this.timi.setValue(this.current_home.price);
+      this.timi.disable();
+
+      this.perigrafi.setValue(this.current_home.description);
+      this.perigrafi.disable();
+
+      this.odigies.setValue(this.current_home.transport);
+      this.odigies.disable();
+
+      this.tetragonika.setValue(this.current_home.squareMeters);
+      this.tetragonika.disable();
+
+      // this.timi.setValue(this.current_home.overnightPrice);
+      this.min_dianikt.setValue(this.current_home.minOvernights);
+      this.min_dianikt.disable();
+
+      this.bedrooms.setValue(this.current_home.bedrooms);
+      this.bedrooms.disable();
+
+      this.beds.setValue(this.current_home.beds);
+      this.beds.disable();
+
+      this.bathrooms.setValue(this.current_home.bathrooms);
+      this.bathrooms.disable();
+
+      // this.odigies.setValue(this.current_home.transport);
+      // this.odigies.disable();
+
+      this.geitonia.setValue(this.current_home.neighborhood);
+      this.geitonia.disable();
+
+      this.kanonismoi.setValue(this.current_home.houseRules);
+      this.kanonismoi.disable();
+
+      this.events.setValue(this.current_home.events);
+      this.events.disable();
+
+      this.task.subtasks[0].completed = this.current_home.ac
+      this.task.subtasks[1].completed = this.current_home.heating;
+      this.task.subtasks[2].completed = this.current_home.wifi;
+      this.task.subtasks[3].completed =this.current_home.elevator;
+      this.task.subtasks[4].completed = this.current_home.kitchen;
+      this.task.subtasks[5].completed = this.current_home.parking;
+      this.task.subtasks[6].completed = this.current_home.tv;
+      this.task.subtasks[7].completed = this.current_home.smoking;
+      this.task.subtasks[8].completed = this.current_home.pets;
+      // this.events.setValue(this.current_home.events);
+      this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
+      this.eidos.disable();
+
+    }
+
     var mousePositionControl = new ol.control.MousePosition({
       coordinateFormat: ol.coordinate.createStringXY(4),
       projection: 'EPSG:4326',
@@ -170,7 +239,6 @@ export class NewHomeComponent implements OnInit {
     });
   }
 
-
   save() {
     let my_info = this.storage.get('my_info');
     this.newHome.address = this.dieuthinsi.value;
@@ -208,11 +276,16 @@ export class NewHomeComponent implements OnInit {
     this.newHome.homeCategory = new HomeCategory();
     this.newHome.homeCategory.homeCategoryTitle = this.eidos.value;
 
-    let url = 'http://localhost:8080/api/host/home/new';
-    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    if(this.current_home == undefined) {
+      // create new home
+      let url = 'http://localhost:8080/api/host/home/new';
+      let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
 
-    this.http.post<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
-
+      this.http.post<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
+    }
+    else {
+      // update home
+    }
   }
 
   updateAllComplete() {
@@ -234,6 +307,23 @@ export class NewHomeComponent implements OnInit {
     this.task.subtasks.forEach(t => t.completed = completed);
   }
 
+  change() {
+    this.dieuthinsi.enable();
+    this.atoma.enable();
+    this.epipleontimi.enable();
+    this.timi.enable();
+    this.perigrafi.enable();
+    this.odigies.enable();
+    this.tetragonika.enable();
+    this.min_dianikt.enable();
+    this.bedrooms.enable();
+    this.beds.enable();
+    this.bathrooms.enable();
+    this.geitonia.enable();
+    this.kanonismoi.enable();
+    this.events.enable();
+    this.eidos.enable();
 
+  }
 
 }
