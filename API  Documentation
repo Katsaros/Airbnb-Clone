@@ -1,7 +1,5 @@
-﻿
 Geocoding API KEY: cfd032737bac482c9b20abb4ffdc3cb2
-
-
+-------------------------------------------------------------------------------------------------------------
 API Documentation
 -------------------------------------------------------------------------------------------------------------
 SAMPLE BODY REQUEST:
@@ -157,10 +155,28 @@ SAMPLE RESPONSE: (the changed user)
 -------------------------------------------------------------------------------------------------------------
 VISIBLE FOR ALL AUTHENTICATED:
 
-PUT
+GET
 localhost:8080/api/secure/user
 
-SAMPLE BODY REQUEST: (right now you can change only firstname and lastname)
+SAMPLE BODY REQUEST:
+{
+  "id" : 1,
+  "username" : "admin",
+  "firstname" : "admin",
+  "lastname" : "admin",
+  "email" : "admin@homerent.com",
+  "telephone" : "+306911111111",
+  "approved" : 1,
+  "image" : null
+}
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+PUT 
+NOTE: if you add "password": "newpassword" will change the password too. If you don't add it in json, password will stay the same as before.
+localhost:8080/api/secure/user/update
+
+SAMPLE BODY REQUEST:
 {
   "id" : 1,
   "username" : "admin",
@@ -183,6 +199,17 @@ SAMPLE RESPONSE: (the changed user)
   "approved" : 1,
   "image" : null
 }
+---------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+DELETE
+localhost:8080/api/secure/user/delete
+
+SAMPLE REQUEST:
+localhost:8080/api/secure/user/delete
+
+SAMPLE RESPONSE:
+{"Status": "Successful Deletion"}
 ---------------------------------------------------------------------------------------------------------
 ADMINS ONLY:
 DELETE

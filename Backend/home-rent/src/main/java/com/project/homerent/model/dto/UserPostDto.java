@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
@@ -15,14 +16,10 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class UserPostDto {
-    private long userId;
+    private long id;
 
-    @NotNull
-    @NotEmpty
     private String username;
 
-    @NotNull
-    @NotEmpty
     private String password;
 
     private String email;
@@ -30,8 +27,9 @@ public class UserPostDto {
     private String firstname;
     private String lastname;
 
-    private Set<Role> roles;
-
     private String telephone;
-    private String approved;
+    private int approved;
+
+    @Lob
+    private Byte[] image;
 }

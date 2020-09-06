@@ -66,7 +66,7 @@ public class Helpers {
         XStream xstream = new XStream();
         xstream.alias("Home", MyHomeDto.class);
         xstream.alias("Homes", AllHomesList.class);
-        xstream.addImplicitCollection(AllHomesList.class, "list");
+        xstream.addImplicitCollection(AllHomesList.class, "homes");
 
         AllHomesList list = new AllHomesList();
 
