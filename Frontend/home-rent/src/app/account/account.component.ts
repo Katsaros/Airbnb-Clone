@@ -12,6 +12,8 @@ import {MatTableDataSource} from '@angular/material/table';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
+
+
 export class AccountComponent implements OnInit {
 
   disabled: boolean;
@@ -24,29 +26,28 @@ export class AccountComponent implements OnInit {
 
   hide = true;
 
+  // username = new FormControl();
+
   enoikiastis_check: boolean = false;
   oikodespotis_check: boolean = false;
 
   role = new FormControl('', [Validators.required]);
   roleList: string[] = ['Ενοικιαστής', 'Οικοδεσπότης'];
 
-  my_info: SigninResp;
+  // my_info: SigninResp;
+
+  my_info: any;
 
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient) {
     this.my_info = this.storage.get('my_info');
     this.disabled = true;
     this.username = this.my_info.username;
     this.password = '';
+    this.name = this.my_info.firstName;
+    this.last_name = this.my_info.lastName;
+    this.email = this.my_info.email;
+    this.phone = this.my_info.telephone;
 
-    // let roles = this.storage.get('token').roles;
-    // for(let i = 0; i < roles.length; i ++) {
-    //   if(roles[i] == "ROLE_USER") {
-    //     this.enoikiastis_check = true;
-    //   }
-    //   else if(roles[i] == "ROLE_MOD") {
-    //     this.oikodespotis_check = true;
-    //   }
-    // }
   }
 
   ngOnInit(): void {
@@ -64,21 +65,14 @@ export class AccountComponent implements OnInit {
   save() {
 
     let id = this.my_info.id;
-    let changed_user: {
-      id: number;
-      username: string;
-      firstname: string;
-      lastname: string;
-      email: string;
-      telephone: string;
-      approved: 1;
-      image: null;
-    }
+    let changed_user: SigninResp = new SigninResp();
     changed_user.id = id;
     changed_user.username = this.username;
     changed_user.lastname = this.last_name;
     changed_user.telephone = this.phone;
     changed_user.firstname = this.name;
+
+    console.log(changed_user);
 
 
     // change account details
@@ -92,12 +86,18 @@ export class AccountComponent implements OnInit {
   }
 
   cancel() {
-    this.disabled = !this.disabled;
-  }
+    this.username = this.my_info.username;
+    this.password = '';
+    this.name = this.my_info.firstName;
+    this.last_name = this.my_info.lastName;
+    this.email = this.my_info.email;
+    this.phone = this.my_info.telephone;
 
-  // delete_account() {
-  //
-  // }
+    console.log(this.username);
+
+    this.disabled = !this.disabled;
+
+  }
 
   change_photo() {
 

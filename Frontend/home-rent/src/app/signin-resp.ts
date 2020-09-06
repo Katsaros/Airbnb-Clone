@@ -7,5 +7,7 @@ export class SigninResp {
     roles: string[];
     tokenType: string;
     accessToken: string;
+    lastname: string;
+    firstname: string;
 
 }

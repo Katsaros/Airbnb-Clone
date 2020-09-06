@@ -107,6 +107,9 @@ export class RegisterComponent implements OnInit {
 
   onUpload() {
     // upload code goes here
+
+    // this.http.post('http://localhost:8080/api/public/home/' + /image', this.selectedFile)
+    //     .subscribe(...);
   }
 
 }

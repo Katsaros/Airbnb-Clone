@@ -10,7 +10,7 @@
                         <p>
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Username</mat-label>
-                                <input matInput value="{{username}}" [disabled]="disabled" style="color: #0d0d0d">
+                                <input matInput value="{{username}}" [disabled]="disabled" [(ngModel)]="username" style="color: #0d0d0d">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
