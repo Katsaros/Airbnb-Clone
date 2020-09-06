@@ -62,7 +62,7 @@ import { ResultsComponent } from './results/results.component';
     NewHomeComponent,
     MyhomesComponent,
     UserRequestsComponent,
-    ResultsComponent
+    ResultsComponent,
   ],
     imports: [
         TextFieldModule,

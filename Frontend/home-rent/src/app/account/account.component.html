@@ -10,7 +10,7 @@
                         <p>
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Username</mat-label>
-                                <input matInput value="{{username}}" [disabled]="disabled" style="color: #0d0d0d">
+                                <input matInput value="{{username}}" [disabled]="disabled" [(ngModel)]="username" style="color: #0d0d0d">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
@@ -46,16 +46,7 @@
                             </mat-form-field>
                         </p>
 
-<!--                        <section class="example-section" style="margin-right: 10px; margin-bottom: 30px">-->
-<!--                            <mat-checkbox class="example-margin" [disabled]="disabled"-->
-<!--                                          [checked]="enoikiastis_check" style="margin-right: 10px">-->
-<!--                                Ενοικιαστής-->
-<!--                            </mat-checkbox>-->
-<!--                            <mat-checkbox class="example-margin" [disabled]="disabled"-->
-<!--                                          [checked]="oikodespotis_check" style="margin-left: 10px">-->
-<!--                                Οικοδεσπότης-->
-<!--                            </mat-checkbox>-->
-<!--                        </section>-->
+
                     </mat-card-content>
 
                     <mat-card-footer *ngIf="disabled == true">
@@ -75,7 +66,11 @@
                     <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Φωτογραφία Λογαριασμού</mat-card-title>
 
                     <mat-card-content>
-                        <img src="assets/avatar.jpeg">
+                        <img [src]="imageUrl">
+<!--                        <iframe [srcdoc]="getPhoto()"></iframe>-->
+<!--                        <img [src]="photo">-->
+<!--                        <img [src]="getPhoto()">-->
+<!--                        <img src="assets/avatar.jpeg">-->
                     </mat-card-content>
 
                     <mat-card-footer>
