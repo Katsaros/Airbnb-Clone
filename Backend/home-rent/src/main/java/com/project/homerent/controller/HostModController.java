@@ -60,6 +60,15 @@ public class HostModController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"Error\"}");
     }
 
+    @PutMapping("/home/update")
+    public ResponseEntity<String> updateHome(@RequestBody MyHomeDto myHomePostDto, Principal principal) throws Exception {
+        User user = userService.findByUsername(principal.getName());
+        if(user.getRoles().stream().findFirst().isPresent())
+            return ResponseEntity.ok().body(convertToJson(hostService.save(myHomePostDto)));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"Error\"}");
+    }
+
     @PostMapping("home/{id}/image")
     public String handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file){
 
