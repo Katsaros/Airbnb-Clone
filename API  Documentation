@@ -341,7 +341,54 @@ In Body:
   "smoking" : "Yes",
   "pets" : "Yes",
   "events" : "No"
-}-------------------------------------------------------------------------------------------------------------
+}
+-------------------------------------------------------------------------------------------------------------
+HOSTS ONLY:
+PUT
+/api/home/update
+
+SAMPLE REQUEST:
+localhost:8080/api/host/home/update
+
+In Body:
+{
+  "id" : 5,
+  "ownerId" : 3,
+  "ownerUsername" : "giorgos",
+  "reservations" : [ ],
+  "openBooking" : "2020-01-01",
+  "closeBooking" : "2020-10-01",
+  "image" : null,
+  "price" : 50.0,
+  "address" : "Aghsilaou",
+  "latitude" : "0.543545",
+  "longitude" : "0.553545",
+  "homeCategory" : {
+    "homeCategoryTitle" : "Shared Room"
+  },
+  "description" : "It is a nice place to stay",
+  "squareMeters" : 78,
+  "overnightPrice" : 50.0,
+  "extraPersonPrice" : 100.0,
+  "maxPeople" : 5,
+  "minOvernights" : 1,
+  "beds" : 3,
+  "bathrooms" : 4,
+  "bedrooms" : 3,
+  "transport" : "1",
+  "neighborhood" : "0",
+  "houseRules" : "There are not house rules",
+  "elevator" : true,
+  "heating" : true,
+  "kitchen" : true,
+  "parking" : true,
+  "tv" : true,
+  "wifi" : true,
+  "ac" : true,
+  "smoking" : "Yes",
+  "pets" : "Yes",
+  "events" : "No"
+}
 HOSTS ONLY:
 
 POST (add photo to home)
