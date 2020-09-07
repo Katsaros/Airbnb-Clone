@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit{
     body.username = this.username.value;
 
     this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body).subscribe(data => {
-      // console.log(data);
+      console.log(data);
 
       let token = {
         roles: [],
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit{
           token.roles.push(1);
           next_page = '/admin';
         }
-        if (data.roles[0] == 'ROLE_MOD') {
+        if (data.roles[0] == 'ROLE_MODERATOR') {
           token.roles.push(2);
           next_page = '/myhomes';
 

@@ -88,74 +88,6 @@ export class NewHomeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.extras = this.route.snapshot.paramMap.get('extras');
-    if(this.extras != null) {
-      // console.log("not null");
-      this.current_home = this.storage.get('home');
-      this.disabled = true;
-      this.dieuthinsi.setValue(this.current_home.address);
-      this.dieuthinsi.disable();
-      this.atoma.setValue(this.current_home.maxPeople);
-      this.atoma.disable();
-
-      this.range.setValue({start: this.current_home.openBooking, end: this.current_home.closeBooking});
-      // console.log(this.range.value);
-      // this.range.value.start.setValue(this.current_home.openBooking);
-      // this.range.value.end.setValue(this.current_home.closeBooking);
-      this.epipleontimi.setValue(this.current_home.extraPersonPrice);
-      this.epipleontimi.disable();
-
-      this.timi.setValue(this.current_home.price);
-      this.timi.disable();
-
-      this.perigrafi.setValue(this.current_home.description);
-      this.perigrafi.disable();
-
-      this.odigies.setValue(this.current_home.transport);
-      this.odigies.disable();
-
-      this.tetragonika.setValue(this.current_home.squareMeters);
-      this.tetragonika.disable();
-
-      // this.timi.setValue(this.current_home.overnightPrice);
-      this.min_dianikt.setValue(this.current_home.minOvernights);
-      this.min_dianikt.disable();
-
-      this.bedrooms.setValue(this.current_home.bedrooms);
-      this.bedrooms.disable();
-
-      this.beds.setValue(this.current_home.beds);
-      this.beds.disable();
-
-      this.bathrooms.setValue(this.current_home.bathrooms);
-      this.bathrooms.disable();
-
-      // this.odigies.setValue(this.current_home.transport);
-      // this.odigies.disable();
-
-      this.geitonia.setValue(this.current_home.neighborhood);
-      this.geitonia.disable();
-
-      this.kanonismoi.setValue(this.current_home.houseRules);
-      this.kanonismoi.disable();
-
-      this.events.setValue(this.current_home.events);
-      this.events.disable();
-
-      this.task.subtasks[0].completed = this.current_home.ac
-      this.task.subtasks[1].completed = this.current_home.heating;
-      this.task.subtasks[2].completed = this.current_home.wifi;
-      this.task.subtasks[3].completed =this.current_home.elevator;
-      this.task.subtasks[4].completed = this.current_home.kitchen;
-      this.task.subtasks[5].completed = this.current_home.parking;
-      this.task.subtasks[6].completed = this.current_home.tv;
-      this.task.subtasks[7].completed = this.current_home.smoking;
-      this.task.subtasks[8].completed = this.current_home.pets;
-      // this.events.setValue(this.current_home.events);
-      this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
-      this.eidos.disable();
-
-    }
 
     var mousePositionControl = new ol.control.MousePosition({
       coordinateFormat: ol.coordinate.createStringXY(4),
@@ -181,6 +113,8 @@ export class NewHomeComponent implements OnInit {
     });
 
     this.mymap.on('click', e => {
+      if(this.disabled == false) {
+
       let coordinates = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
 
       this.long = coordinates[0];
@@ -203,15 +137,63 @@ export class NewHomeComponent implements OnInit {
 
       let url_address = 'https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lon=' + this.long.toString() + '&lat=' + this.lat.toString();
       this.http.get<any>(url_address).subscribe(data => {
-        // console.log(data.display_name);
-        // console.log(this.mymap.getLayers().N.length);
-        // if(this.mymap.getLayers().N.length <= 1) {
           this.dieuthinsi.setValue(data.display_name);
-        // }
       });
+      }
 
     });
     this.dieuthinsi.setValue('');
+
+    this.extras = this.route.snapshot.paramMap.get('extras');
+    if(this.extras != null) {
+      this.current_home = this.storage.get('home');
+      this.disabled = true;
+      this.dieuthinsi.setValue(this.current_home.address);
+      this.dieuthinsi.disable();
+      this.atoma.setValue(this.current_home.maxPeople);
+      this.atoma.disable();
+
+      this.range.setValue({start: this.current_home.openBooking, end: this.current_home.closeBooking});
+      this.epipleontimi.setValue(this.current_home.extraPersonPrice);
+      this.epipleontimi.disable();
+      this.timi.setValue(this.current_home.price);
+      this.timi.disable();
+      this.perigrafi.setValue(this.current_home.description);
+      this.perigrafi.disable();
+      this.odigies.setValue(this.current_home.transport);
+      this.odigies.disable();
+      this.tetragonika.setValue(this.current_home.squareMeters);
+      this.tetragonika.disable();
+      this.min_dianikt.setValue(this.current_home.minOvernights);
+      this.min_dianikt.disable();
+      this.bedrooms.setValue(this.current_home.bedrooms);
+      this.bedrooms.disable();
+      this.beds.setValue(this.current_home.beds);
+      this.beds.disable();
+      this.bathrooms.setValue(this.current_home.bathrooms);
+      this.bathrooms.disable();
+      this.geitonia.setValue(this.current_home.neighborhood);
+      this.geitonia.disable();
+      this.kanonismoi.setValue(this.current_home.houseRules);
+      this.kanonismoi.disable();
+      this.events.setValue(this.current_home.events);
+      this.events.disable();
+      this.task.subtasks[0].completed = this.current_home.ac
+      this.task.subtasks[1].completed = this.current_home.heating;
+      this.task.subtasks[2].completed = this.current_home.wifi;
+      this.task.subtasks[3].completed =this.current_home.elevator;
+      this.task.subtasks[4].completed = this.current_home.kitchen;
+      this.task.subtasks[5].completed = this.current_home.parking;
+      this.task.subtasks[6].completed = this.current_home.tv;
+      this.task.subtasks[7].completed = this.current_home.smoking;
+      this.task.subtasks[8].completed = this.current_home.pets;
+      this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
+      this.eidos.disable();
+
+      this.search();
+
+      }
+
   }
 
   search() {
