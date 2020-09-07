@@ -19,7 +19,7 @@
                </mat-card-content>
                <mat-card-actions>
                    <button mat-button (click)="openDialog(card)">Προβολή</button>
-                   <button mat-button>Διαγραφή</button>
+                   <button mat-button (click)="delete(card.id)">Διαγραφή</button>
                </mat-card-actions>
            </mat-card>
        </div>

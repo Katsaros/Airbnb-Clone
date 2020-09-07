@@ -289,7 +289,6 @@ export class NewHomeComponent implements OnInit {
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
       this.http.put<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
     }
-    // }
   }
 
   updateAllComplete() {
