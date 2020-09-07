@@ -5,31 +5,31 @@
     <div id="formContent">
 
 
-      <h1 style="color: white"> Αναζήτηση Δωματίου/Κατοικίας</h1>
+      <h1 style="color: white">Search for houses and apartments to rent!</h1>
 
       <br>
       <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Συνοικία</mat-label>
+        <mat-label style="color: white;">Συνοικία (wtf is sinikoia?)</mat-label>
         <input matInput placeholder="Συνοικία" style="color: white" [formControl]="synoikia">
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Πόλη</mat-label>
-        <input matInput placeholder="Πόλη" style="color: white" [formControl]="poli">
+        <mat-label style="color: white;">City</mat-label>
+        <input matInput placeholder="City" style="color: white" [formControl]="poli">
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Χώρα</mat-label>
-        <input matInput placeholder="Χώρα" style="color: white" [formControl]="xora">
+        <mat-label style="color: white;">Country</mat-label>
+        <input matInput placeholder="Country" style="color: white" [formControl]="xora">
       </mat-form-field>
 
       <br>
 
       <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Χρονικό Διάστημα</mat-label>
+        <mat-label style="color: white;">Pick Dates</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Άφιξη">
-          <input matEndDate formControlName="end" placeholder="Αναχώρηση">
+          <input matStartDate formControlName="start" placeholder="Arrival">
+          <input matEndDate formControlName="end" placeholder="Departure">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
@@ -39,19 +39,48 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white">Αριθμός Επισκεπτών</mat-label>
-        <input matInput type="number" placeholder="Επισκέπτες" style="color: white" [formControl]="visitors" min="1">
+        <mat-label style="color: white">Visitors</mat-label>
+        <input matInput type="number" placeholder="Visitors" style="color: white" [formControl]="visitors" min="1">
         <mat-error *ngIf="visitors.invalid" style="color: white">Ελαχιστος Αριθμός: 1</mat-error>
       </mat-form-field>
 
       <br>
 
-      <button mat-raised-button style="margin: 10px; background-color: #81d9c4; font-size: 20px;" (click)="search()">Αναζήτηση</button>
+      <button mat-raised-button class="searchbutton" (click)="search()">Search</button>
 
     </div>
-
+</div>
+<div class="container section2">
+  <div class="row">
+    <div class="col-4">
+      <div class="swiper-slide swiper-slide-active" style="width: 373.333px;">
+        <div class="icon-boxes__box">
+            <img src="https://d2dlxvmcs24r4u.cloudfront.net/modules/spiti24/images/box-2.png" alt="">
+            <h4>Find the perfect home</h4>
+            <p>Choose advanced search filters according to the criteria you want, to view the results that match your needs.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="swiper-slide swiper-slide-active" style="width: 373.333px;">
+        <div class="icon-boxes__box">
+            <img src="https://d2dlxvmcs24r4u.cloudfront.net/modules/spiti24/images/box-3.png" alt="">
+            <h4>Properties on the map</h4>
+            <p>Check the results of every search on the map and discover the available properties in each area based on their exact location.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="swiper-slide swiper-slide-active" style="width: 373.333px;">
+        <div class="icon-boxes__box">
+            <img style="max-width: 81px" src="https://cdn.iconscout.com/icon/free/png-512/apple-settings-1-493162.png" alt="">
+            <h4>Host or Tenant?</h4>
+            <p>Sign up as host, tenant or both! Our plarform can work with both roles with a Common Sign In functionality.</p>
+        </div>
+      </div>
+    </div>
   </div>
-
+</div>
 </body>
 
 

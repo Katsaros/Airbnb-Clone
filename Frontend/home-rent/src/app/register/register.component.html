@@ -12,34 +12,34 @@
 
     <br>
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Όνομα Χρήστη</mat-label>
-        <input matInput placeholder="Όνομα Χρήστη" style="color: white" [formControl]="username" required>
+        <mat-label style="color: white;">Username</mat-label>
+        <input matInput placeholder="Username" style="color: white" [formControl]="username" required>
         <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Κωδικός</mat-label>
-        <input type="password" matInput placeholder="Κωδικός" style="color: white"[formControl]="password" required>
+        <mat-label style="color: white;">Password</mat-label>
+        <input type="password" matInput placeholder="Password" style="color: white"[formControl]="password" required>
         <mat-error *ngIf="password.invalid">{{getErrorMessagePass()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Επιβεβαίωση Κωδικού</mat-label>
-        <input type="password" matInput placeholder="Επιβεβαίωση Κωδικού" style="color: white" [formControl]="passVerif" required>
+        <mat-label style="color: white;">Password Check</mat-label>
+        <input type="password" matInput placeholder="Password Check" style="color: white" [formControl]="passVerif" required>
         <mat-error *ngIf="passVerif.invalid">{{getErrorMessagePassVer()}}</mat-error>
     </mat-form-field>
 
     <br>
 
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Όνομα</mat-label>
-        <input matInput placeholder="Όνομα" style="color: white" [formControl]="firstName" required>
+        <mat-label style="color: white;">First Name</mat-label>
+        <input matInput placeholder="First Name" style="color: white" [formControl]="firstName" required>
         <mat-error *ngIf="firstName.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Επίθετο</mat-label>
-        <input matInput placeholder="Επίθετο" style="color: white" [formControl]="lastName" required>
+        <mat-label style="color: white;">Last Name</mat-label>
+        <input matInput placeholder="Last Name" style="color: white" [formControl]="lastName" required>
         <mat-error *ngIf="lastName.invalid">{{getErrorMessage()}}</mat-error>
 
     </mat-form-field>
@@ -54,14 +54,14 @@
     <br>
 
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white;">Τηλέφωνο Επικοινωνίας</mat-label>
-        <input matInput maxlength="10" placeholder="Τηλέφωνο Επικοινωνίας" style="color: white" [formControl]="telephone" required style="color: white">
+        <mat-label style="color: white;">Telephone Number</mat-label>
+        <input matInput maxlength="10" placeholder="Telephone Number" style="color: white" [formControl]="telephone" required style="color: white">
         <mat-error *ngIf="telephone.invalid">{{getPhoneErrorMessage()}}</mat-error>
         <mat-hint align="end" style="color: white">{{telephone.value?.length || 0}}/10</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="padding: 8px">
-        <mat-label style="color: white">Ρόλος Χρήστη</mat-label>
+        <mat-label style="color: white">User Role</mat-label>
         <mat-select [formControl]="role" multiple style="color: white" required>
             <mat-option *ngFor="let r of roleList" [value]="r" >{{r}}</mat-option>
         </mat-select>
