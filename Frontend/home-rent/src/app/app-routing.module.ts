@@ -12,6 +12,7 @@ import {NewHomeComponent} from './new-home/new-home.component';
 import {MyhomesComponent} from './myhomes/myhomes.component';
 import {UserRequestsComponent} from './user-requests/user-requests.component';
 import {ResultsComponent} from './results/results.component';
+import {HomeInfoComponent} from './home-info/home-info.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'userinfo',
     component: UserInfoComponent
+  },
+  {
+    path: 'home-info/:id',
+    component: HomeInfoComponent
   },
   {
     path: '',

@@ -4,8 +4,6 @@
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-
-
       <h1 style="color: white">Search for houses and apartments to rent!</h1>
 
       <br>
@@ -51,7 +49,7 @@
 
     </div>
 </div>
-<div class="container section2">
+<div class="container section2" *ngIf="logged_in == false">
   <div class="row">
     <div class="col-4">
       <div class="swiper-slide swiper-slide-active" style="width: 373.333px;">

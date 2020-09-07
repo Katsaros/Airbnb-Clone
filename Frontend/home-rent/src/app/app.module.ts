@@ -45,6 +45,7 @@ import {NominatimService} from './nominatim.service';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { ResultsComponent } from './results/results.component';
+import { HomeInfoComponent } from './home-info/home-info.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ResultsComponent } from './results/results.component';
     MyhomesComponent,
     UserRequestsComponent,
     ResultsComponent,
+    HomeInfoComponent,
   ],
     imports: [
         TextFieldModule,

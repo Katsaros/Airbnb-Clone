@@ -69,14 +69,9 @@ export class WelcomeComponent implements OnInit {
               Number(this.range.value.end.getMonth() + 1).toString() + '-' +
               this.range.value.end.getDate().toString();
 
-          // let url = 'http://localhost:8080/api/public/homes?people=4&latitude=0.543545&longitude=0.553541&arrivalDate=2020-09-30&departureDate=2020-09-31'
+          this.storage.set('url', url);
 
-          // console.log(url);
-          this.http.get<any>(url).subscribe(data => {
-          //     let body: Search;
-              console.log(data);
-          // this.router.navigate(['/search']);
-        });
+          this.router.navigate(['/search']);
     });
 
   }

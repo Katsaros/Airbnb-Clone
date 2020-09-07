@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   homes: Home[] = [];
   my_info: any;
   user: boolean = false;
-
+  logged_in: boolean;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -37,27 +37,28 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
 
     this.my_info = this.storage.get('my_info');
-    let token = this.storage.get('token');
-    if(token == undefined) {
-      this.router.navigate(['/not-found']);
+    if(this.my_info == null) {
+      this.logged_in = false;
     }
     else {
-      let found = false;
-      for(let i = 0; i < token.roles.length; i++) {
-        if(token.roles[i] == 2) {
-          found = true;
-        }
-      }
-      if(found == false) {
-        this.router.navigate(['/not-found']);
-
-      }
+      this.logged_in = true;
     }
 
-    if(this.my_info.roles.length == 2) { //tow roles
-      this.user = true;
-    }
-
+    this.search();
   }
 
+  search() {
+    let url = this.storage.get('url');
+
+    this.http.get<any>(url).subscribe(data => {
+      this.homes = data.homes;
+      console.log(this.homes);
+
+    });
+  }
+
+  openDialog(card): void {
+    this.storage.set('home', card);
+    this.router.navigate(['/home_info', card.id]);
+  }
 }

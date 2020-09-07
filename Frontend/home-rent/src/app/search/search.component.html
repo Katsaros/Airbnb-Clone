@@ -1,12 +1,6 @@
 <body>
-<app-header-user></app-header-user>
-
-<!--<button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" style="width: 100px; height: 100px" routerLink="/newhome">-->
-<!--    <mat-icon>add</mat-icon>-->
-<!--</button>-->
-
-<!--<button mat-raised-button style="background-color: #81d9c4; margin: 10px" (click)="goSearch()" *ngIf="user == true">Search homes</button>-->
-
+<app-header-user *ngIf="logged_in == true"></app-header-user>
+<app-header *ngIf="logged_in == false"></app-header>
 
 <div class="container-fluid" style="padding-top: 10px">
     <div class="row">
@@ -21,10 +15,21 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-button (click)="openDialog(card)">Προβολή</button>
-                    <button mat-button (click)="delete(card.id)">Διαγραφή</button>
                 </mat-card-actions>
             </mat-card>
         </div>
+    </div>
+    <div class="row" *ngIf="homes.length == 0">
+        <div class="col-12">
+            <mat-card style="text-align: center; padding-top: 200px;; padding-bottom: 200px;">
+                <mat-card-content style="text-align: center">
+                    <h1>No Results Found!</h1>
+                    <button mat-raised-button class="searchbutton" [routerLink]="'/welcome'">New Search</button>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+
     </div>
 </div>
 
