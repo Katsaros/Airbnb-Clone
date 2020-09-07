@@ -15,7 +15,7 @@
 
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Κωδικός</mat-label>
-                                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" ] style="color: #0d0d0d">
+                                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" style="color: #0d0d0d">
                                 <button *ngIf="disabled == false" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" style="width: 20px; height: 20px">
                                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
@@ -25,19 +25,19 @@
                         <p>
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Όνομα</mat-label>
-                                <input matInput [formControl]="name" ] style="color: #0d0d0d">
+                                <input matInput [formControl]="name" style="color: #0d0d0d">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Επίθετο</mat-label>
-                                <input matInput [formControl]="last_name" ] style="color: #0d0d0d">
+                                <input matInput [formControl]="last_name" style="color: #0d0d0d">
                             </mat-form-field>
                         </p>
 
                         <p>
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Email</mat-label>
-                                <input matInput [formControl]="email" ] style="color: #0d0d0d">
+                                <input matInput [formControl]="email" style="color: #0d0d0d">
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
@@ -67,10 +67,7 @@
 
                     <mat-card-content>
                         <img [src]="imageUrl">
-<!--                        <iframe [srcdoc]="getPhoto()"></iframe>-->
-<!--                        <img [src]="photo">-->
-<!--                        <img [src]="getPhoto()">-->
-<!--                        <img src="assets/avatar.jpeg">-->
+
                     </mat-card-content>
 
                     <mat-card-footer>

@@ -90,6 +90,7 @@ export class NewHomeComponent implements OnInit {
 
     this.extras = this.route.snapshot.paramMap.get('extras');
     if(this.extras != null) {
+      // console.log("not null");
       this.current_home = this.storage.get('home');
       this.disabled = true;
       this.dieuthinsi.setValue(this.current_home.address);
@@ -203,10 +204,14 @@ export class NewHomeComponent implements OnInit {
       let url_address = 'https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lon=' + this.long.toString() + '&lat=' + this.lat.toString();
       this.http.get<any>(url_address).subscribe(data => {
         // console.log(data.display_name);
-        this.dieuthinsi.setValue(data.display_name);
+        // console.log(this.mymap.getLayers().N.length);
+        // if(this.mymap.getLayers().N.length <= 1) {
+          this.dieuthinsi.setValue(data.display_name);
+        // }
       });
 
     });
+    this.dieuthinsi.setValue('');
   }
 
   search() {
@@ -311,6 +316,7 @@ export class NewHomeComponent implements OnInit {
   }
 
   change() {
+    this.disabled = !this.disabled;
     this.dieuthinsi.enable();
     this.atoma.enable();
     this.epipleontimi.enable();
@@ -326,7 +332,13 @@ export class NewHomeComponent implements OnInit {
     this.kanonismoi.enable();
     this.events.enable();
     this.eidos.enable();
+  }
 
+  delete() {
+    let url = 'http://localhost:8080/api/home' + this.extras + '/delete';
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    this.http.delete<any>(url, {headers: header} ).subscribe(data =>{});
+    this.router.navigate(['/myhomes']);
   }
 
 }

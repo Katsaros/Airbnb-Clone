@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit{
         }
         if (data.roles[0] == 'ROLE_MOD') {
           token.roles.push(2);
-          next_page = '/mod';
+          next_page = '/myhomes';
 
           if(data.approved == "0") {
             alert('The account has not been approved from the administrator yet!');
@@ -73,13 +73,14 @@ export class HeaderComponent implements OnInit{
       else { // tow roles, user and mod
         token.roles.push(2);
         token.roles.push(3);
-        next_page = '/both'
+        next_page = '/myhomes';
       }
 
       // store in local memory the token
       this.storage.set(this.STORAGE_KEY, token);
       this.storage.set('my_info', data);
 
+      // console.log(next_page);
       this.router.navigate([next_page]); // go to the next page
 
     });

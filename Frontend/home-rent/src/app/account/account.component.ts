@@ -71,7 +71,7 @@ export class AccountComponent implements OnInit {
       this.router.navigate(['/not-found']);
     }
 
-    this.getPhoto();
+    // this.getPhoto();
     // this.photo = this.getPhoto();
   }
 

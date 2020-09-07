@@ -28,6 +28,7 @@ export class MyhomesComponent implements OnInit {
               private http: HttpClient, private changeDetectorRef: ChangeDetectorRef, private dialog: MatDialog) {
   }
 
+  user: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   obs: Observable<any>;
@@ -45,7 +46,6 @@ export class MyhomesComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.my_info = this.storage.get('my_info');
     let token = this.storage.get('token');
     if(token == undefined) {
@@ -62,6 +62,10 @@ export class MyhomesComponent implements OnInit {
         this.router.navigate(['/not-found']);
 
       }
+    }
+
+    if(this.my_info.roles.length == 2) { //tow roles
+      this.user = true;
     }
 
 
@@ -139,6 +143,10 @@ export class MyhomesComponent implements OnInit {
 
       });
     });
+  }
+
+  goSearch() {
+
   }
 
 }

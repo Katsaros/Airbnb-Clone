@@ -113,7 +113,7 @@
                     <p>
                         <mat-form-field appearance="outline" style="width: 300px">
                             <mat-label>Events</mat-label>
-                            <textarea matInput [formControl]="events" [disabled]="disabled"></textarea>
+                            <textarea matInput [formControl]="events"></textarea>
                         </mat-form-field>
 
                     </p>
@@ -146,6 +146,8 @@
 
                     <button mat-button *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px" (click)="save()">Αποθήκευση</button>
                     <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="change()">Τροποποίηση</button>
+                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="delete()">Διαγραφή</button>
+
 
                 </mat-card-content>
             </mat-card>

@@ -12,7 +12,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class HeaderUserComponent implements OnInit {
   STORAGE_KEY = 'token';
 
-  admin: boolean;
+  admin: boolean = false;
+  user: boolean = false;
+  mod: boolean = false;
+
   unapproved: Users[];
   aitimata: number;
 
@@ -21,7 +24,7 @@ export class HeaderUserComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.admin = false;
+    // this.admin = false;
     let token = this.storage.get(this.STORAGE_KEY);
 
     if(token.roles.length == 1) { // one role
@@ -38,15 +41,22 @@ export class HeaderUserComponent implements OnInit {
 
         });
       }
+      else if(token.roles[0] == 2) {
+        this.mod = true;
+        this.arxiki = '/myhomes';
+      }
+      else {
+        this.user = true;
+        this.arxiki = '/account';
+      }
 
     }
     else { // tow roles
-      // for(let i = 0; i < token.roles.length; i++) {
+      this.user = true;
+      this.mod = true;
+      this.arxiki = '/myhomes';
 
-
-      // }
     }
-
 
   }
 

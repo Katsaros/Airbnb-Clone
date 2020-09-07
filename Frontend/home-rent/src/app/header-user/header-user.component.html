@@ -3,7 +3,6 @@
 <mdb-navbar-brand><a class="navbar-brand" routerLink="/home">Home-Rent</a></mdb-navbar-brand>
 
     <links>
-        <!-- Links -->
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link waves-light" mdbWavesEffect [routerLink]="arxiki">Αρχική</a>
@@ -14,9 +13,13 @@
             <li class="nav-item">
                 <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/account'">Λογαριασμός</a>
             </li>
-
+            <li class="nav-item" *ngIf="user==true">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/search'">Αναζήτηση</a>
+            </li>
+            <li class="nav-item" *ngIf="mod==true">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/myhomes'">Σπίτια</a>
+            </li>
         </ul>
-        <!-- Links -->
 
         <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item" *ngIf="admin == true">
