@@ -76,6 +76,7 @@ public class HostServiceImpl implements HostService {
 
     @Override
     public void deleteById(Long id) {
+        hostRepository.deleteById(id);
     }
 
     @Override

@@ -76,4 +76,16 @@ public class HostModController {
 
         return "redirect:/home/" + id + "/show";
     }
+
+    @DeleteMapping("/home/{id}/delete")
+    public ResponseEntity<String> simpleUpdate(@PathVariable("id") Long id, Principal principal) throws JsonProcessingException {
+        User user = userService.findByUsername(principal.getName());
+        if(user.getRoles().stream().findFirst().isPresent()) {
+            hostService.deleteById(id);
+            return ResponseEntity.ok().body("{\"Status\": \"Successful Deletion\"}");
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"User not found\"}");
+        }
+    }
 }
