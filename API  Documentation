@@ -391,6 +391,23 @@ In Body:
 }
 -------------------------------------------------------------------------------------------------------------
 HOSTS ONLY:
+POST
+/api/home/{id}/delete
+
+SAMPLE REQUEST:
+localhost:8080/api/home/2/delete
+
+SAMPLE RESPONSE 1:
+{
+    "Status" : "Successful Deletion"
+}
+
+SAMPLE RESPONSE 2:
+{
+    "Status" : "User not found"
+}
+-------------------------------------------------------------------------------------------------------------
+HOSTS ONLY:
 
 POST (add photo to home)
 localhost:8080/api/host/home/{id}/image
