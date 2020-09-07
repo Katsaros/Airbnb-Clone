@@ -4,14 +4,96 @@
 
 <div class="container-fluid" style="padding-top: 10px">
     <div class="row">
-        <div class="col-2">
+        <div class="col-3">
+            <mat-card>
+                <mat-card-header style="text-align: center; width: 100%">
+                    <mat-card-title style="width: 100%; text-align: center;">Filters</mat-card-title>
+                    <mat-card-subtitle style="width: 100%; text-align: center;">Choose extra Filters</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
 
+                    <p style="padding-top: 10px; font-size: 18px">Accomondation Type:</p>
+
+                    <mat-form-field appearance="fill">
+<!--                        <mat-label>Favorite food</mat-label>-->
+                        <mat-select [(value)]="selected_type">
+                            <mat-option *ngFor="let type of accom" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+<!--                    <section class="example-section">-->
+<!--                  <span class="example-list-section">-->
+<!--                    <mat-checkbox class="example-margin"-->
+<!--                                  [checked]="allComplete1"-->
+<!--                                  [indeterminate]="someComplete1()"-->
+<!--                                  (change)="setAll1($event.checked)">-->
+<!--                      {{accom.name}}-->
+<!--                    </mat-checkbox>-->
+<!--                  </span>-->
+<!--                        <br>-->
+<!--                        <span class="example-list-section">-->
+<!--                        <div class="container-fluid">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-12" *ngFor="let subtask of accom.subtasks">-->
+<!--                                    <mat-checkbox [(ngModel)]="subtask.completed"-->
+<!--                                                  (ngModelChange)="updateAllComplete1()">-->
+<!--                                    {{subtask.name}}-->
+<!--                                    </mat-checkbox>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                  </span>-->
+<!--                    </section>-->
+
+
+                    <p style="padding-top: 20px; font-size: 18px">Max Price: </p>
+                    <p>
+                    <mat-form-field appearance="outline" style="width: 200px">
+                        <mat-label>Max Price</mat-label>
+                        <input matInput [formControl]="timi" style="color: #0d0d0d">
+                    </mat-form-field>
+                    </p>
+
+                    <p style="padding-top: 10px; font-size: 18px">Facilities: </p>
+
+                    <section class="example-section">
+                  <span class="example-list-section">
+                    <mat-checkbox class="example-margin"
+                                  [checked]="allComplete"
+                                  [indeterminate]="someComplete()"
+                                  (change)="setAll($event.checked)">
+                      {{task.name}}
+                    </mat-checkbox>
+                  </span>
+                        <br>
+                        <span class="example-list-section">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12" *ngFor="let subtask of task.subtasks">
+                                    <mat-checkbox [(ngModel)]="subtask.completed"
+                                                  (ngModelChange)="updateAllComplete()">
+                                    {{subtask.name}}
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                  </span>
+                    </section>
+
+                    <button mat-raised-button class="searchbutton" (click)="newFilters()">Apply Filters</button>
+
+
+                </mat-card-content>
+
+            </mat-card>
 
         </div>
-        <div class="col-10">
+        <div class="col-9">
             <div class="container-fluid" >
+                <mat-paginator [pageSizeOptions]="[10]" [showFirstLastButtons]="true"></mat-paginator>
                 <div class="row">
-                    <div class="col-3" *ngFor="let card of obs | async" style="padding: 10px">
+                    <div class="col-6" *ngFor="let card of obs | async" style="padding: 10px">
                         <mat-card style="text-align: center">
                             <mat-card-header style="text-align: center">
                                 <mat-card-title >Κατηγορία: {{card.homeCategory.homeCategoryTitle}}</mat-card-title>
@@ -35,15 +117,10 @@
                             </mat-card-content>
                         </mat-card>
                     </div>
-
-
                 </div>
             </div>
 
-            <mat-paginator [pageSizeOptions]="[12, 24]"></mat-paginator>
-
-
-
+            <mat-paginator [pageSizeOptions]="[10]" [showFirstLastButtons]="true"></mat-paginator>
 
         </div>
     </div>

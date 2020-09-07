@@ -70,9 +70,8 @@ export class NewHomeComponent implements OnInit {
   allComplete: boolean = false;
 
   task: Task = {
-    name: 'Επιλογή Όλων',
+    name: 'Select All',
     completed: false,
-    // color: 'primary',
     subtasks: [
       {name: 'A/C', completed: false},
       {name: 'Θέρμανση', completed: false},
