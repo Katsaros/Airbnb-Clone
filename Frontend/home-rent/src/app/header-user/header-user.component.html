@@ -4,10 +4,10 @@
 
     <links>
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="user == false">
                 <a class="nav-link waves-light" mdbWavesEffect [routerLink]="arxiki">Αρχική</a>
             </li>
-            <li class="nav-item" *ngIf="admin==true">
+            <li class="nav-item" *ngIf="admin == true">
                 <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/user-requests'">Αιτήματα</a>
             </li>
             <li class="nav-item">

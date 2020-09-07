@@ -1,9 +1,10 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Search} from '../search';
 import {Users} from '../users';
 import {HttpClient} from '@angular/common/http';
+import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 
 declare var ol: any;
 
@@ -21,7 +22,8 @@ export class WelcomeComponent implements OnInit {
     xora = new FormControl();
     visitors = new FormControl();
 
-    constructor(private router: Router, private http: HttpClient) { }
+    logged_in: boolean;
+    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient) { }
 
   range = new FormGroup({
     start: new FormControl(),
@@ -29,6 +31,14 @@ export class WelcomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
+      if(this.storage.get('my_info') == null) {
+          this.logged_in = false;
+          this.router.navigate(['/']);
+      }
+      else {
+          this.logged_in = true;
+          this.router.navigate(['/welcome']);
+      }
   }
 
   search() {

@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit{
         }
         if (data.roles[0] == 'ROLE_USER') {
           token.roles.push(3);
-          next_page = '/account';
+          next_page = '/welcome';
         }
       }
       else { // tow roles, user and mod

@@ -1,5 +1,6 @@
 <body>
-<app-header></app-header>
+<app-header *ngIf="logged_in == false"></app-header>
+<app-header-user *ngIf="logged_in == true"></app-header-user>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
