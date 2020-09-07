@@ -170,9 +170,13 @@ export class SearchComponent implements OnInit {
       params = params.append('maxPrice', this.timi.value);
     }
 
-    params = params.append('data', JSON.stringify(this.homes));
+    // params = params.append('data', JSON.stringify(this.homes));
     // console.log(params);
-    this.http.get<any>(url, {params: params}).subscribe(data => {
+    let body = {
+      homes: this.homes
+    }
+    // console.log(body);
+    this.http.post<any>(url, body,{params: params}).subscribe(data => {
       this.homes = data.homes;
       console.log(this.homes);
 
