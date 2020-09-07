@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {Form, FormControl, Validators} from '@angular/forms';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {Router} from '@angular/router';
-import {SigninResp} from '../signin-resp';
+import {ChangedUser, ChangedUserPass, SigninResp} from '../signin-resp';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
@@ -15,12 +15,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class AccountComponent implements OnInit {
 
   disabled: boolean;
-  username: string;
-  name: string;
-  last_name: string;
-  password: string;
-  email: string;
-  phone: string;
+  username: FormControl = new FormControl();
+  name: FormControl = new FormControl();
+  last_name: FormControl = new FormControl();
+  password: FormControl = new FormControl();
+  email: FormControl = new FormControl();
+  phone: FormControl = new FormControl();
 
   hide = true;
 
@@ -43,12 +43,20 @@ export class AccountComponent implements OnInit {
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient) {
     this.my_info = this.storage.get('my_info');
     this.disabled = true;
-    this.username = this.my_info.username;
-    this.password = '';
-    this.name = this.my_info.firstName;
-    this.last_name = this.my_info.lastName;
-    this.email = this.my_info.email;
-    this.phone = this.my_info.telephone;
+    this.username.setValue(this.my_info.username);
+    this.username.disable();
+    this.password.setValue('');
+    this.password.disable();
+    this.name.setValue(this.my_info.firstName);
+    this.name.disable();
+    this.last_name.setValue(this.my_info.lastName);
+    this.last_name.disable();
+    this.email.setValue(this.my_info.email);
+    this.email.disable();
+    this.phone.setValue(this.my_info.telephone);
+    this.phone.disable();
+
+
     // this.getPhoto();
 
     // this.photo = this.getPhoto();
@@ -72,31 +80,61 @@ export class AccountComponent implements OnInit {
   }
 
   save() {
+    if(this.password.value != '') {
+      let id = this.my_info.id;
+      let changed_user: ChangedUserPass = new ChangedUserPass();
+      changed_user.id = id;
+      changed_user.username = this.username.value;
+      changed_user.lastname = this.last_name.value;
+      changed_user.telephone = this.phone.value;
+      changed_user.firstname = this.name.value;
+      changed_user.password = this.password.value;
 
-    let id = this.my_info.id;
-    let changed_user: SigninResp = new SigninResp();
-    changed_user.id = id;
-    changed_user.username = this.username;
-    changed_user.lastname = this.last_name;
-    changed_user.telephone = this.phone;
-    changed_user.firstname = this.name;
+      console.log(changed_user);
 
-    console.log(changed_user);
+      // change account details
+      let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user,{headers: header}).subscribe(data => {
+        console.log(data);
+        this.storage.set('my_info', data);
+        this.my_info = this.storage.get('my_info');
 
+      });
+    }
+    else {
+      let id = this.my_info.id;
+      let changed_user: ChangedUser = new ChangedUser();
+      changed_user.id = id;
+      changed_user.username = this.username.value;
+      changed_user.lastname = this.last_name.value;
+      changed_user.telephone = this.phone.value;
+      changed_user.firstname = this.name.value;
 
-    // change account details
-    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user,{headers: header}).subscribe(data => {
-      console.log(data);
+      console.log(changed_user);
 
-    });
+      // change account details
+      let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user,{headers: header}).subscribe(data => {
+        console.log(data);
+
+        this.storage.set('my_info', data);
+        this.my_info = this.storage.get('my_info');
+
+      });
+    }
 
     this.disabled = !this.disabled;
+    this.username.disable();
+    this.password.disable();
+    this.name.disable();
+    this.last_name.disable();
+    this.email.disable();
+    this.phone.disable();
   }
 
   cancel() {
-    this.username = this.my_info.username;
-    this.password = '';
+    this.username.setValue(this.my_info.username);
+    // this.password = '';
     this.name = this.my_info.firstName;
     this.last_name = this.my_info.lastName;
     this.email = this.my_info.email;

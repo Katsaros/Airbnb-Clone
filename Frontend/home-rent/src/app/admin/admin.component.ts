@@ -53,7 +53,6 @@ export class AdminComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Users>(data);
       this.dataSource.paginator = this.paginator;
 
-
     });
 
     this.http.get<Users[]>('http://localhost:8080/api/admin/users/unapproved', {headers: header}).subscribe(data => {

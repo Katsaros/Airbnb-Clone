@@ -72,7 +72,6 @@ export class UserInfoComponent implements OnInit {
     this.http.delete<any>('http://localhost:8080/api/admin/users/' + this.id, {headers: header}).subscribe(data => {
       // console.log(data);
       alert(data.Status);
-
     });
 
 
