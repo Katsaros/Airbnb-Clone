@@ -1,1 +1,170 @@
-<p>home-info works!</p>
+<body>
+
+<app-header-user *ngIf="loggedin == true"></app-header-user>
+<app-header *ngIf="loggedin == false"></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div id="map" class="map" style="margin-top: 2%; margin-left: 2%; height: 800px"></div>
+            <div id="mouse-position" style="color: #cccccc; margin-left: 2%;"></div>
+        </div>
+        <div class="col-6" align="center">
+            <mat-card style="margin-top: 2%; width: 90%; border-radius: 0px; text-align: center;">
+
+                <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Στοιχεία Ακινήτου</mat-card-title>
+                <mat-card-content>
+                    <p>
+                        <mat-form-field appearance="outline" style="width: 400px">
+                            <mat-label>Διεύθυνση</mat-label>
+                            <input matInput [formControl]="dieuthinsi" (change)="search()" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="padding: 8px">
+                            <mat-label style="color: white;">Χρονικό Διάστημα</mat-label>
+                            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                                <input matStartDate formControlName="start" placeholder="Άφιξη">
+                                <input matEndDate formControlName="end" placeholder="Αναχώρηση">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+
+                            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                        </mat-form-field>
+                    </p>
+
+                    <p>
+                        <mat-form-field appearance="outline" style="width: 300px">
+                            <mat-label>Γειτονιά</mat-label>
+                            <textarea matInput [formControl]="geitonia"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 300px">
+                            <mat-label>Κανονισμοί</mat-label>
+                            <textarea matInput [formControl]="kanonismoi"></textarea>
+                        </mat-form-field>
+                    </p>
+
+                    <p>
+                        <mat-form-field appearance="outline" style="width: 300px">
+                            <mat-label>Οδηγίες προσέλευσης</mat-label>
+                            <textarea matInput [formControl]="odigies"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 300px">
+                            <mat-label>Περιγραφή</mat-label>
+                            <textarea matInput [formControl]="perigrafi"></textarea>
+                        </mat-form-field>
+                    </p>
+
+                    <p>
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Άτομα</mat-label>
+                            <input matInput [formControl]="atoma" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Τιμή</mat-label>
+                            <input matInput [formControl]="timi" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Τ.Μ.</mat-label>
+                            <input matInput [formControl]="tetragonika" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Μπάνια</mat-label>
+                            <input matInput [formControl]="bathrooms" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Κρεβάτια</mat-label>
+                            <input matInput [formControl]="beds" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Υπνοδωμάτια</mat-label>
+                            <input matInput [formControl]="bedrooms" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                    </p>
+                    <p>
+                        <mat-form-field appearance="outline" style="width: 200px">
+                            <mat-label>Επιπλεον τιμή ανά Άτομο</mat-label>
+                            <input matInput [formControl]="epipleontimi" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 200px">
+                            <mat-label>Ελάχιστες διανυκτερεύσεις</mat-label>
+                            <input matInput [formControl]="min_dianikt" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" style="width: 200px">
+                            <mat-label>Είδος Καταλύματος</mat-label>
+                            <input matInput [formControl]="eidos" style="color: #0d0d0d">
+                        </mat-form-field>
+
+                    </p>
+
+                    <p>
+                        <mat-form-field appearance="outline" style="width: 300px">
+                            <mat-label>Events</mat-label>
+                            <textarea matInput [formControl]="events"></textarea>
+                        </mat-form-field>
+
+                    </p>
+
+<!--                    <section class="example-section">-->
+<!--                  <span class="example-list-section">-->
+<!--                    <mat-checkbox class="example-margin"-->
+<!--                                  [checked]="allComplete"-->
+<!--                                  [indeterminate]="someComplete()"-->
+<!--                                  (change)="setAll($event.checked)" [disabled]="disabled">-->
+<!--                      {{task.name}}-->
+<!--                    </mat-checkbox>-->
+<!--                  </span>-->
+<!--                        <br>-->
+                    <div class="container-fluid">-->
+                        <div class="row">
+                            <div class="col-2" *ngFor="let subtask of task.subtasks">
+                                <p *ngIf="subtask.completed == true">{{subtask.name}} </p>
+<!--                                    <mat-checkbox [(ngModel)]="subtask.completed"-->
+<!--                                                  (ngModelChange)="updateAllComplete()" [disabled]="disabled">-->
+<!--                                    {{subtask.name}}-->
+<!--                                    </mat-checkbox>-->
+                                </div>
+                            </div>
+                    </div>
+                        <!--                        <span class="example-list-section">-->
+<!--                        <div class="container-fluid">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-2" *ngFor="let subtask of task.subtasks">-->
+<!--                                    <mat-checkbox [(ngModel)]="subtask.completed"-->
+<!--                                                  (ngModelChange)="updateAllComplete()" [disabled]="disabled">-->
+<!--                                    {{subtask.name}}-->
+<!--                                    </mat-checkbox>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+
+<!--                  </span>-->
+<!--                    </section>-->
+
+                    <button mat-button *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px" (click)="book()">Book</button>
+                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="message()">Message</button>
+<!--                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="delete()">Διαγραφή</button>-->
+
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+

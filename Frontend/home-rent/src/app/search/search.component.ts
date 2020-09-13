@@ -95,6 +95,7 @@ export class SearchComponent implements OnInit {
 
   openDialog(card): void {
     this.storage.set('home', card);
+    this.storage.set('dates', this.range);
     this.router.navigate(['/home_info', card.id]);
   }
 
@@ -116,25 +117,6 @@ export class SearchComponent implements OnInit {
     }
     this.task.subtasks.forEach(t => t.completed = completed);
   }
-
-  // updateAllComplete1() {
-  //   this.allComplete1 = this.accom.subtasks != null && this.accom.subtasks.every(t => t.completed);
-  // }
-  //
-  // someComplete1(): boolean {
-  //   if (this.accom.subtasks == null) {
-  //     return false;
-  //   }
-  //   return this.accom.subtasks.filter(t => t.completed).length > 0 && !this.allComplete1;
-  // }
-  //
-  // setAll1(completed: boolean) {
-  //   this.allComplete1 = completed;
-  //   if (this.accom.subtasks == null) {
-  //     return;
-  //   }
-  //   this.accom.subtasks.forEach(t => t.completed = completed);
-  // }
 
   newFilters() {
 
@@ -170,12 +152,9 @@ export class SearchComponent implements OnInit {
       params = params.append('maxPrice', this.timi.value);
     }
 
-    // params = params.append('data', JSON.stringify(this.homes));
-    // console.log(params);
     let body = {
       homes: this.homes
     }
-    // console.log(body);
     this.http.post<any>(url, body,{params: params}).subscribe(data => {
       this.homes = data.homes;
       console.log(this.homes);

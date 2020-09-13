@@ -15,37 +15,12 @@
                     <p style="padding-top: 10px; font-size: 18px">Accomondation Type:</p>
 
                     <mat-form-field appearance="fill">
-<!--                        <mat-label>Favorite food</mat-label>-->
                         <mat-select [(value)]="selected_type">
                             <mat-option *ngFor="let type of accom" [value]="type">
                                 {{type}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-<!--                    <section class="example-section">-->
-<!--                  <span class="example-list-section">-->
-<!--                    <mat-checkbox class="example-margin"-->
-<!--                                  [checked]="allComplete1"-->
-<!--                                  [indeterminate]="someComplete1()"-->
-<!--                                  (change)="setAll1($event.checked)">-->
-<!--                      {{accom.name}}-->
-<!--                    </mat-checkbox>-->
-<!--                  </span>-->
-<!--                        <br>-->
-<!--                        <span class="example-list-section">-->
-<!--                        <div class="container-fluid">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-12" *ngFor="let subtask of accom.subtasks">-->
-<!--                                    <mat-checkbox [(ngModel)]="subtask.completed"-->
-<!--                                                  (ngModelChange)="updateAllComplete1()">-->
-<!--                                    {{subtask.name}}-->
-<!--                                    </mat-checkbox>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                  </span>-->
-<!--                    </section>-->
-
 
                     <p style="padding-top: 20px; font-size: 18px">Max Price: </p>
                     <p>

@@ -75,3 +75,30 @@ export class NewHome {
 export class HomeCategory {
     homeCategoryTitle: string;
 }
+
+export class Book {
+    bookedHomeId: number;
+    bookedDate: string;
+    leaveDate: string;
+    isBooked: number;
+    userIdBooked: number;
+    userNameBooked: string;
+    hostReviewStars: number;
+    hostReviewDescription: string;
+    homeReviewStars: number;
+    homeReviewDescription: string;
+}
+
+export class BookResp {
+    reservationId: number;
+    bookedHomeId: number;
+    bookedDate: string;
+    leaveDate: string;
+    isBooked: number;
+    userIdBooked: number;
+    userNameBooked: string;
+    hostReviewStars: number;
+    hostReviewDescription: string;
+    homeReviewStars: number;
+    homeReviewDescription: string;
+}
