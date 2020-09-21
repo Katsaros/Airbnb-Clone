@@ -71,6 +71,8 @@ export class WelcomeComponent implements OnInit {
 
           this.storage.set('url', url);
 
+          this.storage.set('dates', {start: this.range.value.start, end: this.range.value.end})
+
           this.router.navigate(['/search']);
     });
 

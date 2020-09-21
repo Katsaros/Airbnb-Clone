@@ -58,7 +58,6 @@
 
                     <button mat-raised-button class="searchbutton" (click)="newFilters()">Apply Filters</button>
 
-
                 </mat-card-content>
 
             </mat-card>
@@ -68,7 +67,7 @@
             <div class="container-fluid" >
                 <mat-paginator [pageSizeOptions]="[10]" [showFirstLastButtons]="true"></mat-paginator>
                 <div class="row">
-                    <div class="col-6" *ngFor="let card of obs | async" style="padding: 10px">
+                    <div class="col-6" *ngFor="let card of homes" style="padding: 10px">
                         <mat-card style="text-align: center">
                             <mat-card-header style="text-align: center">
                                 <mat-card-title >Κατηγορία: {{card.homeCategory.homeCategoryTitle}}</mat-card-title>

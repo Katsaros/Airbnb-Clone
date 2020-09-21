@@ -62,10 +62,10 @@ export class SearchComponent implements OnInit {
   // };
 
 
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
-  });
+  // range = new FormGroup({
+  //   start: new FormControl(),
+  //   end: new FormControl()
+  // });
 
   constructor(private nominatimService: NominatimService, @Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router,
               private http: HttpClient, private changeDetectorRef: ChangeDetectorRef, private dialog: MatDialog) {
@@ -95,8 +95,8 @@ export class SearchComponent implements OnInit {
 
   openDialog(card): void {
     this.storage.set('home', card);
-    this.storage.set('dates', this.range);
-    this.router.navigate(['/home_info', card.id]);
+    // this.storage.set('dates', {start: this.range.value.start.value, end: this.range.value.end.value});
+    this.router.navigate(['/home-info', card.id]);
   }
 
   updateAllComplete() {

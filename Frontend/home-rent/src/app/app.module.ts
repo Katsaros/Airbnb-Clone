@@ -47,6 +47,7 @@ import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { ResultsComponent } from './results/results.component';
 import { HomeInfoComponent } from './home-info/home-info.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { ChatsComponent } from './chats/chats.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
     UserRequestsComponent,
     ResultsComponent,
     HomeInfoComponent,
+    ChatsComponent,
   ],
     imports: [
         TextFieldModule,

@@ -185,7 +185,12 @@ export class HomeInfoComponent implements OnInit {
       this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
       this.eidos.disable();
 
-      this.search();
+      // if(this.extras == null) {
+      //   this.search();
+      // }
+      // else {
+      //   this.long =
+      // }
 
     // }
 
@@ -195,6 +200,9 @@ export class HomeInfoComponent implements OnInit {
 
     this.http.get<any>('https://api.opencagedata.com/geocode/v1/json?key=cfd032737bac482c9b20abb4ffdc3cb2&q='
         + this.dieuthinsi.value).subscribe(data => {
+
+    // this.
+          // console.log(data);
       this.long = Number(data.results[0].annotations.DMS.lng.split(' ')[0].split('\xB0')[0]) +
           Number(data.results[0].annotations.DMS.lng.split(' ')[1].split('\'')[0]) / 60 +
           Number(data.results[0].annotations.DMS.lng.split(' ')[2].split('\'\'')[0]) / 3600;
@@ -332,6 +340,7 @@ export class HomeInfoComponent implements OnInit {
     body.userIdBooked = this.storage.get('my-info').id;
 
     let dates = this.storage.get('dates');
+    console.log(dates);
     body.bookedDate = dates.start.value;
     body.leaveDate = dates.end.value;
 
@@ -341,10 +350,8 @@ export class HomeInfoComponent implements OnInit {
     });
   }
 
-
   message() {
-
-
+    this.router.navigate(['chats']);
   }
 
 }

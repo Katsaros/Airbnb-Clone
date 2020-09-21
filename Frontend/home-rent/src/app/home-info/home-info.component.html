@@ -116,47 +116,16 @@
 
                     </p>
 
-<!--                    <section class="example-section">-->
-<!--                  <span class="example-list-section">-->
-<!--                    <mat-checkbox class="example-margin"-->
-<!--                                  [checked]="allComplete"-->
-<!--                                  [indeterminate]="someComplete()"-->
-<!--                                  (change)="setAll($event.checked)" [disabled]="disabled">-->
-<!--                      {{task.name}}-->
-<!--                    </mat-checkbox>-->
-<!--                  </span>-->
-<!--                        <br>-->
-                    <div class="container-fluid">-->
+                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-2" *ngFor="let subtask of task.subtasks">
                                 <p *ngIf="subtask.completed == true">{{subtask.name}} </p>
-<!--                                    <mat-checkbox [(ngModel)]="subtask.completed"-->
-<!--                                                  (ngModelChange)="updateAllComplete()" [disabled]="disabled">-->
-<!--                                    {{subtask.name}}-->
-<!--                                    </mat-checkbox>-->
                                 </div>
                             </div>
                     </div>
-                        <!--                        <span class="example-list-section">-->
-<!--                        <div class="container-fluid">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-2" *ngFor="let subtask of task.subtasks">-->
-<!--                                    <mat-checkbox [(ngModel)]="subtask.completed"-->
-<!--                                                  (ngModelChange)="updateAllComplete()" [disabled]="disabled">-->
-<!--                                    {{subtask.name}}-->
-<!--                                    </mat-checkbox>-->
-<!--                                </div>-->
-<!--                            </div>-->
 
-<!--                        </div>-->
-
-<!--                  </span>-->
-<!--                    </section>-->
-
-                    <button mat-button *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px" (click)="book()">Book</button>
+                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="book()">Book</button>
                     <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="message()">Message</button>
-<!--                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="delete()">Διαγραφή</button>-->
-
 
                 </mat-card-content>
             </mat-card>

@@ -1,8 +1,10 @@
 body {
-    background-color: #164359;
     background-size: cover;
     height: 100vh;
     padding: 0;
+    font-size: 14px;
+    color: #484848;
+    background-color: #fafafa;
 }
 
 ul {

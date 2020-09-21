@@ -13,6 +13,7 @@ import {MyhomesComponent} from './myhomes/myhomes.component';
 import {UserRequestsComponent} from './user-requests/user-requests.component';
 import {ResultsComponent} from './results/results.component';
 import {HomeInfoComponent} from './home-info/home-info.component';
+import {ChatsComponent} from './chats/chats.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,10 @@ const routes: Routes = [
   {
     path: 'user-requests',
     component: UserRequestsComponent
+  },
+  {
+    path: 'chats',
+    component: ChatsComponent
   },
   {
     path: 'results',
