@@ -65,7 +65,8 @@
         </div>
         <div class="col-9">
             <div class="container-fluid" >
-                <mat-paginator [pageSizeOptions]="[10]" [showFirstLastButtons]="true"></mat-paginator>
+
+                <mat-paginator #paginator [pageSizeOptions]="[10]" showFirstLastButtons="true"></mat-paginator>
                 <div class="row">
                     <div class="col-6" *ngFor="let card of homes" style="padding: 10px">
                         <mat-card style="text-align: center">
@@ -73,6 +74,7 @@
                                 <mat-card-title >Κατηγορία: {{card.homeCategory.homeCategoryTitle}}</mat-card-title>
                                 <mat-card-subtitle>Περιγραφή: {{card.description}}</mat-card-subtitle>
                             </mat-card-header>
+                            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Home Photo" style="width: 50%; height: 50%">
                             <mat-card-content style="text-align: center">
                                 <p>{{card.address + ', ' +  card.price + ', ' + card.maxPeople}}</p>
                             </mat-card-content>
@@ -80,6 +82,7 @@
                                 <button mat-button (click)="openDialog(card)">Προβολή</button>
                             </mat-card-actions>
                         </mat-card>
+
                     </div>
                 </div>
                 <div class="row" *ngIf="homes.length == 0">
@@ -92,9 +95,11 @@
                         </mat-card>
                     </div>
                 </div>
-            </div>
 
-            <mat-paginator [pageSizeOptions]="[10]" [showFirstLastButtons]="true"></mat-paginator>
+                <mat-paginator (page)="handlePageBottom($event)" [pageSize]="paginator.pageSize"
+                               [pageIndex]="paginator.pageIndex" [length]="paginator.length"
+                               [pageSizeOptions]="paginator.pageSizeOptions"></mat-paginator>
+            </div>
 
         </div>
     </div>

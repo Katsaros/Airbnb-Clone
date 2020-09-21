@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {Home} from '../home';
@@ -18,6 +18,8 @@ import {Task} from '../new-home/new-home.component';
 })
 export class SearchComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator1: MatPaginator;
+
   obs: Observable<any>;
   dataSource: MatTableDataSource<Home>;
 
@@ -89,9 +91,19 @@ export class SearchComponent implements OnInit {
     this.http.get<any>(url).subscribe(data => {
       this.homes = data.homes;
       console.log(this.homes);
+      this.dataSource = new MatTableDataSource<Home>(this.homes);
+      this.dataSource.paginator = this.paginator;
+      // this.dataSource.paginator = this.paginator;
 
     });
   }
+
+  public handlePageBottom(event: PageEvent) {
+    this.paginator.pageSize = event.pageSize;
+    this.paginator.pageIndex = event.pageIndex;
+    this.paginator.page.emit(event);
+  }
+
 
   openDialog(card): void {
     this.storage.set('home', card);
