@@ -91,6 +91,8 @@ export class AccountComponent implements OnInit {
   }
 
   save() {
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+
     if (this.password.value != '') {
       let id = this.my_info.id;
       let changed_user: ChangedUserPass = new ChangedUserPass();
@@ -99,13 +101,13 @@ export class AccountComponent implements OnInit {
       changed_user.lastname = this.last_name.value;
       changed_user.telephone = this.phone.value;
       changed_user.firstname = this.name.value;
+      changed_user.approved = this.my_info.approved;
+      changed_user.image = null;
+      changed_user.email = this.email.value;
       changed_user.password = this.password.value;
 
-      console.log(changed_user);
-
       // change account details
-      let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user, {headers: header}).subscribe(data => {
+      this.http.put<SigninResp>('http://localhost:8080/api/secure/user/update', changed_user, {headers: header}).subscribe(data => {
         console.log(data);
         this.storage.set('my_info', data);
         this.my_info = this.storage.get('my_info');
@@ -119,12 +121,15 @@ export class AccountComponent implements OnInit {
       changed_user.lastname = this.last_name.value;
       changed_user.telephone = this.phone.value;
       changed_user.firstname = this.name.value;
+      changed_user.approved = this.my_info.approved;
+      changed_user.image = null;
+      changed_user.email = this.email.value;
 
       console.log(changed_user);
 
       // change account details
-      let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user, {headers: header}).subscribe(data => {
+      // let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+      this.http.put<SigninResp>('http://localhost:8080/api/secure/user/update', changed_user, {headers: header}).subscribe(data => {
         console.log(data);
 
         this.storage.set('my_info', data);
@@ -144,26 +149,24 @@ export class AccountComponent implements OnInit {
 
   cancel() {
     this.username.setValue(this.my_info.username);
-    // this.password = '';
-    this.name = this.my_info.firstName;
-    this.last_name = this.my_info.lastName;
-    this.email = this.my_info.email;
-    this.phone = this.my_info.telephone;
+    this.name.setValue(this.my_info.firstName);
+    this.last_name.setValue(this.my_info.lastName);
+    this.email.setValue(this.my_info.email);
+    this.phone.setValue(this.my_info.telephone);
+    this.password.setValue('');
 
-    // console.log(this.username);
-
+    this.username.disable();
+    this.password.disable();
+    this.name.disable();
+    this.last_name.disable();
+    this.email.disable();
+    this.phone.disable();
     this.disabled = !this.disabled;
-
-  }
-
-  change_photo() {
-    this.onUpload(this.my_info.id);
   }
 
   getPhoto() {
 
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    // header.append('Content-Type', 'image/jpeg');
     let url = 'http://localhost:8080/api/secure/user/' + this.my_info.id + '/image';
     this.http.get(url, {headers: header, responseType: 'blob'}).subscribe(data => {
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
