@@ -34,7 +34,7 @@ import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AdminComponent } from './admin/admin.component';
 import { HeaderUserComponent } from './header-user/header-user.component';
-import { AccountComponent } from './account/account.component';
+import {AccountComponent } from './account/account.component';
 import { SearchComponent } from './search/search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {HttpClientModule} from '@angular/common/http';
@@ -46,6 +46,7 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 import { UserRequestsComponent } from './user-requests/user-requests.component';
 import { ResultsComponent } from './results/results.component';
 import { HomeInfoComponent } from './home-info/home-info.component';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { HomeInfoComponent } from './home-info/home-info.component';
         FormsModule,
         MatCheckboxModule,
         HttpClientModule,
-        StorageServiceModule
+        StorageServiceModule,
+        MatDialogModule,
     ],
   exports: [
     MatButtonModule,

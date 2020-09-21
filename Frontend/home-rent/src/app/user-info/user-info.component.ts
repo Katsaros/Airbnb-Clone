@@ -60,8 +60,8 @@ export class UserInfoComponent implements OnInit {
   accept() {
 
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    this.http.get<Users>('http://localhost:8080/api/admin/users/' + this.id.toString() + '/approve', {headers: header}).subscribe(data => {
-      // alert(data.Status);
+    this.http.get<Users>('http://localhost:8080/api/admin/users/' + this.id.toString() + '/approve', {headers: header, observe: 'response'}).subscribe(data => {
+      alert(data.statusText);
     });
   }
 
@@ -69,9 +69,9 @@ export class UserInfoComponent implements OnInit {
 
     // delete user
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    this.http.delete<any>('http://localhost:8080/api/admin/users/' + this.id, {headers: header}).subscribe(data => {
+    this.http.delete<any>('http://localhost:8080/api/admin/users/' + this.id, {headers: header, observe: 'response'}).subscribe(data => {
       // console.log(data);
-      alert(data.Status);
+      alert(data.statusText);
     });
 
 

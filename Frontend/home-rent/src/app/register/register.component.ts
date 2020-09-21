@@ -162,7 +162,7 @@ export class RegisterComponent implements OnInit {
 
     const formData: FormData = new FormData();
     formData.append('imagefile', this.selectedFile, this.selectedFile.name);
-    this.http.post('http://localhost:8080/api/public/user/' + id.toString() + '/image', formData).subscribe( data => {
+    this.http.post('http://localhost:8080/api/public/user/' + id.toString() + '/image', formData, {responseType: 'text' as 'json'}).subscribe( data => {
     });
   }
 

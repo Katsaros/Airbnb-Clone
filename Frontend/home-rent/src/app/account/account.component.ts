@@ -1,17 +1,24 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, NgModule, OnInit} from '@angular/core';
 import {Form, FormControl, Validators} from '@angular/forms';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {Router} from '@angular/router';
 import {ChangedUser, ChangedUserPass, SigninResp} from '../signin-resp';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {DomSanitizer} from '@angular/platform-browser';
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-
-
 export class AccountComponent implements OnInit {
 
   disabled: boolean;
@@ -26,7 +33,9 @@ export class AccountComponent implements OnInit {
 
   imageUrl: any;
 
-  photo: any;
+  // photo: any;
+  selectedFile: File;
+
 
   // username = new FormControl();
 
@@ -39,8 +48,11 @@ export class AccountComponent implements OnInit {
   // my_info: SigninResp;
 
   my_info: any;
+  closeResult = '';
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient) {
+
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient,
+              private sanitizer: DomSanitizer, public modalService: NgbModal) {
     this.my_info = this.storage.get('my_info');
     this.disabled = true;
     this.username.setValue(this.my_info.username);
@@ -56,31 +68,30 @@ export class AccountComponent implements OnInit {
     this.phone.setValue(this.my_info.telephone);
     this.phone.disable();
 
-
-    // this.getPhoto();
-
-    // this.photo = this.getPhoto();
-
-
+    this.getPhoto();
   }
 
   ngOnInit(): void {
 
     let token = this.storage.get('token');
-    if(token == undefined) {
+    if (token == undefined) {
       this.router.navigate(['/not-found']);
     }
 
-    // this.getPhoto();
-    // this.photo = this.getPhoto();
   }
 
   change_disabled() {
     this.disabled = !this.disabled;
+    this.username.enable();
+    this.password.enable();
+    this.name.enable();
+    this.last_name.enable();
+    this.email.enable();
+    this.phone.enable();
   }
 
   save() {
-    if(this.password.value != '') {
+    if (this.password.value != '') {
       let id = this.my_info.id;
       let changed_user: ChangedUserPass = new ChangedUserPass();
       changed_user.id = id;
@@ -94,14 +105,13 @@ export class AccountComponent implements OnInit {
 
       // change account details
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user,{headers: header}).subscribe(data => {
+      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user, {headers: header}).subscribe(data => {
         console.log(data);
         this.storage.set('my_info', data);
         this.my_info = this.storage.get('my_info');
 
       });
-    }
-    else {
+    } else {
       let id = this.my_info.id;
       let changed_user: ChangedUser = new ChangedUser();
       changed_user.id = id;
@@ -114,7 +124,7 @@ export class AccountComponent implements OnInit {
 
       // change account details
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user,{headers: header}).subscribe(data => {
+      this.http.put<SigninResp>('http://localhost:8080/api/secure/user', changed_user, {headers: header}).subscribe(data => {
         console.log(data);
 
         this.storage.set('my_info', data);
@@ -140,14 +150,14 @@ export class AccountComponent implements OnInit {
     this.email = this.my_info.email;
     this.phone = this.my_info.telephone;
 
-    console.log(this.username);
+    // console.log(this.username);
 
     this.disabled = !this.disabled;
 
   }
 
   change_photo() {
-
+    this.onUpload(this.my_info.id);
   }
 
   getPhoto() {
@@ -155,12 +165,23 @@ export class AccountComponent implements OnInit {
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
     // header.append('Content-Type', 'image/jpeg');
     let url = 'http://localhost:8080/api/secure/user/' + this.my_info.id + '/image';
-    this.http.get(url, {headers: header}).subscribe(data => {
-      // this.imageUrl = URL.createObjectURL(data);
+    this.http.get(url, {headers: header, responseType: 'blob'}).subscribe(data => {
+      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
     });
 
-
-
   }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  onUpload(id) {
+    const formData: FormData = new FormData();
+    formData.append('imagefile', this.selectedFile, this.selectedFile.name);
+    this.http.post('http://localhost:8080/api/public/user/' + id.toString() + '/image', formData, {responseType: 'text' as 'json'}).subscribe(data => {
+      this.getPhoto();
+    });
+  }
+
 
 }

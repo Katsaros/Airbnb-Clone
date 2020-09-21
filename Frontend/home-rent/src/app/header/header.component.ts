@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Signin} from '../signin';
 import {SigninResp} from '../signin-resp';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import {catchError, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -40,50 +41,59 @@ export class HeaderComponent implements OnInit{
     body.password = this.password.value;
     body.username = this.username.value;
 
-    this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body).subscribe(data => {
-      console.log(data);
+    this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body)
+        .subscribe(
+        data => {
+          console.log(data);
 
-      let token = {
-        roles: [],
-        type: data.tokenType,
-        accessToken: data.accessToken
-      };
+          let token = {
+            roles: [],
+            type: data.tokenType,
+            accessToken: data.accessToken
+          };
 
-      let next_page : string;
+          let next_page : string;
 
-      if(data.roles.length == 1) { // one role
-        if (data.roles[0] == 'ROLE_ADMIN') {
-          token.roles.push(1);
-          next_page = '/admin';
-        }
-        if (data.roles[0] == 'ROLE_MODERATOR') {
-          token.roles.push(2);
-          next_page = '/myhomes';
+          if(data.roles.length == 1) { // one role
+            if (data.roles[0] == 'ROLE_ADMIN') {
+              token.roles.push(1);
+              next_page = '/admin';
+            }
+            if (data.roles[0] == 'ROLE_MODERATOR') {
+              token.roles.push(2);
+              next_page = '/myhomes';
 
-          if(data.approved == "0") {
-            alert('The account has not been approved from the administrator yet!');
-            return;
+              if(data.approved == "0") {
+                alert('The account has not been approved from the administrator yet!');
+                return;
+              }
+            }
+            if (data.roles[0] == 'ROLE_USER') {
+              token.roles.push(3);
+              next_page = '/welcome';
+            }
           }
-        }
-        if (data.roles[0] == 'ROLE_USER') {
-          token.roles.push(3);
-          next_page = '/welcome';
-        }
-      }
-      else { // tow roles, user and mod
-        token.roles.push(2);
-        token.roles.push(3);
-        next_page = '/myhomes';
-      }
+          else { // tow roles, user and mod
+            token.roles.push(2);
+            token.roles.push(3);
+            next_page = '/myhomes';
+          }
 
-      // store in local memory the token
-      this.storage.set(this.STORAGE_KEY, token);
-      this.storage.set('my_info', data);
+          // store in local memory the token
+          this.storage.set(this.STORAGE_KEY, token);
+          this.storage.set('my_info', data);
 
-      // console.log(next_page);
-      this.router.navigate([next_page]); // go to the next page
+          // console.log(next_page);
+          this.router.navigate([next_page]); // go to the next page
 
-    });
+        }, error => { alert('Invalid Credentials')}
+
+
+    );
+
+  }
+
+  handleError() {
 
   }
 

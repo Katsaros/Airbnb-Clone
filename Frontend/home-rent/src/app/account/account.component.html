@@ -4,9 +4,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-6" align="center">
-                <mat-card class="boxSquare" style="margin-top: 20%; width: 90%; border-radius: 0px; text-align: center;">
+                <mat-card class="boxSquare" style="margin-top: 20%; width: 90%; border-radius: 0px; text-align: center; height: 500px">
                     <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Στοιχεία Λογαριασμού</mat-card-title>
-                    <mat-card-content>
+                    <mat-card-content style="height: 400px">
                         <p>
                             <mat-form-field appearance="outline" style="margin-right: 10px; margin-bottom: 30px">
                                 <mat-label>Username</mat-label>
@@ -51,7 +51,6 @@
 
                     <mat-card-footer *ngIf="disabled == true">
                         <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="change_disabled()">Αλλαγή στοιχείων</button>
-<!--                        <button mat-button style="padding-left: 20px; padding-right: 20px" (click)="delete_account()">Διαγραφή Λογαριασμού</button>-->
                     </mat-card-footer>
 
                     <mat-card-footer *ngIf="disabled == false">
@@ -62,19 +61,27 @@
             </div>
 
             <div class="col-6" align="center">
-                <mat-card class="boxSquare" style="margin-top: 19%; width: 90%; border-radius: 0px; text-align: center; align-items: center; position: absolute">
+                <mat-card class="boxSquare" style="margin-top: 19%; width: 90%; border-radius: 0px; text-align: center;
+                align-items: center; position: absolute; height: 500px">
                     <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Φωτογραφία Λογαριασμού</mat-card-title>
 
-                    <mat-card-content>
-                        <img [src]="imageUrl">
+                    <mat-card-content style="height: 400px; width: 400px; align-content: center">
+                        <img align="center" [src]="imageUrl" alt="No User Image" style="height: 400px; width: 400px">
 
                     </mat-card-content>
 
                     <mat-card-footer>
-                        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="change_photo()">Αλλαγή Φωτογραφίας</button>
+                        <input
+                                style="display: none"
+                                type="file" (change)="onFileChanged($event)"
+                                #fileInput>
+                        <button mat-button style="padding-right: 20px; padding-left: 20px" (click)="fileInput.click()" style="margin-left: 50px; margin-right: 50px">Upload Image</button>
+                        <button *ngIf="selectedFile" mat-button style="padding-right: 20px; padding-left: 20px" (click)="onUpload(my_info.id)" style="margin-left: 50px; margin-right: 50px">Save</button>
                     </mat-card-footer>
                 </mat-card>
             </div>
         </div>
     </div>
 </body>
+
+
