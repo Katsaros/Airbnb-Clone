@@ -47,8 +47,6 @@ export class SearchComponent implements OnInit {
       {name: 'Κουζίνα', completed: false},
       {name: 'Parking', completed: false},
       {name: 'TV', completed: false},
-      // {name: 'Καπνίζοντες', completed: false},
-      // {name: 'Κατοικίδια', completed: false},
     ]
   };
 

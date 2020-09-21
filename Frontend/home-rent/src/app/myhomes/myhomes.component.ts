@@ -13,6 +13,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Task} from '../new-home/new-home.component';
 import {NominatimResponse} from '../nominati-response';
 import {NominatimService} from '../nominatim.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 declare var ol: any;
 
@@ -25,7 +26,7 @@ declare var ol: any;
 export class MyhomesComponent implements OnInit {
 
   constructor(private nominatimService: NominatimService, @Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router,
-              private http: HttpClient, private changeDetectorRef: ChangeDetectorRef, private dialog: MatDialog) {
+              private http: HttpClient, private changeDetectorRef: ChangeDetectorRef, private dialog: MatDialog, private sanitizer: DomSanitizer) {
   }
 
   user: boolean = false;
@@ -37,7 +38,7 @@ export class MyhomesComponent implements OnInit {
   selected: Home = undefined;
   homes: Home[] = [];
   my_info: any;
-
+  imageUrl = [];
 
   range = new FormGroup({
     start: new FormControl(),
@@ -121,6 +122,15 @@ export class MyhomesComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Home>(this.homes);
       this.dataSource.paginator = this.paginator;
       this.obs = this.dataSource.connect();
+
+      for(let i = 0; i < this.homes.length; i ++) {
+        if(this.homes[i].image != null) {
+          this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.homes[i].image[0])));
+        }
+        else {
+          this.imageUrl.push(null);
+        }
+      }
     });
 
   }

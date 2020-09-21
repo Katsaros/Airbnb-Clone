@@ -14,6 +14,7 @@
                    <mat-card-subtitle>Περιγραφή: {{card.description}}</mat-card-subtitle>
                </mat-card-header>
                <mat-card-content style="text-align: center">
+                   <img mat-card-image [src]="imageUrl[i]" alt="Home Photo" style="width: 50%; height: 50%">
                    <p>{{card.address + ', ' +  card.price + ', ' + card.maxPeople}}</p>
                </mat-card-content>
                <mat-card-actions>
