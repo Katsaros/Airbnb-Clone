@@ -108,7 +108,7 @@ export class AccountComponent implements OnInit {
 
       // change account details
       this.http.put<SigninResp>('http://localhost:8080/api/secure/user/update', changed_user, {headers: header}).subscribe(data => {
-        console.log(data);
+        // console.log(data);
         this.storage.set('my_info', data);
         this.my_info = this.storage.get('my_info');
 
@@ -125,12 +125,12 @@ export class AccountComponent implements OnInit {
       changed_user.image = null;
       changed_user.email = this.email.value;
 
-      console.log(changed_user);
+      // console.log(changed_user);
 
       // change account details
       // let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
       this.http.put<SigninResp>('http://localhost:8080/api/secure/user/update', changed_user, {headers: header}).subscribe(data => {
-        console.log(data);
+        // console.log(data);
 
         this.storage.set('my_info', data);
         this.my_info = this.storage.get('my_info');

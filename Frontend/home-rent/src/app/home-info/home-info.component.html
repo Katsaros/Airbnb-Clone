@@ -4,6 +4,28 @@
 <app-header *ngIf="loggedin == false"></app-header>
 
 <div class="container-fluid">
+
+    <div class="row" *ngIf="imageUrls.length != 0">
+        <div class="col-12">
+            <mdb-carousel [animation]="'slide'">
+                <mdb-carousel-item *ngFor="let image of imageUrls">
+                    <img class="d-block w-100" [src]="image" alt="Photo">
+                </mdb-carousel-item>
+            </mdb-carousel>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="imageUrls.length == 0">
+        <div class="col-12">
+            <mat-card style="margin-top: 2%; width: 100%; border-radius: 0px; text-align: center;">
+                <mat-card-content>
+                    <p>No Photos available!</p>
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-6">
             <div id="map" class="map" style="margin-top: 2%; margin-left: 2%; height: 800px"></div>

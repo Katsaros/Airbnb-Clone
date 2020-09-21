@@ -68,14 +68,14 @@
 
                 <mat-paginator #paginator [pageSizeOptions]="[10]" showFirstLastButtons="true"></mat-paginator>
                 <div class="row">
-                    <div class="col-6" *ngFor="let card of homes" style="padding: 10px">
+                    <div class="col-6" *ngFor="let card of homes; let i=index;" style="padding: 10px">
                         <mat-card style="text-align: center">
                             <mat-card-header style="text-align: center">
                                 <mat-card-title >Κατηγορία: {{card.homeCategory.homeCategoryTitle}}</mat-card-title>
                                 <mat-card-subtitle>Περιγραφή: {{card.description}}</mat-card-subtitle>
                             </mat-card-header>
-                            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Home Photo" style="width: 50%; height: 50%">
-                            <mat-card-content style="text-align: center">
+                            <mat-card-content style="text-align: center; height: 300px; width: 300px">
+                                <img mat-card-image [src]="imageUrl[i]" alt="Home Photo" style="width: 50%; height: 50%">
                                 <p>{{card.address + ', ' +  card.price + ', ' + card.maxPeople}}</p>
                             </mat-card-content>
                             <mat-card-actions>

@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {Task} from '../new-home/new-home.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -23,6 +24,7 @@ export class SearchComponent implements OnInit {
   obs: Observable<any>;
   dataSource: MatTableDataSource<Home>;
 
+  imageUrl = [];
   selected: Home = undefined;
   homes: Home[] = [];
   my_info: any;
@@ -51,26 +53,10 @@ export class SearchComponent implements OnInit {
   };
 
   accom: string[] = ['Full House', 'Private Room', 'Shared Room'];
-// }
 
-  // accom: Task = {
-  //   name: 'Επιλογή Όλων',
-  //   completed: false,
-  //   subtasks: [
-  //     {name: 'Private Room', completed: false},
-  //     {name: 'Shared Room', completed: false},
-  //     {name: 'Full House', completed: false},
-  //   ]
-  // };
-
-
-  // range = new FormGroup({
-  //   start: new FormControl(),
-  //   end: new FormControl()
-  // });
 
   constructor(private nominatimService: NominatimService, @Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router,
-              private http: HttpClient, private changeDetectorRef: ChangeDetectorRef, private dialog: MatDialog) {
+              private http: HttpClient, private changeDetectorRef: ChangeDetectorRef, private dialog: MatDialog, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -90,11 +76,20 @@ export class SearchComponent implements OnInit {
 
     this.http.get<any>(url).subscribe(data => {
       this.homes = data.homes;
-      console.log(this.homes);
+      // console.log(this.homes);
+
+      for(let i = 0; i < this.homes.length; i ++) {
+        if(this.homes[i].image != null) {
+          this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.homes[i].image[0])));
+        }
+        else {
+          this.imageUrl.push(null);
+        }
+      }
+
+
       this.dataSource = new MatTableDataSource<Home>(this.homes);
       this.dataSource.paginator = this.paginator;
-      // this.dataSource.paginator = this.paginator;
-
     });
   }
 
@@ -107,7 +102,6 @@ export class SearchComponent implements OnInit {
 
   openDialog(card): void {
     this.storage.set('home', card);
-    // this.storage.set('dates', {start: this.range.value.start.value, end: this.range.value.end.value});
     this.router.navigate(['/home-info', card.id]);
   }
 
@@ -169,7 +163,7 @@ export class SearchComponent implements OnInit {
     }
     this.http.post<any>(url, body,{params: params}).subscribe(data => {
       this.homes = data.homes;
-      console.log(this.homes);
+      // console.log(this.homes);
 
     });
 

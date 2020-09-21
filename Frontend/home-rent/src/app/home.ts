@@ -5,7 +5,7 @@ export class Home {
     reservations: [];
     openBooking: string;
     closeBooking: string;
-    image: [];
+    image: string[];
     price: number;
     address: string;
     latitude: string;

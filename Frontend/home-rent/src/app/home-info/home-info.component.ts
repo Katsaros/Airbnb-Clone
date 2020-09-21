@@ -8,6 +8,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {NominatimResponse} from '../nominati-response';
 import {Response} from '../response';
 import {Task} from '../new-home/new-home.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 declare var ol: any;
@@ -20,7 +21,7 @@ declare var ol: any;
 
 export class HomeInfoComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
   newHome: NewHome = new NewHome();
 
@@ -42,6 +43,7 @@ export class HomeInfoComponent implements OnInit {
   events: FormControl = new FormControl();
   eidos: FormControl = new FormControl();
 
+  imageUrls = [];
   extras;
 
   range = new FormGroup({
@@ -185,15 +187,9 @@ export class HomeInfoComponent implements OnInit {
       this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
       this.eidos.disable();
 
-      // if(this.extras == null) {
-      //   this.search();
-      // }
-      // else {
-      //   this.long =
-      // }
-
-    // }
-
+      for(let i = 0; i < this.current_home.image.length; i++) {
+        this.imageUrls.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image[i])));
+      }
   }
 
   search() {
