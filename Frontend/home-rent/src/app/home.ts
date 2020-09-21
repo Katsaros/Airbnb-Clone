@@ -40,13 +40,13 @@ export class NewHome {
     ownerId: number;
     ownerUsername: string;
     reservations: [];
-    openBooking: string;
-    closeBooking: string;
+    openBooking: Date;
+    closeBooking: Date;
     image: [];
     price: number;
     address: string;
     latitude: string;
-    longtitude: string;
+    longitude: string;
     homeCategory: HomeCategory;
     description: string;
     squareMeters: number;
@@ -67,8 +67,8 @@ export class NewHome {
     tv: boolean;
     wifi: boolean;
     ac: boolean;
-    smoking: boolean;
-    pets: boolean;
+    smoking: string;
+    pets: string;
     events: string;
 }
 

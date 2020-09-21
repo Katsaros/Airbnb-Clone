@@ -31,7 +31,8 @@ export class NewHomeComponent implements OnInit {
 
   newHome: NewHome = new NewHome();
 
-  current_home: Home = new Home();
+  filesSelected: File;
+  current_home: Home = undefined;
   dieuthinsi: FormControl = new FormControl({disabled: true});
   perigrafi: FormControl = new FormControl();
   tetragonika: FormControl = new FormControl();
@@ -61,7 +62,7 @@ export class NewHomeComponent implements OnInit {
   mouseY: number;
 
   mymap: any;
-  disabled: boolean;
+  disabled: boolean = false;
 
 
   long: number = 23.729762;
@@ -145,6 +146,7 @@ export class NewHomeComponent implements OnInit {
 
     this.extras = this.route.snapshot.paramMap.get('extras');
     if(this.extras != null) {
+      this.current_home = new Home();
       this.current_home = this.storage.get('home');
       this.disabled = true;
       this.dieuthinsi.setValue(this.current_home.address);
@@ -229,10 +231,10 @@ export class NewHomeComponent implements OnInit {
     let my_info = this.storage.get('my_info');
     this.newHome.address = this.dieuthinsi.value;
     this.newHome.latitude = this.lat.toString();
-    this.newHome.longtitude = this.long.toString();
+    this.newHome.longitude = this.long.toString();
     this.newHome.maxPeople = this.atoma.value;
-    this.newHome.openBooking = this.range.value.start;
-    this.newHome.closeBooking = this.range.value.end;
+    this.newHome.openBooking = new Date(this.range.value.start);
+    this.newHome.closeBooking = new Date(this.range.value.end);
     this.newHome.extraPersonPrice = this.epipleontimi.value;
     this.newHome.price = this.timi.value;
     this.newHome.ownerUsername = my_info.username;
@@ -256,18 +258,34 @@ export class NewHomeComponent implements OnInit {
     this.newHome.kitchen = this.task.subtasks[4].completed;
     this.newHome.parking = this.task.subtasks[5].completed;
     this.newHome.tv = this.task.subtasks[6].completed;
-    this.newHome.smoking = this.task.subtasks[7].completed;
-    this.newHome.pets = this.task.subtasks[8].completed;
+    if(this.task.subtasks[7].completed) {
+      this.newHome.smoking = "Yes";
+    }
+    else {
+      this.newHome.smoking = "No";
+    }
+    if(this.task.subtasks[8].completed) {
+      this.newHome.pets = "Yes";
+    }
+    else {
+      this.newHome.pets = "No";
+    }
+    // this.newHome.pets = this.task.subtasks[8].completed;
     this.newHome.events = this.events.value;
     this.newHome.homeCategory = new HomeCategory();
     this.newHome.homeCategory.homeCategoryTitle = this.eidos.value;
+    this.newHome.reservations = [];
+    this.newHome.image = null;
 
     if(this.current_home == undefined) {
       // create new home
       let url = 'http://localhost:8080/api/host/home/new';
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
 
-      this.http.post<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
+      console.log(this.newHome);
+      this.http.post<Home>(url, this.newHome, {headers: header} ).subscribe(data =>{
+        this.onUpload(data.id);
+      });
     }
     else {
       // update home
@@ -322,4 +340,14 @@ export class NewHomeComponent implements OnInit {
     this.router.navigate(['/myhomes']);
   }
 
+  addImage(event) {
+    this.filesSelected = event.target.files[0];
+  }
+
+  onUpload(id) {
+    const formData: FormData = new FormData();
+    formData.append('imagefile', this.filesSelected, this.filesSelected.name);
+    this.http.post('localhost:8080/api/host/home/' + id.toString() + '/image', formData, {responseType: 'text' as 'json'}).subscribe( data => {
+    });
+  }
 }

@@ -144,17 +144,20 @@
                   </span>
                 </section>
 
-                    <button mat-button *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px" (click)="save()">Αποθήκευση</button>
+                    <input
+                            style="display: none"
+                            type="file" (change)="addImage($event)"
+                            #fileInput>
+                    <button mat-button (click)="fileInput.click()" *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px">Upload Image</button>
+                    <button mat-button *ngIf="disabled==false" style="padding-right: 20px; padding-left: 20px" (click)="save()">Save</button>
                     <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="change()">Τροποποίηση</button>
                     <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="delete()">Διαγραφή</button>
-
 
                 </mat-card-content>
             </mat-card>
         </div>
     </div>
 </div>
-
 
 </body>
 
