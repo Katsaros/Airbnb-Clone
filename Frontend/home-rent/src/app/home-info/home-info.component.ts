@@ -351,7 +351,7 @@ export class HomeInfoComponent implements OnInit {
   }
 
   message() {
-    this.router.navigate(['chats']);
+    this.router.navigate(['/chats']);
   }
 
 }

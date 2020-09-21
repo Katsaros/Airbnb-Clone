@@ -5,19 +5,22 @@
     <links>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" *ngIf="user == false">
-                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="arxiki">Αρχική</a>
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="arxiki">Home</a>
             </li>
             <li class="nav-item" *ngIf="admin == true">
-                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/user-requests'">Αιτήματα</a>
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/user-requests'">Requests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/account'">Λογαριασμός</a>
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/account'">Accout</a>
             </li>
             <li class="nav-item" *ngIf="user==true">
-                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/welcome'">Αναζήτηση</a>
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/welcome'">Search</a>
             </li>
             <li class="nav-item" *ngIf="mod==true">
-                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/myhomes'">Σπίτια</a>
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/myhomes'">My Places</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="'/chats'">Chat</a>
             </li>
         </ul>
 
@@ -29,7 +32,7 @@
                 <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
                     <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" alt="" class="img-fluid rounded-circle z-depth-0" style="width: 40px"></a>
                 <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/account">Προφίλ</a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/account">My Account</a>
                     <a class="dropdown-item waves-light" mdbWavesEffect (click)="logOut()">Log out</a>
                 </div>
             </li>
