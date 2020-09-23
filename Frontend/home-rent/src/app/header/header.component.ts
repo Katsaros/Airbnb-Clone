@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Signin} from '../signin';
 import {SigninResp} from '../signin-resp';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import {catchError, map} from 'rxjs/operators';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -21,11 +22,13 @@ export class HeaderComponent implements OnInit{
   floatLabelControl = new FormControl('auto');
   hide = true;
 
+  imageUrl;
 
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
 
-  constructor(fb: FormBuilder, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) {
+  constructor(fb: FormBuilder, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService,
+              private sanitizer: DomSanitizer) {
     this.options = fb.group({
       hideRequired: this.hideRequiredControl,
       floatLabel: this.floatLabelControl,
@@ -44,7 +47,7 @@ export class HeaderComponent implements OnInit{
     this.http.post<SigninResp>('http://localhost:8080/api/auth/signin', body)
         .subscribe(
         data => {
-          console.log(data);
+          // console.log(data);
 
           let token = {
             roles: [],
@@ -85,7 +88,7 @@ export class HeaderComponent implements OnInit{
 
           // console.log(next_page);
           this.router.navigate([next_page]); // go to the next page
-
+          this.getPhoto(data.id);
         }, error => { alert('Invalid Credentials')}
 
 
@@ -97,6 +100,18 @@ export class HeaderComponent implements OnInit{
 
   }
 
+
+  getPhoto(id) {
+
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    let url = 'http://localhost:8080/api/secure/user/' + id + '/image';
+    this.http.get(url, {headers: header, responseType: 'blob'}).subscribe(data => {
+      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      this.storage.set('photo', this.imageUrl);
+
+    });
+
+  }
   goRegister() {
     this.router.navigate(['register']);
   }

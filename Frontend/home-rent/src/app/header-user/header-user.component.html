@@ -30,7 +30,7 @@
             </li>
             <li class="nav-item avatar dropdown" dropdown>
                 <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" alt="" class="img-fluid rounded-circle z-depth-0" style="width: 40px"></a>
+                    <img [src]="imageUrl" alt="" class="img-fluid rounded-circle z-depth-0" style="width: 40px"></a>
                 <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
                     <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/account">My Account</a>
                     <a class="dropdown-item waves-light" mdbWavesEffect (click)="logOut()">Log out</a>

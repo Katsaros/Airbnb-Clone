@@ -52,7 +52,7 @@ export class AccountComponent implements OnInit {
 
 
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router, private http: HttpClient,
-              private sanitizer: DomSanitizer, public modalService: NgbModal) {
+              private sanitizer: DomSanitizer) {
     this.my_info = this.storage.get('my_info');
     this.disabled = true;
     this.username.setValue(this.my_info.username);

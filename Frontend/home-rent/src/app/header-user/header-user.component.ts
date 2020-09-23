@@ -19,6 +19,7 @@ export class HeaderUserComponent implements OnInit {
   unapproved: Users[];
   aitimata: number;
 
+  imageUrl;
   arxiki: string;
   constructor(public router: Router, @Inject(LOCAL_STORAGE) private storage: StorageService, private http: HttpClient) { }
 
@@ -57,6 +58,8 @@ export class HeaderUserComponent implements OnInit {
       this.arxiki = '/myhomes';
 
     }
+
+    this.imageUrl = this.storage.get('photo');
 
   }
 
