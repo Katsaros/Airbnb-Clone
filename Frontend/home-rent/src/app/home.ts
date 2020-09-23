@@ -2,10 +2,10 @@ export class Home {
     id: number;
     ownerId: number;
     ownerUsername: string;
-    reservations: [];
+    reservations: Reservations[];
     openBooking: string;
     closeBooking: string;
-    image: string[];
+    image: [];
     price: number;
     address: string;
     latitude: string;
@@ -36,10 +36,24 @@ export class Home {
 
 }
 
+export class Reservations {
+    reservationId: number;
+    bookedHomeId: number;
+    bookedDate: Date;
+    leaveDate: Date;
+    isBooked: number;
+    userIdBooked: number;
+    userNameBooked: string;
+    hostReviewStars: number;
+    hostReviewDescription: string;
+    homeReviewStars: number;
+    homeReviewDescription: string;
+}
+
 export class NewHome {
     ownerId: number;
     ownerUsername: string;
-    reservations: [];
+    reservations: Reservations[];
     openBooking: Date;
     closeBooking: Date;
     image: [];

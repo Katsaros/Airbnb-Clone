@@ -3,13 +3,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NominatimService} from '../nominatim.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
-import {Book, BookResp, Home, HomeCategory, NewHome} from '../home';
+import {Book, BookResp, Home, HomeCategory, NewHome, Reservations} from '../home';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NominatimResponse} from '../nominati-response';
-import {Response} from '../response';
 import {Task} from '../new-home/new-home.component';
 import {DomSanitizer} from '@angular/platform-browser';
-
 
 declare var ol: any;
 
@@ -42,9 +40,12 @@ export class HomeInfoComponent implements OnInit {
   kanonismoi: FormControl = new FormControl();
   events: FormControl = new FormControl();
   eidos: FormControl = new FormControl();
+  slides: any = [[]];
 
-  imageUrls = [];
+  imageUrls = null;
   extras;
+
+  reservations: Reservations[];
 
   range = new FormGroup({
     start: new FormControl(),
@@ -187,9 +188,11 @@ export class HomeInfoComponent implements OnInit {
       this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
       this.eidos.disable();
 
-      for(let i = 0; i < this.current_home.image.length; i++) {
-        this.imageUrls.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image[i])));
-      }
+      this.reservations = this.current_home.reservations;
+      this.slides = this.chunk(this.reservations, 3);
+      // for(let i = 0; i < this.current_home.image.length; i++) {
+        this.imageUrls = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
+      // }
   }
 
   search() {
@@ -225,6 +228,13 @@ export class HomeInfoComponent implements OnInit {
     });
   }
 
+  chunk(arr, chunkSize) {
+    let R = [];
+    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
+      R.push(arr.slice(i, i + chunkSize));
+    }
+    return R;
+  }
   // save() {
   //   let my_info = this.storage.get('my_info');
   //   this.newHome.address = this.dieuthinsi.value;

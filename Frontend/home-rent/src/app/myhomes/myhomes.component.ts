@@ -39,6 +39,7 @@ export class MyhomesComponent implements OnInit {
   homes: Home[] = [];
   my_info: any;
   imageUrl = [];
+  stars: number[] = [];
 
   range = new FormGroup({
     start: new FormControl(),
@@ -61,57 +62,12 @@ export class MyhomesComponent implements OnInit {
       }
       if(found == false) {
         this.router.navigate(['/not-found']);
-
       }
     }
 
     if(this.my_info.roles.length == 2) { //tow roles
       this.user = true;
     }
-
-
-
-    // let ahome: Home = new Home();
-    // ahome.id = 1;
-    // ahome.ownerId = 1;
-    // ahome.ownerUsername = "mpla";
-    // ahome.reservations = [];
-    // ahome.openBooking = "string";
-    // ahome.closeBooking = "string";
-    // ahome.image = [];
-    // ahome.price = 10;
-    // ahome.address = "string";
-    // ahome.latitude = "string";
-    // ahome.longtitude = "string";
-    // ahome.homeCategory = new HomeCategory();
-    // ahome.homeCategory.homeCategoryTitle = "mpla";
-    // ahome.description = "string";
-    // ahome.squareMeters = 10;
-    // ahome.overnightPrice = 13;
-    // ahome.extraPersonPrice = 2;
-    // ahome.maxPeople = 3;
-    // ahome.minOvernights = 1;
-    // ahome.beds = 4;
-    // ahome.bathrooms = 8;
-    // ahome.bedrooms = 0;
-    // ahome.transport = "mpla";
-    // ahome.neighborhood = "mpla";
-    // ahome.houseRules = "string";
-    // ahome.elevator = false;
-    // ahome.heating = false;
-    // ahome.kitchen = false;
-    // ahome.parking = false;
-    // ahome.tv = true;
-    // ahome.wifi = true;
-    // ahome.ac = true;
-    // ahome.smoking = true;
-    // ahome.pets = true;
-    // ahome.events = "true";
-    //
-    // for(let i = 0; i < 10; i++) {
-    //   this.homes.push(ahome);
-    // }
-
 
     // get my homes
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
@@ -125,11 +81,16 @@ export class MyhomesComponent implements OnInit {
 
       for(let i = 0; i < this.homes.length; i ++) {
         if(this.homes[i].image != null) {
-          this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.homes[i].image[0])));
+          this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.homes[i].image)));
         }
         else {
           this.imageUrl.push(null);
         }
+
+        this.http.get<any>('http://localhost:8080/api/public/home/' + this.homes[i].id + '/reviews', {headers: header}).subscribe(data => {
+          this.stars.push(data.average);
+        });
+
       }
     });
 

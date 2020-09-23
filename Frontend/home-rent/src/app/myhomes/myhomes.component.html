@@ -7,7 +7,7 @@
 
 <div class="container-fluid" style="padding-top: 10px">
    <div class="row">
-       <div class="col-3" *ngFor="let card of obs | async" style="padding: 10px">
+       <div class="col-3" *ngFor="let card of obs | async; let i = index" style="padding: 10px">
            <mat-card style="text-align: center">
                <mat-card-header style="text-align: center">
                    <mat-card-title >Κατηγορία: {{card.homeCategory.homeCategoryTitle}}</mat-card-title>
@@ -16,10 +16,12 @@
                <mat-card-content style="text-align: center">
                    <img mat-card-image [src]="imageUrl[i]" alt="Home Photo" style="width: 50%; height: 50%">
                    <p>{{card.address + ', ' +  card.price + ', ' + card.maxPeople}}</p>
+                   <h1>{{stars[i]}}<i class="fas fa-star"></i></h1>
+
                </mat-card-content>
                <mat-card-actions>
-                   <button mat-button (click)="openDialog(card)">Προβολή</button>
-                   <button mat-button (click)="delete(card.id)">Διαγραφή</button>
+                   <button mat-button (click)="openDialog(card)">More Details</button>
+                   <button mat-button (click)="delete(card.id)">Delete</button>
                </mat-card-actions>
            </mat-card>
        </div>

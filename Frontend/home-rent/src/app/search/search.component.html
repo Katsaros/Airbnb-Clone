@@ -77,6 +77,7 @@
                             <mat-card-content style="text-align: center; height: 300px; width: 300px">
                                 <img mat-card-image [src]="imageUrl[i]" alt="Home Photo" style="width: 50%; height: 50%">
                                 <p>{{card.address + ', ' +  card.price + ', ' + card.maxPeople}}</p>
+                                <h1>{{stars[i]}}<i class="fas fa-star"></i></h1>
                             </mat-card-content>
                             <mat-card-actions>
                                 <button mat-button (click)="openDialog(card)">Προβολή</button>

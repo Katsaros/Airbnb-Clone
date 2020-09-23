@@ -50,6 +50,8 @@ export class SearchComponent implements OnInit {
     ]
   };
 
+  stars: number[];
+
   accom: string[] = ['Full House', 'Private Room', 'Shared Room'];
 
 
@@ -65,7 +67,6 @@ export class SearchComponent implements OnInit {
     } else {
       this.logged_in = true;
     }
-
     this.search();
   }
 
@@ -78,13 +79,15 @@ export class SearchComponent implements OnInit {
 
       for(let i = 0; i < this.homes.length; i ++) {
         if(this.homes[i].image != null) {
-          this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.homes[i].image[0])));
+          this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.homes[i].image)));
         }
         else {
           this.imageUrl.push(null);
         }
+        this.http.get<any>('http://localhost:8080/api/public/home/' + this.homes[i].id + '/reviews').subscribe(data => {
+          this.stars.push(data.average);
+        })
       }
-
 
       this.dataSource = new MatTableDataSource<Home>(this.homes);
       this.dataSource.paginator = this.paginator;
@@ -96,7 +99,6 @@ export class SearchComponent implements OnInit {
     this.paginator.pageIndex = event.pageIndex;
     this.paginator.page.emit(event);
   }
-
 
   openDialog(card): void {
     this.storage.set('home', card);

@@ -5,17 +5,13 @@
 
 <div class="container-fluid">
 
-    <div class="row" *ngIf="imageUrls.length != 0">
+    <div class="row" *ngIf="imageUrls != null">
         <div class="col-12">
-            <mdb-carousel [animation]="'slide'">
-                <mdb-carousel-item *ngFor="let image of imageUrls">
-                    <img class="d-block w-100" [src]="image" alt="Photo">
-                </mdb-carousel-item>
-            </mdb-carousel>
+                    <img class="d-block w-100" [src]="imageUrls" alt="Photo">
         </div>
     </div>
 
-    <div class="row" *ngIf="imageUrls.length == 0">
+    <div class="row" *ngIf="imageUrls == null">
         <div class="col-12">
             <mat-card style="margin-top: 2%; width: 100%; border-radius: 0px; text-align: center;">
                 <mat-card-content>
@@ -146,11 +142,35 @@
                             </div>
                     </div>
 
-                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="book()">Book</button>
-                    <button mat-button *ngIf="disabled==true" style="padding-right: 20px; padding-left: 20px" (click)="message()">Message</button>
+                    <button mat-button *ngIf="disabled==true && loggedin == true" style="padding-right: 20px; padding-left: 20px" (click)="book()">Book</button>
+                    <button mat-button *ngIf="disabled==true && loggedin == true" style="padding-right: 20px; padding-left: 20px" (click)="message()">Message</button>
 
                 </mat-card-content>
             </mat-card>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            <mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
+                          [animation]="'slide'">
+                <mdb-carousel-item *ngFor="let item of slides; let i = index">
+                    <div class="col-md-4" *ngFor="let card of item; let cardIndex = index">
+                        <mdb-card class="my-1">
+                            <h1>{{card.homeReviewStars}}<i class="fas fa-star"></i></h1>
+                            <mdb-card-body>
+                                <h2>Home Review</h2>
+                                    <h4>{{card.homeReviewDescription}}</h4>
+                                <h1>{{card.ownerReviewStars}}<i class="fas fa-star"></i></h1>
+                                <h2>Owner Review</h2>
+                                <h4>{{card.ownerReviewDescription}}</h4>
+                            </mdb-card-body>
+                        </mdb-card>
+                    </div>
+                </mdb-carousel-item>
+            </mdb-carousel>
+
         </div>
     </div>
 </div>
