@@ -1,5 +1,6 @@
 package com.project.homerent.converter;
 
+import com.project.homerent.model.dto.MessageConnectionsDto;
 import com.project.homerent.model.dto.MessageDto;
 import com.project.homerent.model.messagemodel.Message;
 import com.project.homerent.model.usermodel.User;
@@ -49,6 +50,27 @@ public class MessageConverter {
 
         message.setRecipientId(messageDto.getReceiverId());
         User receiver = userServiceStatic.findById(messageDto.getReceiverId());
+
+        message.setRecipientUsername(receiver.getUsername());
+
+        return message;
+    }
+
+    public static MessageConnectionsDto convertToMessageConnectionsDto(Message message) {
+        MessageConnectionsDto messageConnectionsDto = new MessageConnectionsDto();
+        messageConnectionsDto.setReceiverId(message.getRecipientId());
+        messageConnectionsDto.setReceiverName(message.getRecipientUsername());
+        messageConnectionsDto.setSenderId(message.getSender().getId());
+        return messageConnectionsDto;
+    }
+
+    public static Message convertToMessageConnections(MessageConnectionsDto messageConnectionsDto) {
+        Message message = new Message();
+        User user = userServiceStatic.findById(messageConnectionsDto.getSenderId());
+        message.setSender(user);
+
+        message.setRecipientId(messageConnectionsDto.getReceiverId());
+        User receiver = userServiceStatic.findById(messageConnectionsDto.getReceiverId());
 
         message.setRecipientUsername(receiver.getUsername());
 

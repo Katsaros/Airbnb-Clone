@@ -35,20 +35,15 @@ public class HostModController {
 
     @Autowired
     private ImageService imageService;
-    //TODO gia ola: tsekare an to approved einai 1 se ka8e API, an den einai den exei ginei approved apo admin
 
     @GetMapping("/{id}/homes")
-    //TODO rwtise tin xristina an tin voleuei na stelnei to token h an thn voleuei me id
-//    public ResponseEntity<String> getHostHomes(@RequestBody Principal principal) throws JsonProcessingException {
     public ResponseEntity<String> getHostHomes(@PathVariable("id") Long id)  throws JsonProcessingException {
-//        User user = userService.findByUsername(principal.getName());
         User user = userService.findById(id);
 
         if(user.getApproved()==0)
             return ResponseEntity.ok().body("{\"message\": \"Host Isn't approved yet by administrator\"}");
         else
             return ResponseEntity.ok().body(convertToJson(hostService.findByUserId(id)));
-//            return ResponseEntity.ok().body(Helpers.convertToJson(hostService.findByUserId(user.getId())));
     }
 
     @PostMapping("/home/new")

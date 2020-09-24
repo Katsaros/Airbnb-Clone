@@ -93,6 +93,7 @@ public class MyHome {
 
     private Integer bedrooms;
 
+    @Length(max = 500)
     private String transport;
 
     private String neighborhood;

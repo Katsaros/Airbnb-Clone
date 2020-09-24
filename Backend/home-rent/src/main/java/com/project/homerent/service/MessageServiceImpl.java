@@ -1,15 +1,14 @@
 package com.project.homerent.service;
 
 import com.project.homerent.converter.MessageConverter;
+import com.project.homerent.model.dto.MessageConnectionsDto;
 import com.project.homerent.model.dto.MessageDto;
 import com.project.homerent.model.messagemodel.Message;
 import com.project.homerent.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,4 +100,20 @@ public class MessageServiceImpl implements MessageService {
         messageRepository.deleteById(id);
     }
 
+    public Set<MessageConnectionsDto> findMessageConnections(Long id) {
+        Set<MessageConnectionsDto> sendMessageConnections = messageRepository.findBySenderId(id)
+                .stream()
+                .map(MessageConverter::convertToMessageConnectionsDto)
+                .collect(Collectors.toSet());
+
+//        Set<MessageConnectionsDto> receiveMessageConnections = messageRepository.findByRecipientId(id)
+//                .stream()
+//                .map(MessageConverter::convertToMessageConnectionsDto)
+//                .collect(Collectors.toSet());
+
+//        Set<MessageConnectionsDto> finalConnections = new HashSet<>(sendMessageConnections);
+//        finalConnections.addAll(receiveMessageConnections);
+
+        return sendMessageConnections;
+    }
 }
