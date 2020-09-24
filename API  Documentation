@@ -868,3 +868,19 @@ SAMPLE RESPONSE:
   "read" : false,
   "creationTimestamp" : "2020-08-31 03:13 π.μ. EEST"
 } ]
+-------------------------------------------------------------------------------------------------------------
+VISIBLE FOR ALL AUTHENTICATED:
+
+GET (message connections)
+localhost:8080/api/secure/messages
+
+SAMPLE REQUEST:
+(if i am the user with id=2)
+localhost:8080/api/secure/messages
+
+SAMPLE RESPONSE: 
+[ {
+  "senderId" : 2,
+  "receiverId" : 10,
+  "receiverName" : "host10"
+} ]
