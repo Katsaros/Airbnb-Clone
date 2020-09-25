@@ -107,7 +107,7 @@ export class MyhomesComponent implements OnInit {
 
   delete(id) {
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    this.http.delete<any>('http://localhost:8080/api/home/' + id.toString() + '/delete', {headers: header}).subscribe(data => {
+    this.http.delete<any>('http://localhost:8080/api/host/home/' + id.toString() + '/delete', {headers: header}).subscribe(data => {
       // get my homes
       this.http.get<Home[]>('http://localhost:8080/api/host/' + this.my_info.id + '/homes', {headers: header}).subscribe(data => {
         this.homes = data;

@@ -1,33 +1,26 @@
 <body>
 
-<app-header-user></app-header-user>
+<app-header-user *ngIf="logged_in == true"></app-header-user>
+<app-header *ngIf="logged_in == false"></app-header>
 
 
 <div class="container-fluid">
 
     <div class="row" *ngIf="imageUrl != null">
         <div class="col-12">
-            <img class="d-block w-100" [src]="imageUrl" alt="Photo">
+            <center>
+            <img class="d-block" [src]="imageUrl" alt="Photo" style="height: 50%; width: 50%">
+            </center>
         </div>
     </div>
 
-    <div class="row" *ngIf="imageUrl != null">
+    <div class="row" *ngIf="imageUrl == null && storage.get('home') != null">
         <div class="col-12">
-            <img class="d-block w-100" src="assets/home_pic.png" alt="Photo">
+            <center>
+                <img class="d-block" src="assets/home_pic.png" alt="Photo" style="height: 50%; width: 50%">
+            </center>
         </div>
     </div>
-
-<!--    <div class="row" *ngIf="imageUrl == null">-->
-<!--        <div class="col-12">-->
-<!--            <mat-card style="margin-top: 2%; width: 100%; border-radius: 0px; text-align: center;">-->
-<!--                <mat-card-content>-->
-<!--                    <p>No Photos available!</p>-->
-<!--                </mat-card-content>-->
-
-<!--            </mat-card>-->
-<!--        </div>-->
-<!--    </div>-->
-
 
     <div class="row">
         <div class="col-6">
@@ -130,7 +123,18 @@
 
                         <mat-form-field appearance="outline" style="width: 200px">
                             <mat-label>Είδος Καταλύματος</mat-label>
-                            <input matInput [formControl]="eidos" style="color: #0d0d0d">
+
+<!--                            <p style="padding-top: 10px; font-size: 18px">Accomondation Type:</p>-->
+
+<!--                            <mat-form-field appearance="fill">-->
+                                <mat-select [(value)]="selected_type">
+                                    <mat-option *ngFor="let type of accom" [value]="type" style="color: #0d0d0d">
+                                        {{type}}
+                                    </mat-option>
+                                </mat-select>
+<!--                            </mat-form-field>-->
+
+<!--                            <input matInput [formControl]="eidos" style="color: #0d0d0d">-->
                         </mat-form-field>
 
                     </p>
@@ -138,7 +142,12 @@
                     <p>
                         <mat-form-field appearance="outline" style="width: 300px">
                             <mat-label>Events</mat-label>
-                            <textarea matInput [formControl]="events"></textarea>
+                            <mat-select [(value)]="selected_event">
+                                <mat-option *ngFor="let type of event" [value]="type" style="color: #0d0d0d">
+                                    {{type}}
+                                </mat-option>
+                            </mat-select>
+<!--                            <textarea matInput [formControl]="events"></textarea>-->
                         </mat-form-field>
 
                     </p>

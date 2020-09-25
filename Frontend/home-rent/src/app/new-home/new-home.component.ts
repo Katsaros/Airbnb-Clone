@@ -24,11 +24,9 @@ export interface Task {
   styleUrls: ['./new-home.component.css']
 })
 
-
-
 export class NewHomeComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) public storage: StorageService) { }
 
   newHome: NewHome = new NewHome();
 
@@ -48,9 +46,10 @@ export class NewHomeComponent implements OnInit {
   geitonia: FormControl = new FormControl();
   kanonismoi: FormControl = new FormControl();
   events: FormControl = new FormControl();
-  eidos: FormControl = new FormControl();
+  // eidos: FormControl = new FormControl();
 
   extras;
+  logged_in: boolean;
   imageUrl;
 
   range = new FormGroup({
@@ -66,6 +65,11 @@ export class NewHomeComponent implements OnInit {
   mymap: any;
   disabled: boolean = false;
 
+  accom: string[] = ['Full House', 'Private Room', 'Shared Room'];
+  event: string[] = ['Yes', 'No'];
+
+  selected_type: string = undefined;
+  selected_event: string = undefined;
 
   long: number = 23.729762;
   lat: number = 37.973393;
@@ -90,6 +94,11 @@ export class NewHomeComponent implements OnInit {
 
   ngOnInit() {
 
+    if (this.storage.get('my_info') == null) {
+      this.logged_in = false;
+    } else {
+      this.logged_in = true;
+    }
 
     var mousePositionControl = new ol.control.MousePosition({
       coordinateFormat: ol.coordinate.createStringXY(4),
@@ -113,6 +122,25 @@ export class NewHomeComponent implements OnInit {
         zoom: 8
       })
     });
+
+    if(this.storage.get('home') != null) {
+      this.long = this.storage.get('home').longitude;
+      this.lat = this.storage.get('home').latitude;
+      let layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              geometry: new ol.geom.Point(ol.proj.fromLonLat([this.long, this.lat]))
+            })
+          ]
+        })
+      });
+
+      if (this.mymap.getLayers().N.length > 1) {
+        this.mymap.getLayers().removeAt(1);
+      }
+      this.mymap.addLayer(layer);
+    }
 
     this.mymap.on('click', e => {
       if(this.disabled == false) {
@@ -179,8 +207,8 @@ export class NewHomeComponent implements OnInit {
       this.geitonia.disable();
       this.kanonismoi.setValue(this.current_home.houseRules);
       this.kanonismoi.disable();
-      this.events.setValue(this.current_home.events);
-      this.events.disable();
+      // this.events.setValue(this.current_home.events);
+      // this.events.disable();
       this.task.subtasks[0].completed = this.current_home.ac
       this.task.subtasks[1].completed = this.current_home.heating;
       this.task.subtasks[2].completed = this.current_home.wifi;
@@ -190,15 +218,14 @@ export class NewHomeComponent implements OnInit {
       this.task.subtasks[6].completed = this.current_home.tv;
       this.task.subtasks[7].completed = this.current_home.smoking;
       this.task.subtasks[8].completed = this.current_home.pets;
-      this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
-      this.eidos.disable();
+      // this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
+      // this.eidos.disable();
 
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
 
       this.search();
 
       }
-
   }
 
   search() {
@@ -254,7 +281,8 @@ export class NewHomeComponent implements OnInit {
     this.newHome.transport = this.odigies.value;
     this.newHome.neighborhood = this.geitonia.value;
     this.newHome.houseRules = this.kanonismoi.value;
-    this.newHome.events = this.events.value;
+    // this.newHome.events = this.events.value;
+    this.newHome.events = this.selected_event;
     this.newHome.ac = this.task.subtasks[0].completed;
     this.newHome.heating = this.task.subtasks[1].completed;
     this.newHome.wifi = this.task.subtasks[2].completed;
@@ -275,12 +303,12 @@ export class NewHomeComponent implements OnInit {
       this.newHome.pets = "No";
     }
     // this.newHome.pets = this.task.subtasks[8].completed;
-    this.newHome.events = this.events.value;
+    this.newHome.events = this.selected_event;
     this.newHome.homeCategory = new HomeCategory();
-    this.newHome.homeCategory.homeCategoryTitle = this.eidos.value;
+    this.newHome.homeCategory.homeCategoryTitle = this.selected_type;
     this.newHome.reservations = [];
     this.newHome.image = null;
-    console.log(this.newHome);
+    // console.log(this.newHome);
 
     if(this.current_home == undefined) {
       // create new home
@@ -299,7 +327,7 @@ export class NewHomeComponent implements OnInit {
       this.http.put<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{
         console.log(data);
         alert('Update Home successfully!');
-        // this.router.navigate(['/myhomes']);
+        this.router.navigate(['/myhomes']);
       });
     }
   }
@@ -338,15 +366,16 @@ export class NewHomeComponent implements OnInit {
     this.bathrooms.enable();
     this.geitonia.enable();
     this.kanonismoi.enable();
-    this.events.enable();
-    this.eidos.enable();
+    // this.events.enable();
+    // this.eidos.enable();
   }
 
   delete() {
-    let url = 'http://localhost:8080/api/host/home' + this.extras + '/delete';
+    let url = 'http://localhost:8080/api/host/home/' + this.extras + '/delete';
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    this.http.delete<any>(url, {headers: header} ).subscribe(data =>{});
-    this.router.navigate(['/myhomes']);
+    this.http.delete<any>(url, {headers: header} ).subscribe(data =>{
+      this.router.navigate(['/myhomes']);
+    });
   }
 
   addImage(event) {

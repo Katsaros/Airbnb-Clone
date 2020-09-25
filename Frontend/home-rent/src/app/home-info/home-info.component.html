@@ -7,7 +7,11 @@
 
     <div class="row" *ngIf="imageUrls != null">
         <div class="col-12">
-            <img class="d-block w-100" [src]="imageUrls" alt="Photo">
+            <center>
+
+            <img class="d-block w-100" [src]="imageUrls" alt="Photo" style="width: 50%; height: 50%">
+            </center>
+
         </div>
     </div>
     <div class="row" *ngIf="imageUrls == null">
