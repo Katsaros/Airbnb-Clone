@@ -289,9 +289,12 @@ export class NewHomeComponent implements OnInit {
     }
     else {
       // update home
-      let url = 'http://localhost:8080/api/home/update';
+      let url = 'http://localhost:8080/api/host/home/update';
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-      this.http.put<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
+      this.http.put<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{
+        alert('Update Home successfully!');
+        this.router.navigate(['/myhomes']);
+      });
     }
   }
 

@@ -70,7 +70,6 @@ export class HomeInfoComponent implements OnInit {
   mymap: any;
   disabled: boolean;
 
-
   long: number = 23.729762;
   lat: number = 37.973393;
 
@@ -120,6 +119,7 @@ export class HomeInfoComponent implements OnInit {
       })
     });
 
+
     this.mymap.on('click', e => {
       if(this.disabled == false) {
 
@@ -150,10 +150,6 @@ export class HomeInfoComponent implements OnInit {
       }
 
     });
-    // this.dieuthinsi.setValue('');
-
-    // this.extras = this.route.snapshot.paramMap.get('extras');
-    // if(this.extras != null) {
       this.current_home = this.storage.get('home');
       this.disabled = true;
       this.dieuthinsi.setValue(this.current_home.address);
@@ -210,9 +206,7 @@ export class HomeInfoComponent implements OnInit {
       }
 
       this.slides = this.chunk(this.reservations, 3);
-      // for(let i = 0; i < this.current_home.image.length; i++) {
-        this.imageUrls = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
-      // }
+      this.imageUrls = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
   }
 
   search() {
@@ -220,8 +214,6 @@ export class HomeInfoComponent implements OnInit {
     this.http.get<any>('https://api.opencagedata.com/geocode/v1/json?key=cfd032737bac482c9b20abb4ffdc3cb2&q='
         + this.dieuthinsi.value).subscribe(data => {
 
-    // this.
-          // console.log(data);
       this.long = Number(data.results[0].annotations.DMS.lng.split(' ')[0].split('\xB0')[0]) +
           Number(data.results[0].annotations.DMS.lng.split(' ')[1].split('\'')[0]) / 60 +
           Number(data.results[0].annotations.DMS.lng.split(' ')[2].split('\'\'')[0]) / 3600;
@@ -326,32 +318,6 @@ export class HomeInfoComponent implements OnInit {
     this.task.subtasks.forEach(t => t.completed = completed);
   }
 
-  // change() {
-  //   this.disabled = !this.disabled;
-  //   this.dieuthinsi.enable();
-  //   this.atoma.enable();
-  //   this.epipleontimi.enable();
-  //   this.timi.enable();
-  //   this.perigrafi.enable();
-  //   this.odigies.enable();
-  //   this.tetragonika.enable();
-  //   this.min_dianikt.enable();
-  //   this.bedrooms.enable();
-  //   this.beds.enable();
-  //   this.bathrooms.enable();
-  //   this.geitonia.enable();
-  //   this.kanonismoi.enable();
-  //   this.events.enable();
-  //   this.eidos.enable();
-  // }
-  //
-  // delete() {
-  //   let url = 'http://localhost:8080/api/home' + this.extras + '/delete';
-  //   let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-  //   this.http.delete<any>(url, {headers: header} ).subscribe(data =>{});
-  //   this.router.navigate(['/myhomes']);
-  // }
-
   book() {
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
     let url = 'http://localhost:8080/api/secure/home/book/';
@@ -367,11 +333,9 @@ export class HomeInfoComponent implements OnInit {
     body.userNameBooked = this.storage.get('my_info').username;
 
     let dates = this.storage.get('dates');
-    // console.log(dates);
     body.bookedDate = dates.start;
     body.leaveDate = dates.end;
 
-    // console.log('book body', body);
     this.http.post<BookResp[]>(url, body, {headers: header}).subscribe(data => {
       alert("Booked successfully!")
       if(this.storage.get('my_info').roles.length == 2) {
