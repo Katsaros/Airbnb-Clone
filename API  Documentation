@@ -552,7 +552,7 @@ SAMPLE RESPONSE 2:
 }
 -------------------------------------------------------------------------------------------------------------
 PUBLIC FOR ALL:
-GET (with url parameters as filters) (more filters coming soon)
+POST (with url parameters as filters) (more filters coming soon)
 /api/public/homes/more?type={Private Room ή Shared Room ή Full House}&maxPrice={double}&wifi={boolean}&elevator={boolean}&heating={boolean}&kitchen={boolean}&parking={boolean}&tv={boolean}&ac={boolean}
 
 SAMPLE REQUEST:

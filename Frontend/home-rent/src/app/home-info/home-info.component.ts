@@ -45,6 +45,7 @@ export class HomeInfoComponent implements OnInit {
   imageUrls = null;
   extras;
 
+  write_review: boolean = false;
   reservations: Reservations[];
 
   range = new FormGroup({
@@ -189,6 +190,15 @@ export class HomeInfoComponent implements OnInit {
       this.eidos.disable();
 
       this.reservations = this.current_home.reservations;
+
+      if(this.loggedin == true) {
+        for(let i = 0; i < this.reservations.length; i++) {
+          if(this.reservations[i].userIdBooked == this.storage.get('my_info').id) {
+            this.write_review = true;
+          }
+        }
+      }
+
       this.slides = this.chunk(this.reservations, 3);
       // for(let i = 0; i < this.current_home.image.length; i++) {
         this.imageUrls = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
