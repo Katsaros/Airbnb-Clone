@@ -24,6 +24,7 @@ export class SearchComponent implements OnInit {
   obs: Observable<any>;
   dataSource: MatTableDataSource<Home>;
 
+  init_homes: Home[] = [];
   imageUrl = [];
   selected: Home = undefined;
   homes: Home[] = [];
@@ -50,7 +51,7 @@ export class SearchComponent implements OnInit {
     ]
   };
 
-  stars: number[];
+  stars: string[] = [];
   accom: string[] = ['Full House', 'Private Room', 'Shared Room'];
 
 
@@ -83,13 +84,20 @@ export class SearchComponent implements OnInit {
         else {
           this.imageUrl.push(null);
         }
-        this.http.get<any>('http://localhost:8080/api/public/home/' + this.homes[i].id + '/reviews').subscribe(data => {
-          this.stars.push(data.average);
-        })
+        if(this.homes[i].reservations.length != 0) {
+          this.http.get<any>('http://localhost:8080/api/public/home/' + this.homes[i].id + '/reviews').subscribe(data => {
+            this.stars.push(data.average.toString());
+          });
+        }
+        else {
+          this.stars.push('-');
+
+        }
       }
 
       this.dataSource = new MatTableDataSource<Home>(this.homes);
       this.dataSource.paginator = this.paginator;
+      this.init_homes = this.homes;
     });
   }
 
@@ -158,12 +166,11 @@ export class SearchComponent implements OnInit {
     }
 
     let body = {
-      homes: this.homes
+      homes: this.init_homes
     }
+
     this.http.post<any>(url, body,{params: params}).subscribe(data => {
       this.homes = data.homes;
-      // console.log(this.homes);
-
     });
 
   }

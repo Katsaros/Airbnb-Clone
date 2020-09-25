@@ -39,7 +39,7 @@ export class MyhomesComponent implements OnInit {
   homes: Home[] = [];
   my_info: any;
   imageUrl = [];
-  stars: number[] = [];
+  stars: string[] = [];
 
   range = new FormGroup({
     start: new FormControl(),
@@ -87,10 +87,14 @@ export class MyhomesComponent implements OnInit {
           this.imageUrl.push(null);
         }
 
-        this.http.get<any>('http://localhost:8080/api/public/home/' + this.homes[i].id + '/reviews', {headers: header}).subscribe(data => {
-          this.stars.push(data.average);
-        });
-
+        if(this.homes[i].reservations.length != 0) {
+          this.http.get<any>('http://localhost:8080/api/public/home/' + this.homes[i].id + '/reviews', {headers: header}).subscribe(data => {
+            this.stars.push(data.average.toString());
+          });
+        }
+        else {
+          this.stars.push('-');
+        }
       }
     });
 
