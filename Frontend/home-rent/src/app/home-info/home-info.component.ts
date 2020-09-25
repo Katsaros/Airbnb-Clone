@@ -354,7 +354,7 @@ export class HomeInfoComponent implements OnInit {
 
   book() {
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-    let url = 'http://localhost:8080/api/secure/book/';
+    let url = 'http://localhost:8080/api/secure/home/book/';
     let body = new Book();
     let home: Home = this.storage.get('home');
     body.bookedHomeId = home.id;
@@ -362,17 +362,30 @@ export class HomeInfoComponent implements OnInit {
     body.homeReviewStars = 0;
     body.hostReviewDescription = null;
     body.hostReviewStars = 0;
-
+    body.isBooked = 1;
     body.userIdBooked = this.storage.get('my_info').id;
+    body.userNameBooked = this.storage.get('my_info').username;
 
     let dates = this.storage.get('dates');
     // console.log(dates);
-    body.bookedDate = dates.start.value;
-    body.leaveDate = dates.end.value;
+    body.bookedDate = dates.start;
+    body.leaveDate = dates.end;
 
     // console.log('book body', body);
     this.http.post<BookResp[]>(url, body, {headers: header}).subscribe(data => {
-      console.log(data);
+      alert("Booked successfully!")
+      if(this.storage.get('my_info').roles.length == 2) {
+        this.router.navigate(['/myhomes']);
+      }
+      else {
+        if(this.storage.get('my_info').roles[0] == 'ROLE_USER') {
+          this.router.navigate(['/account']);
+        }
+        else {
+          this.router.navigate(['/myhomes']);
+        }
+      }
+      this.router.navigate(['/']);
     });
   }
 

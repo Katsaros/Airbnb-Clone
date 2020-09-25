@@ -20,8 +20,10 @@
 }
 
 body {
-    background-image: url("/../../assets/home.jpg");
     background-size: cover;
     height: 100vh;
     padding: 0;
+    font-size: 14px;
+    color: #484848;
+    background-color: #fafafa;
 }

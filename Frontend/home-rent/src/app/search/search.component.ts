@@ -51,7 +51,6 @@ export class SearchComponent implements OnInit {
   };
 
   stars: number[];
-
   accom: string[] = ['Full House', 'Private Room', 'Shared Room'];
 
 
