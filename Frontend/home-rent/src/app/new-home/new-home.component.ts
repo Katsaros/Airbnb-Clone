@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Home, HomeCategory, NewHome} from '../home';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {Response} from '../response';
+import {DomSanitizer} from '@angular/platform-browser';
 
 declare var ol: any;
 
@@ -27,7 +28,7 @@ export interface Task {
 
 export class NewHomeComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
   newHome: NewHome = new NewHome();
 
@@ -50,6 +51,7 @@ export class NewHomeComponent implements OnInit {
   eidos: FormControl = new FormControl();
 
   extras;
+  imageUrl;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -191,6 +193,8 @@ export class NewHomeComponent implements OnInit {
       this.eidos.setValue(this.current_home.homeCategory.homeCategoryTitle);
       this.eidos.disable();
 
+      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
+
       this.search();
 
       }
@@ -276,13 +280,14 @@ export class NewHomeComponent implements OnInit {
     this.newHome.homeCategory.homeCategoryTitle = this.eidos.value;
     this.newHome.reservations = [];
     this.newHome.image = null;
+    console.log(this.newHome);
 
     if(this.current_home == undefined) {
       // create new home
       let url = 'http://localhost:8080/api/host/home/new';
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
 
-      console.log(this.newHome);
+      // console.log(this.newHome);
       this.http.post<Home>(url, this.newHome, {headers: header} ).subscribe(data =>{
         this.onUpload(data.id);
       });
@@ -292,8 +297,9 @@ export class NewHomeComponent implements OnInit {
       let url = 'http://localhost:8080/api/host/home/update';
       let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
       this.http.put<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{
+        console.log(data);
         alert('Update Home successfully!');
-        this.router.navigate(['/myhomes']);
+        // this.router.navigate(['/myhomes']);
       });
     }
   }
@@ -337,7 +343,7 @@ export class NewHomeComponent implements OnInit {
   }
 
   delete() {
-    let url = 'http://localhost:8080/api/home' + this.extras + '/delete';
+    let url = 'http://localhost:8080/api/host/home' + this.extras + '/delete';
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
     this.http.delete<any>(url, {headers: header} ).subscribe(data =>{});
     this.router.navigate(['/myhomes']);

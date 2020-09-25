@@ -4,6 +4,25 @@
 
 
 <div class="container-fluid">
+
+    <div class="row" *ngIf="imageUrl != null">
+        <div class="col-12">
+            <img class="d-block w-100" [src]="imageUrl" alt="Photo">
+        </div>
+    </div>
+
+    <div class="row" *ngIf="imageUrl == null">
+        <div class="col-12">
+            <mat-card style="margin-top: 2%; width: 100%; border-radius: 0px; text-align: center;">
+                <mat-card-content>
+                    <p>No Photos available!</p>
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-6">
             <div id="map" class="map" style="margin-top: 2%; margin-left: 2%; height: 800px"></div>

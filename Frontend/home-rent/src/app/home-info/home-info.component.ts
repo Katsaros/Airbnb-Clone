@@ -119,6 +119,25 @@ export class HomeInfoComponent implements OnInit {
       })
     });
 
+    if(this.storage.get('home') != null) {
+      this.long = this.storage.get('home').longitude;
+      this.lat = this.storage.get('home').latitude;
+      let layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              geometry: new ol.geom.Point(ol.proj.fromLonLat([this.long, this.lat]))
+            })
+          ]
+        })
+      });
+
+      if (this.mymap.getLayers().N.length > 1) {
+        this.mymap.getLayers().removeAt(1);
+      }
+      this.mymap.addLayer(layer);
+    }
+
 
     this.mymap.on('click', e => {
       if(this.disabled == false) {
@@ -246,61 +265,6 @@ export class HomeInfoComponent implements OnInit {
       R.push(arr.slice(i, i + chunkSize));
     }
     return R;
-  }
-  // save() {
-  //   let my_info = this.storage.get('my_info');
-  //   this.newHome.address = this.dieuthinsi.value;
-  //   this.newHome.latitude = this.lat.toString();
-  //   this.newHome.longtitude = this.long.toString();
-  //   this.newHome.maxPeople = this.atoma.value;
-  //   this.newHome.openBooking = this.range.value.start;
-  //   this.newHome.closeBooking = this.range.value.end;
-  //   this.newHome.extraPersonPrice = this.epipleontimi.value;
-  //   this.newHome.price = this.timi.value;
-  //   this.newHome.ownerUsername = my_info.username;
-  //   this.newHome.ownerId = my_info.id;
-  //   this.newHome.description = this.perigrafi.value;
-  //   this.newHome.transport = this.odigies.value;
-  //   this.newHome.squareMeters = this.tetragonika.value;
-  //   this.newHome.overnightPrice = this.timi.value;
-  //   this.newHome.minOvernights = this.min_dianikt.value;
-  //   this.newHome.bedrooms = this.bedrooms.value;
-  //   this.newHome.beds = this.beds.value;
-  //   this.newHome.bathrooms = this.bathrooms.value;
-  //   this.newHome.transport = this.odigies.value;
-  //   this.newHome.neighborhood = this.geitonia.value;
-  //   this.newHome.houseRules = this.kanonismoi.value;
-  //   this.newHome.events = this.events.value;
-  //   this.newHome.ac = this.task.subtasks[0].completed;
-  //   this.newHome.heating = this.task.subtasks[1].completed;
-  //   this.newHome.wifi = this.task.subtasks[2].completed;
-  //   this.newHome.elevator = this.task.subtasks[3].completed;
-  //   this.newHome.kitchen = this.task.subtasks[4].completed;
-  //   this.newHome.parking = this.task.subtasks[5].completed;
-  //   this.newHome.tv = this.task.subtasks[6].completed;
-  //   this.newHome.smoking = this.task.subtasks[7].completed;
-  //   this.newHome.pets = this.task.subtasks[8].completed;
-  //   this.newHome.events = this.events.value;
-  //   this.newHome.homeCategory = new HomeCategory();
-  //   this.newHome.homeCategory.homeCategoryTitle = this.eidos.value;
-  //
-  //   if(this.current_home == undefined) {
-  //     // create new home
-  //     let url = 'http://localhost:8080/api/host/home/new';
-  //     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-  //
-  //     this.http.post<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
-  //   }
-  //   else {
-  //     // update home
-  //     let url = 'http://localhost:8080/api/home/update';
-  //     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
-  //     this.http.put<Response>(url, this.newHome, {headers: header} ).subscribe(data =>{});
-  //   }
-  // }
-
-  updateAllComplete() {
-    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
   }
 
   someComplete(): boolean {
