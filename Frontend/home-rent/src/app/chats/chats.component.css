@@ -1,0 +1,27 @@
+.searchbutton {
+    padding: 8px 10px;
+    border-radius: 2px;
+    border: 1px solid #ff545c;
+    background: #ff545c;
+    color: #fff;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    font-size: 15px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+.searchbutton:hover {
+    color: #fff;
+    background: #d74e56;
+    border: 1px solid #d74e56;
+    text-decoration: none;
+}
+
+body {
+    background-image: url("/../../assets/home.jpg");
+    background-size: cover;
+    height: 100vh;
+    padding: 0;
+}

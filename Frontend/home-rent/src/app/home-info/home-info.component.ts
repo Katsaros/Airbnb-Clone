@@ -363,7 +363,7 @@ export class HomeInfoComponent implements OnInit {
     body.hostReviewDescription = null;
     body.hostReviewStars = 0;
 
-    body.userIdBooked = this.storage.get('my-info').id;
+    body.userIdBooked = this.storage.get('my_info').id;
 
     let dates = this.storage.get('dates');
     // console.log(dates);
@@ -377,7 +377,7 @@ export class HomeInfoComponent implements OnInit {
   }
 
   message() {
-    this.router.navigate(['/chats']);
+    this.router.navigate(['/chats/new']);
   }
 
   submit() {

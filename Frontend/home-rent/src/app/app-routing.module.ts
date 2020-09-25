@@ -81,6 +81,10 @@ const routes: Routes = [
     component: ChatsComponent
   },
   {
+    path: 'chats/new',
+    component: ChatsComponent
+  },
+  {
     path: 'results',
     component: ResultsComponent
   },

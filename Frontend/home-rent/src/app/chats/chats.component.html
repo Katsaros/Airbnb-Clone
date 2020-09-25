@@ -10,12 +10,12 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- All chats-->
-                <div class="col-4" style="height: 90vh">
-                    <mat-card *ngFor="let chat of chatList" (click)="getMessages(chat.receiverId)">{{chat.receiverName}}</mat-card>
+                <div class="col-4" style="height: 90vh; background: #eae6e6">
+                    <mat-card style="margin-top: 20px" *ngFor="let chat of chatList" (click)="getMessages(chat.receiverId)">{{chat.receiverName}}</mat-card>
                 </div>
 
                 <!-- messages of selected chat-->
-                <div class="col-8" style="height: 80vh; scroll-behavior: smooth;  overflow: hidden; overflow-y: scroll;">
+                <div class="col-8" style="height: 70vh; scroll-behavior: smooth;  overflow: hidden; overflow-y: scroll;">
                     <div *ngFor="let mess of messages" style="scroll-behavior: smooth;">
                         <mat-card *ngIf="mess.senderId == my_id" style="background: #5fbae9; margin: 10px; width: 70%; margin-left: 200px;
                             border-bottom-left-radius: 40px; border-bottom-right-radius: 0px; border-top-left-radius: 40px; border-top-right-radius: 40px">
@@ -28,7 +28,7 @@
                         </mat-card>
 
                         <!-- messages of selected chat-->
-                        <mat-card *ngIf="mess.senderId != my_id" style="background: #484848; width: 70%; margin-left: 0px; margin-right: 200px;
+                        <mat-card *ngIf="mess.senderId != my_id" style="background: #d7d7d7;  margin: 10px; width: 70%; margin-left: 0px; margin-right: 200px;
                         border-bottom-left-radius: 0px; border-bottom-right-radius: 40px; border-top-left-radius: 40px; border-top-right-radius: 40px">
                             <mat-card-content style="margin: 10px">
                                 <h2 style="font-size: 18px">{{mess.message}}</h2>
@@ -39,8 +39,37 @@
                         </mat-card>
                     </div>
                 </div>
+<!--                <div class="row">-->
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-10">
+                                    <mat-form-field style="width: 100%">
+                                        <mat-label>Message</mat-label>
+                                        <textarea matInput
+                                                  cdkTextareaAutosize
+                                                  #autosize="cdkTextareaAutosize"
+                                                  cdkAutosizeMinRows="1"
+                                                  cdkAutosizeMaxRows="5"
+                                                  [formControl]="newMess"></textarea>
+                                    </mat-form-field>
+
+                                </div>
+                                <div class="col-2">
+                                    <button mat-raised-button class="searchbutton" (click)="send()">send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--                </div>-->
+<!--                </div>-->
+
+
             </div>
         </div>
+
+
 
     </mat-card>
 
