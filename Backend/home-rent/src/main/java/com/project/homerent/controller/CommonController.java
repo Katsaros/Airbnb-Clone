@@ -11,15 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.security.Principal;
-import java.util.List;
 
 import static com.project.homerent.util.Helpers.convertToJson;
 
@@ -141,6 +138,15 @@ public class CommonController {
         User user = userService.findByUsername(principal.getName());
         if(user.getRoles().stream().findFirst().isPresent())
             return ResponseEntity.ok().body(convertToJson(messageService.findHistory(sender, receiver)));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"Error with user id\"}");
+    }
+
+    @GetMapping("/messages")
+    public ResponseEntity<String> historyList(Principal principal) throws Exception {
+        User user = userService.findByUsername(principal.getName());
+        if(user.getRoles().stream().findFirst().isPresent())
+            return ResponseEntity.ok().body(convertToJson(messageService.findMessageConnections(user.getId())));
         else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Status\": \"Error with user id\"}");
     }
