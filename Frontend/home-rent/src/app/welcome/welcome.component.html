@@ -49,6 +49,44 @@
 
     </div>
 </div>
+
+<div class="container-fluid" align="center" style="padding-top: 100px">
+  <div class="row">
+    <div class="col-1">
+      <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
+        <mat-icon (click)="go_prev()">arrow_back_ios</mat-icon>
+      </button>
+    </div>
+    <div class="col-2" *ngFor="let h of homes_i">
+      <mat-card style="text-align: center" style="padding: 10px">
+        <mat-card-header style="text-align: center">
+          <mat-card-title >Κατηγορία: {{homes[h].homeCategory.homeCategoryTitle}}</mat-card-title>
+          <mat-card-subtitle>Περιγραφή: {{homes[h].description}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content style="text-align: center">
+          <img mat-card-image [src]="imageUrl[h]" *ngIf="imageUrl[h] != null" alt="Home Photo" style="width: 50%; height: 50%">
+          <img mat-card-image src="assets/home_pic.png" *ngIf="imageUrl[h] == null" alt="Home Photo" style="width: 50%; height: 50%">
+
+          <p>{{homes[h].address + ', ' +  homes[h].price + '€' + ', ' + homes[h].squareMeters + 'sm'}}</p>
+
+<!--          <h1>{{stars[i]}}<i class="fas fa-star"></i></h1>-->
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="openDialog(homes[h])">More Details</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+<!--    </div>-->
+    <div class="col-1">
+      <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
+        <mat-icon (click)="go_next()">arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+
 <div class="container section2" *ngIf="logged_in == false">
   <div class="row">
     <div class="col-4">

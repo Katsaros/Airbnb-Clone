@@ -49,18 +49,16 @@ export class AdminComponent implements OnInit {
     // get all users
     let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
     this.http.get<Users[]>('http://localhost:8080/api/admin/users', {headers: header}).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.dataSource = new MatTableDataSource<Users>(data);
       this.dataSource.paginator = this.paginator;
 
     });
 
     this.http.get<Users[]>('http://localhost:8080/api/admin/users/unapproved', {headers: header}).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.unapproved = data;
-
       this.aitimata = this.unapproved.length;
-
     });
 
 

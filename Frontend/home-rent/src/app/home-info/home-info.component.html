@@ -7,20 +7,17 @@
 
     <div class="row" *ngIf="imageUrls != null">
         <div class="col-12">
-                    <img class="d-block w-100" [src]="imageUrls" alt="Photo">
+            <img class="d-block w-100" [src]="imageUrls" alt="Photo">
         </div>
     </div>
-
     <div class="row" *ngIf="imageUrls == null">
         <div class="col-12">
-            <mat-card style="margin-top: 2%; width: 100%; border-radius: 0px; text-align: center;">
-                <mat-card-content>
-                    <p>No Photos available!</p>
-                </mat-card-content>
-
-            </mat-card>
+            <center>
+                <img class="d-block" src="assets/home_pic.png" alt="Home Photo" style="width: 50%; height: 50%">
+            </center>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-6">
