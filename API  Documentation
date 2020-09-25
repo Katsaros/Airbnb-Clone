@@ -654,10 +654,10 @@ SAMPLE RESPONSE 2:
 VISIBLE FOR ALL AUTHENTICATED:
 
 POST (BOOKING)
-localhost:8080/api/secure/book
+localhost:8080/api/secure/home/book
 
 SAMPLE REQUEST:
-localhost:8080/api/secure/book
+localhost:8080/api/secure/home/book
 {
  //h diafora tou panw me tou katw einai oti edw den vazeis reservationId
     "bookedHomeId" : 1,
@@ -693,10 +693,10 @@ SAMPLE RESPONSE 2:
 VISIBLE FOR ALL AUTHENTICATED:
 
 PUT (Update Booking)
-localhost:8080/api/secure/book
+localhost:8080/api/secure/home/book
 
 SAMPLE REQUEST:
-localhost:8080/api/secure/book
+localhost:8080/api/secure/home/book
 {
     "reservationId" : 2,
     "bookedHomeId" : 1,
