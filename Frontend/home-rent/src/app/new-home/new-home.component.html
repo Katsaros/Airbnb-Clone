@@ -9,7 +9,7 @@
     <div class="row" *ngIf="imageUrl != null">
         <div class="col-12">
             <center>
-            <img class="d-block" [src]="imageUrl" alt="Photo" style="height: 50%; width: 50%">
+            <img class="d-block" [src]="imageUrl" alt="Photo" style="height: 20%; width: 20%">
             </center>
         </div>
     </div>
@@ -17,7 +17,7 @@
     <div class="row" *ngIf="imageUrl == null && storage.get('home') != null">
         <div class="col-12">
             <center>
-                <img class="d-block" src="assets/home_pic.png" alt="Photo" style="height: 50%; width: 50%">
+                <img class="d-block" src="assets/home_pic.png" alt="Photo" style="height: 20%; width: 20%">
             </center>
         </div>
     </div>

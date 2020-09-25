@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {NominatimResponse} from '../nominati-response';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {NominatimService} from '../nominatim.service';
@@ -24,7 +24,7 @@ export interface Task {
   styleUrls: ['./new-home.component.css']
 })
 
-export class NewHomeComponent implements OnInit {
+export class NewHomeComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) public storage: StorageService) { }
 
@@ -224,7 +224,6 @@ export class NewHomeComponent implements OnInit {
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.current_home.image));
 
       this.search();
-
       }
   }
 
@@ -387,5 +386,11 @@ export class NewHomeComponent implements OnInit {
     formData.append('imagefile', this.filesSelected, this.filesSelected.name);
     this.http.post('localhost:8080/api/host/home/' + id.toString() + '/image', formData, {responseType: 'text' as 'json'}).subscribe( data => {
     });
+  }
+
+  ngOnDestroy() {
+    if(this.storage.get('home') != null) {
+      this.storage.remove('home');
+    }
   }
 }

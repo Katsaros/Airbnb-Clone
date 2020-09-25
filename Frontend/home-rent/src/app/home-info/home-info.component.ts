@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NominatimService} from '../nominatim.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -18,7 +18,7 @@ declare var ol: any;
   styleUrls: ['./home-info.component.css']
 })
 
-export class HomeInfoComponent implements OnInit {
+export class HomeInfoComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
@@ -333,9 +333,12 @@ export class HomeInfoComponent implements OnInit {
     this.http.put<BookResp[]>(url, this.my_reservation, {headers: header}).subscribe(data => {
       console.log(data);
     });
-
   }
 
-
+  ngOnDestroy() {
+    if(this.storage.get('home') != null) {
+      this.storage.remove('home');
+    }
+  }
 
 }
