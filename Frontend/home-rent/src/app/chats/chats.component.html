@@ -17,22 +17,24 @@
                 <!-- messages of selected chat-->
                 <div class="col-8" style="height: 80vh; scroll-behavior: smooth;  overflow: hidden; overflow-y: scroll;">
                     <div *ngFor="let mess of messages" style="scroll-behavior: smooth;">
-                        <mat-card *ngIf="mess.senderId == my_id" style="background: #5fbae9; margin: 10px; padding-right: 0px; margin-right: 0px;">
-                            <mat-card-content>
-                                <p>{{mess.message}}</p>
+                        <mat-card *ngIf="mess.senderId == my_id" style="background: #5fbae9; margin: 10px; width: 70%; margin-left: 200px;
+                            border-bottom-left-radius: 40px; border-bottom-right-radius: 0px; border-top-left-radius: 40px; border-top-right-radius: 40px">
+                            <mat-card-content style="margin: 10px">
+                                <h2 style="font-size: 18px">{{mess.message}}</h2>
                             </mat-card-content>
-                            <mat-card-footer>
-                                <h3>{{mess.creationTimestamp}}</h3>
+                            <mat-card-footer style="margin: 13px">
+                                <h3 style="font-weight: lighter; font-size: 10px">{{mess.creationTimestamp}}</h3>
                             </mat-card-footer>
                         </mat-card>
 
                         <!-- messages of selected chat-->
-                        <mat-card *ngIf="mess.senderId != my_id" style="background: #484848;">
-                            <mat-card-content>
-                                <p>{{mess.message}}</p>
+                        <mat-card *ngIf="mess.senderId != my_id" style="background: #484848; width: 70%; margin-left: 0px; margin-right: 200px;
+                        border-bottom-left-radius: 0px; border-bottom-right-radius: 40px; border-top-left-radius: 40px; border-top-right-radius: 40px">
+                            <mat-card-content style="margin: 10px">
+                                <h2 style="font-size: 18px">{{mess.message}}</h2>
                             </mat-card-content>
-                            <mat-card-footer>
-                                <h3>{{mess.creationTimestamp}}</h3>
+                            <mat-card-footer style="margin: 13px">
+                                <h3 style="font-weight: lighter; font-size: 10px">{{mess.creationTimestamp}}</h3>
                             </mat-card-footer>
                         </mat-card>
                     </div>

@@ -93,7 +93,7 @@ export class HomeInfoComponent implements OnInit {
   };
 
   ngOnInit() {
-    if(this.storage.get('my-info') != null) {
+    if(this.storage.get('my_info') != null) {
       this.loggedin = true;
     }
 
