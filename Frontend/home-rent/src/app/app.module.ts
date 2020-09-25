@@ -48,6 +48,7 @@ import { ResultsComponent } from './results/results.component';
 import { HomeInfoComponent } from './home-info/home-info.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { ChatsComponent } from './chats/chats.component';
+import {RatingModule} from 'ng-starrating';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { ChatsComponent } from './chats/chats.component';
         HttpClientModule,
         StorageServiceModule,
         MatDialogModule,
+        RatingModule
     ],
   exports: [
     MatButtonModule,

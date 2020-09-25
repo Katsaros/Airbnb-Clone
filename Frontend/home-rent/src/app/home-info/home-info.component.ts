@@ -8,6 +8,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {NominatimResponse} from '../nominati-response';
 import {Task} from '../new-home/new-home.component';
 import {DomSanitizer} from '@angular/platform-browser';
+import { StarRatingComponent } from 'ng-starrating';
 
 declare var ol: any;
 
@@ -22,6 +23,9 @@ export class HomeInfoComponent implements OnInit {
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private nominatimService: NominatimService, private router: Router, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
   newHome: NewHome = new NewHome();
+  totalstar: number = 5;
+  stars_owner: number;
+  stars_home: number;
 
   loggedin: Boolean = false;
   current_home: Home = new Home();
@@ -40,6 +44,11 @@ export class HomeInfoComponent implements OnInit {
   kanonismoi: FormControl = new FormControl();
   events: FormControl = new FormControl();
   eidos: FormControl = new FormControl();
+  homeDescr: FormControl = new FormControl();
+  ownerDescr: FormControl = new FormControl();
+
+  my_reservation: Reservations;
+
   slides: any = [[]];
 
   imageUrls = null;
@@ -194,6 +203,7 @@ export class HomeInfoComponent implements OnInit {
       if(this.loggedin == true) {
         for(let i = 0; i < this.reservations.length; i++) {
           if(this.reservations[i].userIdBooked == this.storage.get('my_info').id) {
+            this.my_reservation = this.reservations[i];
             this.write_review = true;
           }
         }
@@ -356,11 +366,11 @@ export class HomeInfoComponent implements OnInit {
     body.userIdBooked = this.storage.get('my-info').id;
 
     let dates = this.storage.get('dates');
-    console.log(dates);
+    // console.log(dates);
     body.bookedDate = dates.start.value;
     body.leaveDate = dates.end.value;
 
-    console.log('book body', body);
+    // console.log('book body', body);
     this.http.post<BookResp[]>(url, body, {headers: header}).subscribe(data => {
       console.log(data);
     });
@@ -369,5 +379,22 @@ export class HomeInfoComponent implements OnInit {
   message() {
     this.router.navigate(['/chats']);
   }
+
+  submit() {
+    this.my_reservation.homeReviewDescription = this.homeDescr.value;
+    this.my_reservation.homeReviewStars = this.stars_home;
+    this.my_reservation.hostReviewDescription = this.ownerDescr.value;
+    this.my_reservation.hostReviewStars = this.stars_owner;
+
+    let header = new HttpHeaders({'Authorization': 'Bearer ' + this.storage.get('token').accessToken});
+    let url = 'http://localhost:8080/api/secure/book/';
+
+    this.http.put<BookResp[]>(url, this.my_reservation, {headers: header}).subscribe(data => {
+      console.log(data);
+    });
+
+  }
+
+
 
 }

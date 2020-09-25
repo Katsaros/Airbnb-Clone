@@ -1,0 +1,1 @@
+{"version":3,"file":"rating.component.d.ts","sources":["rating.component.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;AACA;;;AACA","sourcesContent":["import { OnInit } from '@angular/core';\r\nexport declare class RatingComponent implements OnInit {\r\n    constructor();\r\n    ngOnInit(): void;\r\n}\r\n"]}

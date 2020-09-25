@@ -173,31 +173,45 @@
 
         </div>
     </div>
-    <div class="row">
-        <div class="col-6">
+    <div class="row" *ngIf="write_review">
+        <div class="col-12">
             <mat-card style="margin-top: 2%; width: 90%; border-radius: 0px; text-align: center;">
-                <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Home Review</mat-card-title>
+                <mat-card-title style="font-weight: bold; text-decoration: none; padding-bottom: 20px">Review</mat-card-title>
                 <mat-card-content>
-                    <p>
-                        <mat-form-field appearance="outline" style="width: 300px">
-                            <mat-label>Description</mat-label>
-                            <textarea matInput [formControl]="events"></textarea>
-                        </mat-form-field>
 
-                    </p>
-                    <p>
-                        <mat-form-field appearance="outline" style="width: 300px">
-                            <mat-label>Description</mat-label>
-                            <textarea matInput [formControl]="events"></textarea>
-                        </mat-form-field>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>Home Review</h1>
+                                <p>
+                                    <mat-form-field appearance="outline" style="width: 300px">
+                                        <mat-label>Description</mat-label>
+                                        <textarea matInput [formControl]="homeDescr"></textarea>
+                                    </mat-form-field>
 
-                    </p>
+                                </p>
+                                <star-rating value={{stars_home}} checkedcolor="gold" uncheckedcolor="gray" totalstars= {{totalstar}} size="25px" ></star-rating>
+
+                            </div>
+                            <div class="col-6">
+                                <h1>Owner Review</h1>
+                                <p>
+                                    <mat-form-field appearance="outline" style="width: 300px">
+                                        <mat-label>Description</mat-label>
+                                        <textarea matInput [formControl]="ownerDescr"></textarea>
+                                    </mat-form-field>
+
+                                </p>
+                                <star-rating value={{stars_owner}}  checkedcolor="gold" uncheckedcolor="gray" totalstars= {{totalstar}} size="25px" ></star-rating>
+                            </div>
+                        </div>
+                    </div>
+
                 </mat-card-content>
+                <mat-card-footer>
+                    <button mat-raised-button class="searchbutton" (click)="submit()">Submit</button>
+                </mat-card-footer>
             </mat-card>
-        </div>
-        <div class="col-6">
-
-
         </div>
     </div>
 </div>
